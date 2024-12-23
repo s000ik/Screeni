@@ -66,3 +66,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Set a fixed size for the popup */
+html, body {
+  width: 600px;   /* Adjust width as needed */
+  height: 600px;  /* Adjust height as needed */
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure no scrollbars are shown unless necessary */
+body {
+  overflow: hidden;
+}
