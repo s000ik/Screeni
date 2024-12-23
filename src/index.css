@@ -69,10 +69,12 @@ button:focus-visible {
 
 /* Set a fixed size for the popup */
 html, body {
-  width: 600px;   /* Adjust width as needed */
-  height: 600px;  /* Adjust height as needed */
+  width: 400px;   /* Can go upto 600 */
+  height: 600px;  /* Can go upto 800 */
   margin: 0;
   padding: 0;
+  /* background-color: #7B66FF; */
+  /* Our brand colour is #7B66FF; */
 }
 
 /* Ensure no scrollbars are shown unless necessary */
