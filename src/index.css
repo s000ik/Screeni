@@ -7,10 +7,17 @@
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.87);
   background-color: #fafafa;
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #f5f5f5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark mode styles */
 @media (prefers-color-scheme: dark) {
   :root {
     background-color: #181818;
@@ -23,24 +30,20 @@
   }
 }
 
-/* Card and Header Styling */
+/* Tailwind custom classes */
 body {
   margin: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  place-items: center;
+  min-width: 320px;
   min-height: 100vh;
-  background-color: #f5f5f5;
 }
 
 h1 {
   font-size: 2.5em;
-  font-weight: 700;
-  color: #6b46c1;
-}
-
-h2, h3 {
-  color: #4a5568;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #333;
 }
 
 button {
@@ -54,18 +57,16 @@ button {
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
-
 button:hover {
   background-color: #45a049;
   transform: scale(1.05);
 }
 
-ul li {
-  font-size: 0.95rem;
-  color: #2d3748;
-  font-weight: 500;
-}
-
-.bg-gray-50 {
-  background-color: #f9fafb;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

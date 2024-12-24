@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 function App() {
   const [siteTimings, setSiteTimings] = useState<Array<{
@@ -41,31 +42,42 @@ function App() {
     .slice(0, 5);
 
   return (
-    <div className="max-w-md mx-auto mt-8 space-y-8 p-6 bg-white shadow-xl rounded-xl text-gray-800">
-      <header className="text-center">
-        <h1 className="text-4xl font-bold text-purple-600">Screeni</h1>
-        <p className="mt-2 text-lg text-gray-500">Your Browsing Insights</p>
-      </header>
+    <div className="max-w-2xl mx-auto mt-8 space-y-8 p-6 bg-white shadow-lg rounded-lg">
+      <Tabs defaultValue="today" className="w-full">
+        <TabsList className="grid grid-cols-2 gap-4">
+          <TabsTrigger value="today" className="p-4 text-lg font-semibold hover:bg-gray-100 rounded-md">Today</TabsTrigger>
+          <TabsTrigger value="details" className="p-4 text-lg font-semibold hover:bg-gray-100 rounded-md">Details</TabsTrigger>
+        </TabsList>
 
-      <div className="text-center">
-        <p className="text-lg font-medium text-gray-600">Total Browsing Time</p>
-        <h2 className="text-3xl font-bold text-purple-600">{formatTime(totalSessionTime)}</h2>
-      </div>
+        <TabsContent value="today" className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-800">Screen Time Tracker</h2>
+          <p className="text-lg text-gray-600">Total Browsing Session Time: {formatTime(totalSessionTime)}</p>
+          <div className="bg-gray-50 p-4 rounded-lg shadow-md">
+            <ul>
+              {sortedTimings.map(([hostname, totalTime], index) => (
+                <li key={index} className="py-3 flex justify-between items-center border-b last:border-none">
+                  <span className="text-md text-gray-700">{hostname}</span>
+                  <span className="text-sm text-gray-500">{formatTime(totalTime)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </TabsContent>
 
-      <div className="bg-gray-50 p-4 rounded-lg shadow-lg">
-        <h3 className="text-xl font-semibold text-gray-700">Most Viewed Sites</h3>
-        <ul className="mt-4 space-y-3">
-          {sortedTimings.map(([hostname, totalTime], index) => (
-            <li
-              key={index}
-              className="flex justify-between items-center p-2 bg-white rounded-md shadow-sm hover:bg-purple-50 transition"
-            >
-              <span className="text-gray-700 font-medium">{hostname}</span>
-              <span className="text-sm text-gray-500">{formatTime(totalTime)}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+        <TabsContent value="details" className="space-y-4">
+          <h3 className="text-xl font-semibold text-gray-700">Detailed Timings</h3>
+          <div className="bg-gray-50 p-4 rounded-lg shadow-md">
+            <ul>
+              {siteTimings.map((site, index) => (
+                <li key={index} className="py-3 flex justify-between items-center border-b last:border-none">
+                  <span className="text-md text-gray-700">{new URL(site.url).hostname}</span>
+                  <span className="text-sm text-gray-500">{formatTime(site.timeSpent)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
