@@ -1,72 +1,123 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Base styling for light and dark modes */
-:root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  background-color: #fafafa;
-  color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #f5f5f5;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
-  :root {
-    background-color: #181818;
-    color: #eaeaea;
-  }
-
-  .dark {
-    background-color: #1a1a1a;
-    color: #eaeaea;
-  }
-}
-
-/* Tailwind custom classes */
+/* General styles */
 body {
   margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.frame {
+  width: 450px;
+  height: 550px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #7B66FF;
+  height: 90px;
+  width: 100%;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-h1 {
-  font-size: 2.5em;
-  line-height: 1.1;
-  font-weight: 600;
-  color: #333;
+.logo {
+  height: 28px;
+  margin-left: 24px;
 }
 
-button {
-  border-radius: 8px;
-  padding: 0.8em 1.5em;
-  font-size: 1.1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #4CAF50;
+.icons {
+  display: flex;
+  margin-left: auto;
+  margin-right: 27px;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
   color: white;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-button:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.icon.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Content styles */
+.content {
+  padding: 40px 25px 25px 25px;
+}
+
+.total-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  color: #4d4d4d;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  color: #7B66FF;
+}
+
+.divider {
+  margin: 20px auto;
+  width: 400px;
+  border: none;
+  border-top: 1px solid #d9d9d9;
+}
+
+.most-viewed {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  color: #4d4d4d;
+  margin-bottom: 24px;
+}
+
+.site-list {
+  list-style-type: decimal;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.site-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #666666;
+}
+
+.site-name {
+  flex: 1;
+}
+
+.site-time {
+  text-align: right;
+  color: #7B66FF;
 }
