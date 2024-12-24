@@ -32,7 +32,6 @@ function App() {
     };
   }, []);
 
-  // Rest of your code remains the same...
 
 // Aggregate timings by hostname
 const aggregatedTimings = siteTimings.reduce((acc, site) => {
@@ -71,11 +70,17 @@ const aggregatedTimings = siteTimings.reduce((acc, site) => {
   className="navbar flex items-center justify-between"
   style={{ paddingLeft: '26px', paddingRight: '30px' }}
 >
-  <img
+<img
     src="/Screeni-logotype.png"
     alt="Screeni Logo"
-    className="w-[110px] h-auto"
-  />
+    className="h-[28px] w-auto"
+    style={{
+        height: '28px',
+        width: 'auto',
+        maxWidth: '120px',
+        objectFit: 'contain'
+    }}
+/>
   <div className="icons flex space-x-4">
     <button
       className={`icon ${currentPage === 0 ? 'active' : ''}`}
