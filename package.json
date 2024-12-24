@@ -1,7 +1,7 @@
 {
   "name": "screeni",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,5 +25,17 @@
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.1",
     "vite": "^6.0.3"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s000ik/screeni.git"
+  },
+  "author": "satwik singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s000ik/screeni/issues"
+  },
+  "homepage": "https://github.com/s000ik/screeni#readme"
 }
