@@ -1,22 +1,19 @@
 import { useState, useEffect } from 'react';
 import './index.css';
 
+
 function App() {
   const [siteTimings, setSiteTimings] = useState<Array<{
     url: string;
     timeSpent: number;
     startTime: number;
   }>>([]);
-  const [currentPage, setCurrentPage] = useState(0); // 0 for home, 1 for detailed view
-
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const loadTimes = () => {
-      chrome.storage.local.get(['siteTimings'], (result) => {
-        if (result.siteTimings) {
-          setSiteTimings(result.siteTimings);
-        }
-      });
+    const loadTimes = async () => {
+      const { siteTimings: storedTimings = [] } = await chrome.storage.local.get('siteTimings');
+      setSiteTimings(storedTimings);
     };
 
     // Initial load
@@ -35,11 +32,20 @@ function App() {
     };
   }, []);
 
-  const aggregatedTimings = siteTimings.reduce((acc, site) => {
+  // Rest of your code remains the same...
+
+// Aggregate timings by hostname
+const aggregatedTimings = siteTimings.reduce((acc, site) => {
+  try {
     const hostname = new URL(site.url).hostname;
     acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
     return acc;
-  }, {} as Record<string, number>);
+  } catch (err) {
+    // Handle invalid URLs gracefully
+    console.error('Invalid URL:', site.url);
+    return acc;
+  }
+}, {} as Record<string, number>);
 
   const totalSessionTime = siteTimings.reduce((acc, site) => acc + site.timeSpent, 0);
 

@@ -1,80 +1,92 @@
-let activeTabs = new Map();
+// Store the current active tab's info
+let currentTab = {
+  id: null,
+  url: null,
+  startTime: null
+};
 
-function calculateTimeSpent(startTime) {
-  return Math.floor((Date.now() - startTime) / 1000);
+// Function to get hostname from URL
+function getHostname(url) {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return '';
+  }
 }
 
-// Function to update storage with new timing
-async function updateStorage(tabUrl, timeSpent, startTime) {
+// Function to update time spent for a URL
+async function updateTimeSpent(url, timeSpent) {
   const { siteTimings = [] } = await chrome.storage.local.get('siteTimings');
-  const existingIndex = siteTimings.findIndex(site => site.url === tabUrl);
-
-  if (existingIndex !== -1) {
-    siteTimings[existingIndex].timeSpent += timeSpent;
-    siteTimings[existingIndex].startTime = startTime;
-  } else {
-    siteTimings.push({ url: tabUrl, timeSpent, startTime });
-  }
-
+  
+  const newTiming = {
+    url,
+    timeSpent,
+    startTime: Date.now()
+  };
+  
+  siteTimings.push(newTiming);
+  
   await chrome.storage.local.set({ siteTimings });
 }
 
-// switching between tabs
+// Function to handle tab changes
+async function handleTabChange(tabId, url) {
+  const now = Date.now();
+
+  // If there was a previous tab, update its time
+  if (currentTab.id && currentTab.startTime && currentTab.url) {
+    const timeSpent = Math.floor((now - currentTab.startTime) / 1000); // Convert to seconds
+    await updateTimeSpent(currentTab.url, timeSpent);
+  }
+
+  // Update current tab info
+  currentTab = {
+    id: tabId,
+    url: url,
+    startTime: now
+  };
+}
+
+// Listen for tab activation
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
-  const currentTime = Date.now();
+  const tab = await chrome.tabs.get(activeInfo.tabId);
+  if (tab.url) {
+    await handleTabChange(tab.id, tab.url);
+  }
+});
 
-  // Update time for previously active tab
-  if (activeTabs.size > 0) {
-    for (const [tabId, tabData] of activeTabs) {
-      const timeSpent = calculateTimeSpent(tabData.startTime);
-      await updateStorage(tabData.url, timeSpent, currentTime);
+// Listen for tab URL updates
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.url && tab.active) {
+    handleTabChange(tabId, changeInfo.url);
+  }
+});
+
+// Listen for tab removal
+chrome.tabs.onRemoved.addListener((tabId) => {
+  if (currentTab.id === tabId) {
+    handleTabChange(null, null);
+  }
+});
+
+// Listen for windows focus change
+chrome.windows.onFocusChanged.addListener(async (windowId) => {
+  if (windowId === chrome.windows.WINDOW_ID_NONE) {
+    // Chrome lost focus, update current tab's time
+    await handleTabChange(null, null);
+  } else {
+    // Chrome gained focus, get current active tab
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab?.url) {
+      await handleTabChange(tab.id, tab.url);
     }
-    activeTabs.clear();
-  }
-
-  // Get new active tab info
-  try {
-    const tab = await chrome.tabs.get(activeInfo.tabId);
-    if (tab.url && tab.url.startsWith('http')) {
-      activeTabs.set(tab.id, {
-        url: tab.url,
-        startTime: currentTime
-      });
-    }
-  } catch (error) {
-    console.error('Error getting tab info:', error);
   }
 });
 
-// same tab URL updates
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (changeInfo.url && activeTabs.has(tabId)) {
-    const tabData = activeTabs.get(tabId);
-    const timeSpent = calculateTimeSpent(tabData.startTime);
-    await updateStorage(tabData.url, timeSpent, Date.now());
-    
-    activeTabs.set(tabId, {
-      url: changeInfo.url,
-      startTime: Date.now()
-    });
+// Initialize tracking when extension loads
+chrome.runtime.onStartup.addListener(async () => {
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (tab?.url) {
+    await handleTabChange(tab.id, tab.url);
   }
-});
-
-// tab closing
-chrome.tabs.onRemoved.addListener(async (tabId) => {
-  if (activeTabs.has(tabId)) {
-    const tabData = activeTabs.get(tabId);
-    const timeSpent = calculateTimeSpent(tabData.startTime);
-    await updateStorage(tabData.url, timeSpent, Date.now());
-    activeTabs.delete(tabId);
-  }
-});
-
-// Handle browser shutdown
-chrome.runtime.onSuspend.addListener(async () => {
-  for (const [tabId, tabData] of activeTabs) {
-    const timeSpent = calculateTimeSpent(tabData.startTime);
-    await updateStorage(tabData.url, timeSpent, Date.now());
-  }
-  activeTabs.clear();
 });
