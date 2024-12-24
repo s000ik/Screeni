@@ -1,7 +1,7 @@
 {
-  "name": "screeni",
+  "name": "simple-chrome-extension",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,32 +10,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@types/react": "^18.3.17",
+    "@types/chrome": "^0.0.287",
+    "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
-    "globals": "^15.13.0",
+    "globals": "^15.14.0",
     "typescript": "~5.6.2",
-    "typescript-eslint": "^8.18.1",
-    "vite": "^6.0.3"
-  },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "main": "eslint.config.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/s000ik/screeni.git"
-  },
-  "author": "satwik singh",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/s000ik/screeni/issues"
-  },
-  "homepage": "https://github.com/s000ik/screeni#readme"
+    "typescript-eslint": "^8.18.2",
+    "vite": "^6.0.5"
+  }
 }
