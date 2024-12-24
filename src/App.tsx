@@ -9,6 +9,7 @@ function App() {
   }>>([]);
   const [currentPage, setCurrentPage] = useState(0); // 0 for home, 1 for detailed view
 
+
   useEffect(() => {
     const loadTimes = () => {
       chrome.storage.local.get(['siteTimings'], (result) => {
@@ -18,9 +19,20 @@ function App() {
       });
     };
 
+    // Initial load
     loadTimes();
-    const interval = setInterval(loadTimes, 1000);
-    return () => clearInterval(interval);
+    
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+      if (changes.siteTimings) {
+        setSiteTimings(changes.siteTimings.newValue);
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
   }, []);
 
   const aggregatedTimings = siteTimings.reduce((acc, site) => {
@@ -41,10 +53,11 @@ function App() {
   const sortedTimings = Object.entries(aggregatedTimings)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
-
+  
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+      setCurrentPage(page);
+    };
+  
 
   return (
     <div className="frame">
