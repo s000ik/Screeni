@@ -18,8 +18,18 @@ function App() {
     };
 
     loadTimes();
-    const interval = setInterval(loadTimes, 1000);
-    return () => clearInterval(interval);
+    
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+      if (changes.siteTimings) {
+        setSiteTimings(changes.siteTimings.newValue);
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
   }, []);
 
   const aggregatedTimings = siteTimings.reduce((acc, site) => {
