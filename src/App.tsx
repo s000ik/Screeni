@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import './index.css';
 
 function App() {
   const [siteTimings, setSiteTimings] = useState<Array<{
@@ -7,6 +7,8 @@ function App() {
     timeSpent: number;
     startTime: number;
   }>>([]);
+  const [currentPage, setCurrentPage] = useState(0); // 0 for home, 1 for detailed view
+
 
   useEffect(() => {
     const loadTimes = () => {
@@ -51,46 +53,60 @@ function App() {
   const sortedTimings = Object.entries(aggregatedTimings)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
+  
+  const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+    };
+  
 
-  return (
-    <div className="max-w-2xl mx-auto mt-8 space-y-8 p-6 bg-white shadow-lg rounded-lg">
-      <Tabs defaultValue="today" className="w-full">
-        <TabsList className="grid grid-cols-2 gap-4">
-          <TabsTrigger value="today" className="p-4 text-lg font-semibold hover:bg-gray-100 rounded-md">Today</TabsTrigger>
-          <TabsTrigger value="details" className="p-4 text-lg font-semibold hover:bg-gray-100 rounded-md">Details</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="today" className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-800">Screen Time Tracker</h2>
-          <p className="text-lg text-gray-600">Total Browsing Session Time: {formatTime(totalSessionTime)}</p>
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md">
-            <ul>
-              {sortedTimings.map(([hostname, totalTime], index) => (
-                <li key={index} className="py-3 flex justify-between items-center border-b last:border-none">
-                  <span className="text-md text-gray-700">{hostname}</span>
-                  <span className="text-sm text-gray-500">{formatTime(totalTime)}</span>
+    return (
+      <div className="frame">
+        <nav className="navbar">
+        <img src="/Screeni-logotype.png" alt="Screeni Logo" style={{ width: '110px', height: 'auto' }} />
+          <div className="icons">
+            <button className={`icon ${currentPage === 0 ? 'active' : ''}`} onClick={() => handlePageChange(0)}>🏠</button>
+            <button className={`icon ${currentPage === 1 ? 'active' : ''}`} onClick={() => handlePageChange(1)}>📊</button>
+            <button className="icon">⚙️</button>
+            <button className="icon">ℹ️</button>
+          </div>
+        </nav>
+  
+        {currentPage === 0 ? (
+          <main className="content">
+            <div className="total-time">
+              <span className="label">Total Browsing Time</span>
+              <span className="value">{formatTime(totalSessionTime)}</span>
+            </div>
+  
+            <hr className="divider" />
+  
+            <div className="most-viewed">
+              <h2 className="section-title">Most Viewed Sites</h2>
+              <ol className="site-list">
+                {sortedTimings.map(([hostname, totalTime], index) => (
+                  <li key={index} className="site-item">
+                    <span className="site-name">{hostname}</span>
+                    <span className="site-time">{formatTime(totalTime)}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </main>
+        ) : (
+          <main className="content">
+            <h2 className="section-title">Detailed View</h2>
+            <ol className="site-list">
+              {Object.entries(aggregatedTimings).map(([hostname, totalTime], index) => (
+                <li key={index} className="site-item">
+                  <span className="site-name">{hostname}</span>
+                  <span className="site-time">{formatTime(totalTime)}</span>
                 </li>
               ))}
-            </ul>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="details" className="space-y-4">
-          <h3 className="text-xl font-semibold text-gray-700">Detailed Timings</h3>
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md">
-            <ul>
-              {siteTimings.map((site, index) => (
-                <li key={index} className="py-3 flex justify-between items-center border-b last:border-none">
-                  <span className="text-md text-gray-700">{new URL(site.url).hostname}</span>
-                  <span className="text-sm text-gray-500">{formatTime(site.timeSpent)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
-}
-
-export default App;
+            </ol>
+          </main>
+        )}
+      </div>
+    );
+  }
+  
+  export default App;
