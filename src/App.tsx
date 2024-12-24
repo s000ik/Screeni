@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react';
 import './index.css';
 
-
 function App() {
-  const [siteTimings, setSiteTimings] = useState<Array<{
-    url: string;
-    timeSpent: number;
-    startTime: number;
-  }>>([]);
+  const [siteTimings, setSiteTimings] = useState<
+    Array<{ url: string; timeSpent: number; startTime: number }>
+  >([]);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const loadTimes = async () => {
-      const { siteTimings: storedTimings = [] } = await chrome.storage.local.get('siteTimings');
+      const { siteTimings: storedTimings = [] } = await chrome.storage.local.get(
+        'siteTimings'
+      );
       setSiteTimings(storedTimings);
     };
 
     // Initial load
     loadTimes();
-    
-    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+
+    const handleStorageChange = (changes: {
+      [key: string]: chrome.storage.StorageChange;
+    }) => {
       if (changes.siteTimings) {
         setSiteTimings(changes.siteTimings.newValue);
       }
@@ -32,21 +33,21 @@ function App() {
     };
   }, []);
 
+  const aggregatedTimings = siteTimings.reduce((acc, site) => {
+    try {
+      const hostname = new URL(site.url).hostname;
+      acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
+      return acc;
+    } catch (err) {
+      console.error('Invalid URL:', site.url);
+      return acc;
+    }
+  }, {} as Record<string, number>);
 
-// Aggregate timings by hostname
-const aggregatedTimings = siteTimings.reduce((acc, site) => {
-  try {
-    const hostname = new URL(site.url).hostname;
-    acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
-    return acc;
-  } catch (err) {
-    // Handle invalid URLs gracefully
-    console.error('Invalid URL:', site.url);
-    return acc;
-  }
-}, {} as Record<string, number>);
-
-  const totalSessionTime = siteTimings.reduce((acc, site) => acc + site.timeSpent, 0);
+  const totalSessionTime = siteTimings.reduce(
+    (acc, site) => acc + site.timeSpent,
+    0
+  );
 
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -58,66 +59,54 @@ const aggregatedTimings = siteTimings.reduce((acc, site) => {
   const sortedTimings = Object.entries(aggregatedTimings)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
-  
+
   const handlePageChange = (page: number) => {
-      setCurrentPage(page);
-    };
-  
+    setCurrentPage(page);
+  };
 
   return (
     <div className="frame">
-      <nav
-  className="navbar flex items-center justify-between"
-  style={{ paddingLeft: '26px', paddingRight: '30px' }}
->
-<img
-    src="/Screeni-logotype.png"
-    alt="Screeni Logo"
-    className="h-[28px] w-auto"
-    style={{
-        height: '28px',
-        width: 'auto',
-        maxWidth: '120px',
-        objectFit: 'contain'
-    }}
-/>
-  <div className="icons flex space-x-4">
-    <button
-      className={`icon ${currentPage === 0 ? 'active' : ''}`}
-      onClick={() => handlePageChange(0)}
-    >
-      <img src="/icon1.png" alt="Home" />
-    </button>
-    <button
-      className={`icon ${currentPage === 1 ? 'active' : ''}`}
-      onClick={() => handlePageChange(1)}
-    >
-      <img src="/icon2.png" alt="Statistics" />
-    </button>
-    <button className="icon">
-      <img src="/icon3.png" alt="Settings" />
-    </button>
-    <button className="icon">
-      <img src="/icon4.png" alt="Information" />
-    </button>
-  </div>
-</nav>
+      <nav className="navbar flex items-center justify-between">
+        <img
+          src="/Screeni-logotype.png"
+          alt="Screeni Logo"
+          className="logo"
+        />
+        <div className="icons">
+          <button
+            className={`icon ${currentPage === 0 ? 'active' : ''}`}
+            onClick={() => handlePageChange(0)}
+          >
+            <img src="/icon1.png" alt="Home" />
+          </button>
+          <button
+            className={`icon ${currentPage === 1 ? 'active' : ''}`}
+            onClick={() => handlePageChange(1)}
+          >
+            <img src="/icon2.png" alt="Statistics" />
+          </button>
+          <button className="icon">
+            <img src="/icon3.png" alt="Settings" />
+          </button>
+          <button className="icon">
+            <img src="/icon4.png" alt="Information" />
+          </button>
+        </div>
+      </nav>
 
       {currentPage === 0 ? (
         <main className="content">
           <div className="total-time">
-            <span className="label">Total Browsing Time</span>
+            <span className="label">Total browsing time</span>
             <span className="value">{formatTime(totalSessionTime)}</span>
           </div>
-
           <hr className="divider" />
-
           <div className="most-viewed">
-            <h2 className="section-title">Most Viewed Sites</h2>
+            <h2 className="section-title">Most viewed sites</h2>
             <ol className="site-list">
               {sortedTimings.map(([hostname, totalTime], index) => (
                 <li key={index} className="site-item">
-                  <span className="site-name">{hostname}</span>
+                  <span className="site-name">{`${index + 1}. ${hostname}`}</span>
                   <span className="site-time">{formatTime(totalTime)}</span>
                 </li>
               ))}

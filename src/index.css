@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'DINProCondensedBlackItalic';
+  src: url('/customfont.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+
 /* General styles */
 body {
   margin: 0;
@@ -26,15 +35,17 @@ body {
 }
 
 .logo {
-  height: 28px;
+  height: 44px; /* Increased logo size */
   margin-left: 24px;
 }
 
 .icons {
   display: flex;
+  gap: 13px; /* Adds a gap of 26px between each icon */
   margin-left: auto;
-  margin-right: 27px;
+  margin-right: 27px; /* Keeps the icons 30px from the right */
 }
+
 
 .icon {
   width: 28px;
@@ -51,65 +62,71 @@ body {
 }
 
 .icon.active {
-  font-weight: bold;
-  text-decoration: underline;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.217); /* Light pink glow */
+  border-radius: 50%; /* Optional: Adds rounded glow effect */
+  transition: box-shadow 0.3s ease; /* Smooth transition */
 }
-
 /* Content styles */
 .content {
-  padding: 40px 25px 25px 25px;
+  padding: 25px 25px 25px 25px;
 }
 
-.total-time {
+.total-time { /* Adjusts the layout of the total time section */
+  /* margin-top: 24px; */
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end; /* Anchors the label and value towards the bottom */
 }
 
-.label {
-  font-size: 24px;
+.section-title { 
+  font-size: 32px; /* Updated size */
   font-weight: bold;
   font-style: italic;
+  font-family: 'DINProCondensedBlackItalic', sans-serif; /* Applied custom font */
   color: #4d4d4d;
 }
 
-.value {
-  font-size: 24px;
+.label {
+  font-size: 32px; /* Updated size */
   font-weight: bold;
   font-style: italic;
+  font-family: 'DINProCondensedBlackItalic', sans-serif; /* Applied custom font */
+  color: #4d4d4d;
+}
+
+.value { /* Adjusts the font size and color of the total time value */
+  font-size: 40px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: 'DINProCondensedBlackItalic', sans-serif; /* Fallback to sans-serif */
   color: #7B66FF;
 }
+
 
 .divider {
   margin: 20px auto;
   width: 400px;
   border: none;
-  border-top: 1px solid #d9d9d9;
+  border-top: 2px solid #d9d9d9;
 }
 
 .most-viewed {
   margin-top: 20px;
 }
 
-.section-title {
-  font-size: 24px;
-  font-weight: bold;
-  font-style: italic;
-  color: #4d4d4d;
-  margin-bottom: 24px;
-}
-
 .site-list {
   list-style-type: decimal;
-  padding-left: 20px;
+  padding-left: 2px; /* Adjusts the indentation to be exactly 32px from the left */
   margin: 0;
+  margin-top: 22px; /* Adds space between the heading and the first list item */
 }
+
 
 .site-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 16px;
+  margin-bottom: 30px; /* Adds vertical spacing between list items */
+  font-size: 16px; /* Keeps the size consistent with the updated design */
   color: #666666;
 }
 
@@ -119,6 +136,6 @@ body {
 
 .site-time {
   text-align: right;
+  font-size: 16px;
   color: #7B66FF;
 }
-
