@@ -53,7 +53,13 @@ function App() {
     const hours = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    return `${hours}h ${mins}m ${secs}s`;
+  
+    const timeParts = [];
+    if (hours > 0) timeParts.push(`${hours}h`);
+    if (mins > 0 || hours > 0) timeParts.push(`${mins}m`); // Only show minutes if hours are present or minutes are non-zero
+    timeParts.push(`${secs}s`);
+  
+    return timeParts.join(' ');
   };
 
   const sortedTimings = Object.entries(aggregatedTimings)
