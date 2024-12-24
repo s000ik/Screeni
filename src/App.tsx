@@ -17,6 +17,7 @@ function App() {
       });
     };
 
+    // Initial load
     loadTimes();
     
     const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
