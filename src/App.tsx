@@ -48,15 +48,36 @@ function App() {
 
   return (
     <div className="frame">
-      <nav className="navbar">
-      <img src="/Screeni-logotype.png" alt="Screeni Logo" style={{ width: '110px', height: 'auto' }} />
-        <div className="icons">
-          <button className={`icon ${currentPage === 0 ? 'active' : ''}`} onClick={() => handlePageChange(0)}>🏠</button>
-          <button className={`icon ${currentPage === 1 ? 'active' : ''}`} onClick={() => handlePageChange(1)}>📊</button>
-          <button className="icon">⚙️</button>
-          <button className="icon">ℹ️</button>
-        </div>
-      </nav>
+      <nav
+  className="navbar flex items-center justify-between"
+  style={{ paddingLeft: '26px', paddingRight: '30px' }}
+>
+  <img
+    src="/Screeni-logotype.png"
+    alt="Screeni Logo"
+    className="w-[110px] h-auto"
+  />
+  <div className="icons flex space-x-4">
+    <button
+      className={`icon ${currentPage === 0 ? 'active' : ''}`}
+      onClick={() => handlePageChange(0)}
+    >
+      <img src="/icon1.png" alt="Home" />
+    </button>
+    <button
+      className={`icon ${currentPage === 1 ? 'active' : ''}`}
+      onClick={() => handlePageChange(1)}
+    >
+      <img src="/icon2.png" alt="Statistics" />
+    </button>
+    <button className="icon">
+      <img src="/icon3.png" alt="Settings" />
+    </button>
+    <button className="icon">
+      <img src="/icon4.png" alt="Information" />
+    </button>
+  </div>
+</nav>
 
       {currentPage === 0 ? (
         <main className="content">
