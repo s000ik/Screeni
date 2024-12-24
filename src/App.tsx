@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Container, Typography, List, ListItem, ListItemText, Paper, Box } from '@mui/material';
 
 function App() {
   const [siteTimings, setSiteTimings] = useState<Array<{
@@ -27,55 +26,48 @@ function App() {
     acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
     return acc;
   }, {} as Record<string, number>);
-  
+
+  const totalSessionTime = siteTimings.reduce((acc, site) => acc + site.timeSpent, 0);
+
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
     return `${hours}h ${mins}m ${secs}s`;
   };
+
   const sortedTimings = Object.entries(aggregatedTimings)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 5);
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Screen Time Tracker
-        </Typography>
-        <Paper elevation={3}>
-        <List>
-  {sortedTimings.map(([hostname, totalTime], index) => (
-    <ListItem key={index} divider>
-      <ListItemText
-        primary={hostname}
-        secondary={formatTime(totalTime)}
-      />
-    </ListItem>
-  ))}
-</List>
-        </Paper>
-      </Box>
-      <Box my={4}>
-        <Typography variant="h5" component="h2" gutterBottom>
-          Detailed Timings
-        </Typography>
-        <Paper elevation={3}>
-          
-          <List>
-            {Object.entries(aggregatedTimings).map(([hostname, totalTime], index) => (
-              <ListItem key={index} divider>
-                <ListItemText
-                  primary={hostname}
-                  secondary={`${totalTime} seconds`}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
-      </Box>
-    </Container>
+    <div className="max-w-md mx-auto mt-8 space-y-8 p-6 bg-white shadow-xl rounded-xl text-gray-800">
+      <header className="text-center">
+        <h1 className="text-4xl font-bold text-purple-600">Screeni</h1>
+        <p className="mt-2 text-lg text-gray-500">Your Browsing Insights</p>
+      </header>
+
+      <div className="text-center">
+        <p className="text-lg font-medium text-gray-600">Total Browsing Time</p>
+        <h2 className="text-3xl font-bold text-purple-600">{formatTime(totalSessionTime)}</h2>
+      </div>
+
+      <div className="bg-gray-50 p-4 rounded-lg shadow-lg">
+        <h3 className="text-xl font-semibold text-gray-700">Most Viewed Sites</h3>
+        <ul className="mt-4 space-y-3">
+          {sortedTimings.map(([hostname, totalTime], index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center p-2 bg-white rounded-md shadow-sm hover:bg-purple-50 transition"
+            >
+              <span className="text-gray-700 font-medium">{hostname}</span>
+              <span className="text-sm text-gray-500">{formatTime(totalTime)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
-  }
+}
 
 export default App;
