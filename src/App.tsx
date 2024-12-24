@@ -27,7 +27,16 @@ function App() {
     acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
     return acc;
   }, {} as Record<string, number>);
-
+  
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours}h ${mins}m ${secs}s`;
+  };
+  const sortedTimings = Object.entries(aggregatedTimings)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5);
   return (
     <Container maxWidth="sm">
       <Box my={4}>
@@ -35,6 +44,24 @@ function App() {
           Screen Time Tracker
         </Typography>
         <Paper elevation={3}>
+        <List>
+  {sortedTimings.map(([hostname, totalTime], index) => (
+    <ListItem key={index} divider>
+      <ListItemText
+        primary={hostname}
+        secondary={formatTime(totalTime)}
+      />
+    </ListItem>
+  ))}
+</List>
+        </Paper>
+      </Box>
+      <Box my={4}>
+        <Typography variant="h5" component="h2" gutterBottom>
+          Detailed Timings
+        </Typography>
+        <Paper elevation={3}>
+          
           <List>
             {Object.entries(aggregatedTimings).map(([hostname, totalTime], index) => (
               <ListItem key={index} divider>
