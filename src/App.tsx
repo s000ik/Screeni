@@ -28,6 +28,8 @@ function App() {
 
     chrome.storage.onChanged.addListener(handleStorageChange);
 
+    
+
     return () => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
     };

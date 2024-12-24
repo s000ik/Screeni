@@ -62,8 +62,9 @@ body {
 }
 
 .icon.active {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.217); /* Light pink glow */
-  border-radius: 50%; /* Optional: Adds rounded glow effect */
+  box-shadow: 0 0 20 2px white; /* Adds a white border around the active icon */
+
+  border-radius: 50%; /* Rounds the corners of the active icon */
   transition: box-shadow 0.3s ease; /* Smooth transition */
 }
 /* Content styles */
@@ -104,14 +105,18 @@ body {
 
 
 .divider {
-  margin: 20px auto;
+  margin-top: 20px;
+  margin-bottom: 0;
+  /* Centering the line */
+  display: block;
   width: 400px;
   border: none;
   border-top: 2px solid #d9d9d9;
 }
 
+
 .most-viewed {
-  margin-top: 20px;
+  margin-top: 2px;
 }
 
 .site-list {
@@ -127,7 +132,7 @@ body {
   justify-content: space-between;
   margin-bottom: 30px; /* Adds vertical spacing between list items */
   font-size: 16px; /* Keeps the size consistent with the updated design */
-  color: #666666;
+  color: #777777;
 }
 
 .site-name {
