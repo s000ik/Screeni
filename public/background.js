@@ -27,14 +27,16 @@ let currentTab = {
   function updateTimeForPreviousTab() {
     if (!currentTab.url) return;
   
+    const hostname = new URL(currentTab.url).hostname;
+    
     chrome.storage.local.get(['siteTimings'], (result) => {
       const siteTimings = result.siteTimings || [];
       const timeSpent = Math.floor((Date.now() - currentTab.startTime) / 1000);
   
-      const existingSite = siteTimings.find(site => site.url === currentTab.url);
+      const existingSite = siteTimings.find(site => new URL(site.url).hostname === hostname);
       const newTimings = existingSite 
         ? siteTimings.map(site => 
-            site.url === currentTab.url 
+            new URL(site.url).hostname === hostname
               ? { ...site, timeSpent: site.timeSpent + timeSpent }
               : site
           )
@@ -48,7 +50,7 @@ let currentTab = {
       currentTab.startTime = Date.now();
     });
   }
-  
+    
   setInterval(() => {
     updateTimeForPreviousTab();
   }, 1000);

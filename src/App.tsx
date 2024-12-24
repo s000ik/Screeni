@@ -22,6 +22,12 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const aggregatedTimings = siteTimings.reduce((acc, site) => {
+    const hostname = new URL(site.url).hostname;
+    acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
+    return acc;
+  }, {} as Record<string, number>);
+
   return (
     <Container maxWidth="sm">
       <Box my={4}>
@@ -30,11 +36,11 @@ function App() {
         </Typography>
         <Paper elevation={3}>
           <List>
-            {siteTimings.map((site, index) => (
+            {Object.entries(aggregatedTimings).map(([hostname, totalTime], index) => (
               <ListItem key={index} divider>
                 <ListItemText
-                  primary={new URL(site.url).hostname}
-                  secondary={`${site.timeSpent} seconds`}
+                  primary={hostname}
+                  secondary={`${totalTime} seconds`}
                 />
               </ListItem>
             ))}
@@ -43,6 +49,6 @@ function App() {
       </Box>
     </Container>
   );
-}
+  }
 
 export default App;
