@@ -131,57 +131,62 @@ function App() {
       </nav>
 
       {currentPage === 0 ? (
-        <main className="content">
-          <div className="total-time">
-            <span className="label">Total browsing time</span>
-            <span className="value">{formatTime(totalSessionTime)}</span>
-          </div>
-          <hr className="divider" />
-          <div className="most-viewed">
-            <h2 className="section-title">Most viewed sites</h2>
-            <ol className="site-list">
-              {sortedTimings.map(([hostname, totalTime], index) => (
-                <li key={index} className="site-item">
-                  <span className="site-name">
-                    {index + 1}. <span className="bold">{hostname}</span>
-                  </span>
-                  <span className="site-time bold">{formatTime(totalTime)}</span>
-                  <div className="progress-bar-bg" />
-                  <div 
-                    className="progress-bar" 
-                    style={{ 
-                      width: `${(totalTime / totalSessionTime) * 100}%` 
-                    }} 
-                  />
-                </li>
-              ))}
-            </ol>
-          </div>
-        </main>
-      ) : (
-        <main className="content">
-          <h2 className="section-title">Detailed View</h2>
-          <ol className="site-list">
-            {Object.entries(liveTimings).map(([hostname, totalTime], index) => (
-              <li key={index} className="site-item">
-                <span className="site-name">
-                  {index + 1}. <span className="bold">{hostname}</span>
-                </span>
-                <span className="site-time bold">{formatTime(totalTime)}</span>
-                <div className="progress-bar-bg" />
-                <div 
-                  className="progress-bar" 
-                  style={{ 
-                    width: `${(totalTime / totalSessionTime) * 100}%` 
-                  }} 
-                />
-              </li>
-            ))}
-          </ol>
-        </main>
-      )}
+  <main className="content">
+    <div className="total-time">
+      <span className="label">Total browsing time</span>
+      <span className="value">{formatTime(totalSessionTime)}</span>
+    </div>
+    <hr className="divider" />
+    <div className="most-viewed">
+      <h2 className="section-title">Most viewed sites</h2>
+      <ol className="site-list">
+        {sortedTimings.map(([hostname, totalTime], index) => (
+          <li key={index} className="site-item">
+            <span className="site-name">
+              {index + 1}. <span className="bold">{hostname}</span>
+            </span>
+            <span className="site-time bold">{formatTime(totalTime)}</span>
+            <div className="progress-bar-bg" />
+            <div
+              className="progress-bar"
+              style={{
+                width: `${(totalTime / totalSessionTime) * 100}%`
+              }}
+            />
+          </li>
+        ))}
+      </ol>
+    </div>
+  </main>
+) : (
+  <main className="content">
+    <h2 className="section-title">Detailed View</h2>
+    <div className="scrollable-content">
+      <ol className="site-list">
+        {Object.entries(liveTimings).map(([hostname, totalTime], index) => (
+          <li key={index} className="site-item">
+            <span className="site-name">
+              {index + 1}. <span className="bold">{hostname}</span>
+            </span>
+            <span className="site-time bold">{formatTime(totalTime)}</span>
+            <div className="progress-bar-bg" />
+            <div
+              className="progress-bar"
+              style={{
+                width: `${(totalTime / totalSessionTime) * 100}%`
+              }}
+            />
+          </li>
+        ))}
+      </ol>
+    </div>
+  </main>
+)}
+
     </div>
   );
 }
+
+
 
 export default App;

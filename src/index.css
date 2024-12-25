@@ -223,3 +223,31 @@ html, body {
 .bold {
   font-weight: bold;
 }
+
+
+.scrollable-content {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 10px;
+  /* Remove padding-right if present */
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;
+  position: absolute;
+  right: 0;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px 0 0 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: #7B66FF;
+  border-radius: 4px 0 0 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background: #5e4ddb;
+}
