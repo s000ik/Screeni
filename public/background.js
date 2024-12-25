@@ -134,7 +134,12 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
   }
 });
 
+// Add this at the top of background.js where other listeners are defined
 chrome.runtime.onStartup.addListener(async () => {
+  // Clear session timings when Chrome starts
+  await chrome.storage.local.set({ sessionTimings: [] });
+  
+  // Initialize current tab with active tab if any
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.url) {
     await handleTabChange(tab.id, tab.url);
