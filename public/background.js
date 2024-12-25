@@ -31,6 +31,9 @@ async function updateTimeSpent(url, timeSpent) {
 
 // Function to handle tab changes
 async function handleTabChange(tabId, url) {
+  if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://')) {
+    return;
+  }
   const now = Date.now();
 
   // If there was a previous tab, update its time
@@ -88,5 +91,17 @@ chrome.runtime.onStartup.addListener(async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.url) {
     await handleTabChange(tab.id, tab.url);
+  }
+});
+
+// Update time on extension click
+chrome.runtime.onMessage.addListener(async (request) => {
+  if (request.type === 'GET_CURRENT_TIME') {
+    // Update time for current tab before responding
+    if (currentTab.id && currentTab.startTime && currentTab.url) {
+      const now = Date.now();
+      const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
+      await updateTimeSpent(currentTab.url, timeSpent);
+    }
   }
 });

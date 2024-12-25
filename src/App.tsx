@@ -9,13 +9,12 @@ function App() {
 
   useEffect(() => {
     const loadTimes = async () => {
-      const { siteTimings: storedTimings = [] } = await chrome.storage.local.get(
-        'siteTimings'
-      );
+      // Request time update before getting data
+      await chrome.runtime.sendMessage({ type: 'GET_CURRENT_TIME' });
+      const { siteTimings: storedTimings = [] } = await chrome.storage.local.get('siteTimings');
       setSiteTimings(storedTimings);
     };
-
-    // Initial load
+  
     loadTimes();
 
     const handleStorageChange = (changes: {

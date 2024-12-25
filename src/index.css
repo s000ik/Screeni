@@ -47,6 +47,12 @@ body {
 }
 
 
+.icon img {
+  width: 28px; /* Set a smaller fixed width */
+  height: 28px; /* Set a smaller fixed height */
+  object-fit: contain; /* Ensures image maintains aspect ratio */
+}
+
 .icon {
   width: 28px;
   height: 28px;
@@ -108,6 +114,7 @@ body {
   border: none;
   border-top: 2px solid #d9d9d9;
 }
+
 
 
 .most-viewed {
