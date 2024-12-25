@@ -104,7 +104,9 @@ html, body {
     transform: scale(1.2);
     opacity: 0.3;
   }
-}
+}  
+
+
 /* Content styles */
 .content {
   padding: 25px 25px 25px 25px;
