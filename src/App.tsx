@@ -1,18 +1,33 @@
 import { useState, useEffect } from 'react';
 import './index.css';
 
+interface SiteTiming {
+  url: string;
+  timeSpent: number;
+  startTime: number;
+}
+
 function App() {
-  const [siteTimings, setSiteTimings] = useState<
-    Array<{ url: string; timeSpent: number; startTime: number }>
-  >([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [liveTimings, setLiveTimings] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const loadTimes = async () => {
-      // Request time update before getting data
       await chrome.runtime.sendMessage({ type: 'GET_CURRENT_TIME' });
       const { siteTimings: storedTimings = [] } = await chrome.storage.local.get('siteTimings');
-      setSiteTimings(storedTimings);
+      
+      // Initialize live timings from stored timings
+      const initialLiveTimings = storedTimings.reduce((acc: Record<string, number>, site: SiteTiming) => {
+        try {
+          const hostname = new URL(site.url).hostname;
+          acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
+          return acc;
+        } catch (err) {
+          console.error('Invalid URL:', site.url);
+          return acc;
+        }
+      }, {});
+      setLiveTimings(initialLiveTimings);
     };
   
     loadTimes();
@@ -21,30 +36,44 @@ function App() {
       [key: string]: chrome.storage.StorageChange;
     }) => {
       if (changes.siteTimings) {
-        setSiteTimings(changes.siteTimings.newValue);
+        const storedTimings: SiteTiming[] = changes.siteTimings.newValue;
+        const updatedTimings = storedTimings.reduce((acc: Record<string, number>, site: SiteTiming) => {
+          try {
+            const hostname = new URL(site.url).hostname;
+            acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
+            return acc;
+          } catch (err) {
+            console.error('Invalid URL:', site.url);
+            return acc;
+          }
+        }, {});
+        setLiveTimings(updatedTimings);
       }
     };
 
     chrome.storage.onChanged.addListener(handleStorageChange);
 
+    // Set up live timer
+    const updateInterval = setInterval(async () => {
+      // Get current active tab
+      const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (activeTab?.url) {
+        const hostname = new URL(activeTab.url).hostname;
+        setLiveTimings(prev => ({
+          ...prev,
+          [hostname]: (prev[hostname] || 0) + 1
+        }));
+      }
+    }, 1000);
+
     return () => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
+      clearInterval(updateInterval);
     };
   }, []);
 
-  const aggregatedTimings = siteTimings.reduce((acc, site) => {
-    try {
-      const hostname = new URL(site.url).hostname;
-      acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
-      return acc;
-    } catch (err) {
-      console.error('Invalid URL:', site.url);
-      return acc;
-    }
-  }, {} as Record<string, number>);
-
-  const totalSessionTime = siteTimings.reduce(
-    (acc, site) => acc + site.timeSpent,
+  const totalSessionTime = Object.values(liveTimings).reduce(
+    (acc, time) => acc + time,
     0
   );
 
@@ -61,7 +90,7 @@ function App() {
     return timeParts.join(' ');
   };
 
-  const sortedTimings = Object.entries(aggregatedTimings)
+  const sortedTimings = Object.entries(liveTimings)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
@@ -133,7 +162,7 @@ function App() {
         <main className="content">
           <h2 className="section-title">Detailed View</h2>
           <ol className="site-list">
-            {Object.entries(aggregatedTimings).map(([hostname, totalTime], index) => (
+            {Object.entries(liveTimings).map(([hostname, totalTime], index) => (
               <li key={index} className="site-item">
                 <span className="site-name">
                   {index + 1}. <span className="bold">{hostname}</span>
