@@ -5,8 +5,6 @@
   font-style: italic;
 }
 
-
-
 /* General styles */
 html, body {
   margin: 0;
@@ -36,24 +34,19 @@ html, body {
 }
 
 .logo {
-  height: 44px; /* Increased logo size */
+  height: 44px;
   margin-left: 24px;
 }
 
+/* Icons container */
 .icons {
   display: flex;
-  gap: 13px; /* Adds a gap of 26px between each icon */
+  gap: 13px;
   margin-left: auto;
-  margin-right: 27px; /* Keeps the icons 30px from the right */
+  margin-right: 27px;
 }
 
-
-.icon img {
-  width: 28px; /* Set a smaller fixed width */
-  height: 28px; /* Set a smaller fixed height */
-  object-fit: contain; /* Ensures image maintains aspect ratio */
-}
-
+/* Icon base styles */
 .icon {
   width: 28px;
   height: 28px;
@@ -66,71 +59,90 @@ html, body {
   background: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  opacity: 0.5;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.icon.active {
-  box-shadow: 0 0 20 2px white; /* Adds a white border around the active icon */
-
-  border-radius: 50%; /* Rounds the corners of the active icon */
-  transition: box-shadow 0.3s ease; /* Smooth transition */
+.icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
+/* Hover state */
 .icon:hover {
-  transform: scale(1.1);
+  opacity: 0.8;
 }
 
-.icon.active::after {
+.icon:hover img {
+  transform: scale(1.05);
+}
+
+/* Active state */
+.icon.active {
+  opacity: 1;
+  position: relative;
+}
+
+.icon.active::before {
   content: '';
   position: absolute;
   inset: -4px;
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
+  animation: pulseGlow 1s forwards;
 }
 
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
+  50%, 100% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+}
 /* Content styles */
 .content {
   padding: 25px 25px 25px 25px;
 }
 
-.total-time { /* Adjusts the layout of the total time section */
-  /* margin-top: 24px; */
+.total-time {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end; /* Anchors the label and value towards the bottom */
+  align-items: flex-end;
 }
 
-.section-title { 
-  font-size: 32px; /* Updated size */
-  font-family: 'DINProCondensedBlackItalic', sans-serif; /* Applied custom font */
+.section-title {
+  font-size: 32px;
+  font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #4d4d4d;
 }
 
 .label {
-  font-size: 32px; /* Updated size */
-  font-family: 'DINProCondensedBlackItalic', sans-serif; /* Applied custom font */
+  font-size: 32px;
+  font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #4d4d4d;
 }
 
-.value { /* Adjusts the font size and color of the total time value */
+.value {
   font-size: 40px;
   font-style: italic;
-  font-family: 'DINProCondensedBlackItalic', sans-serif; /* Fallback to sans-serif */
+  font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #7B66FF;
 }
-
 
 .divider {
   margin-top: 20px;
   margin-bottom: 0;
-  /* Centering the line */
   display: block;
   width: 400px;
   border: none;
   border-top: 2px solid #d9d9d9;
 }
-
-
 
 .most-viewed {
   margin-top: 2px;
@@ -138,18 +150,19 @@ html, body {
 
 .site-list {
   list-style-type: decimal;
-  padding-left: 2px; /* Adjusts the indentation to be exactly 32px from the left */
+  padding-left: 2px;
   margin: 0;
-  margin-top: 22px; /* Adds space between the heading and the first list item */
+  margin-top: 22px;
 }
-
 
 .site-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px; /* Adds vertical spacing between list items */
-  font-size: 16px; /* Keeps the size consistent with the updated design */
+  margin-bottom: 30px;
+  font-size: 16px;
   color: #777777;
+  position: relative;
+  padding-bottom: 8px;
 }
 
 .site-name {
@@ -166,12 +179,6 @@ html, body {
   font-weight: normal;
 }
 
-
-.site-item {
-  position: relative;
-  padding-bottom: 8px; /* Add space for the progress bar */
-}
-
 .progress-bar {
   position: absolute;
   bottom: 0;
@@ -179,7 +186,7 @@ html, body {
   height: 4px;
   background-color: #7B66FF;
   transition: width 0.3s ease;
-  border-radius: 2px;  /* half of height */
+  border-radius: 2px;
 }
 
 .progress-bar-bg {
@@ -189,7 +196,7 @@ html, body {
   width: 100%;
   height: 4px;
   background-color: #eee;
-  border-radius: 2px;  /* half of height */
+  border-radius: 2px;
 }
 
 .bold {
