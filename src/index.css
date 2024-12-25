@@ -73,6 +73,7 @@ body {
   border-radius: 50%; /* Rounds the corners of the active icon */
   transition: box-shadow 0.3s ease; /* Smooth transition */
 }
+
 /* Content styles */
 .content {
   padding: 25px 25px 25px 25px;
@@ -149,4 +150,30 @@ body {
 
 .section-title, .label, .value, .site-name, .site-time {
   font-weight: normal;
+}
+
+
+.site-item {
+  position: relative;
+  padding-bottom: 8px; /* Add space for the progress bar */
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: #7B66FF;
+  transition: width 0.3s ease;
+  border-radius: 2px;  /* half of height */
+}
+
+.progress-bar-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #eee;
+  border-radius: 2px;  /* half of height */
 }

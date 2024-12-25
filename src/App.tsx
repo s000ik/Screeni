@@ -111,13 +111,19 @@ function App() {
           <div className="most-viewed">
             <h2 className="section-title">Most viewed sites</h2>
             <ol className="site-list">
-              {sortedTimings.map(([hostname, totalTime], index) => (
-                <li key={index} className="site-item">
-                  <span className="site-name">{`${index + 1}. ${hostname}`}</span>
-                  <span className="site-time">{formatTime(totalTime)}</span>
-                </li>
-              ))}
-            </ol>
+            {sortedTimings.map(([hostname, totalTime], index) => (
+              <li key={index} className="site-item">
+                <span className="site-name">{`${index + 1}. ${hostname}`}</span>
+                <span className="site-time">{formatTime(totalTime)}</span>
+                <div className="progress-bar-bg" />
+                <div 
+                  className="progress-bar" 
+                  style={{ 
+                    width: `${(totalTime / totalSessionTime) * 100}%` 
+                  }} 
+                />
+              </li>
+            ))}            </ol>
           </div>
         </main>
       ) : (
