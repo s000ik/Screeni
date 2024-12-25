@@ -66,6 +66,7 @@ html, body {
   background: none;
   border: none;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .icon.active {
@@ -73,6 +74,18 @@ html, body {
 
   border-radius: 50%; /* Rounds the corners of the active icon */
   transition: box-shadow 0.3s ease; /* Smooth transition */
+}
+
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.icon.active::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
 }
 
 /* Content styles */
