@@ -5,6 +5,21 @@ let currentTab = {
   startTime: null
 };
 
+function getStartOfWeek() {
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setHours(0, 0, 0, 0);
+  startOfWeek.setDate(now.getDate() - now.getDay()); // Start from Sunday
+  return startOfWeek.getTime();
+}
+
+function getStartOfDay() {
+  const now = new Date();
+  const startOfDay = new Date(now);
+  startOfDay.setHours(0, 0, 0, 0);
+  return startOfDay.getTime();
+}
+
 // Function to get hostname from URL
 function getHostname(url) {
   try {
@@ -16,33 +31,72 @@ function getHostname(url) {
 
 // Function to update time spent for a URL
 async function updateTimeSpent(url, timeSpent) {
-  const { siteTimings = [] } = await chrome.storage.local.get('siteTimings');
-  
-  const newTiming = {
+  const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
+    'sessionTimings',
+    'dailyTimings',
+    'weeklyTimings',
+    'lastWeekReset'
+  ]);
+
+  const now = Date.now();
+  const startOfWeek = getStartOfWeek();
+  const startOfDay = getStartOfDay();
+
+  // Check if we need to reset weekly data
+  const lastWeekReset = await chrome.storage.local.get('lastWeekReset');
+  if (!lastWeekReset.lastWeekReset || lastWeekReset.lastWeekReset < startOfWeek) {
+    await chrome.storage.local.set({
+      weeklyTimings: [],
+      lastWeekReset: startOfWeek
+    });
+  }
+
+  // Update session timings
+  const newSessionTiming = {
     url,
     timeSpent,
-    startTime: Date.now()
+    startTime: now
   };
-  
-  siteTimings.push(newTiming);
-  
-  await chrome.storage.local.set({ siteTimings });
+  sessionTimings.push(newSessionTiming);
+
+  // Update daily timings
+  const newDailyTiming = {
+    url,
+    timeSpent,
+    timestamp: now,
+    dayStart: startOfDay
+  };
+  dailyTimings.push(newDailyTiming);
+
+  // Update weekly timings
+  const newWeeklyTiming = {
+    url,
+    timeSpent,
+    timestamp: now,
+    weekStart: startOfWeek,
+    dayOfWeek: new Date(now).getDay()
+  };
+  weeklyTimings.push(newWeeklyTiming);
+
+  await chrome.storage.local.set({
+    sessionTimings,
+    dailyTimings,
+    weeklyTimings
+  });
 }
 
-// Function to handle tab changes
+// Rest of the background.js code remains the same
 async function handleTabChange(tabId, url) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://')) {
     return;
   }
   const now = Date.now();
 
-  // If there was a previous tab, update its time
   if (currentTab.id && currentTab.startTime && currentTab.url) {
-    const timeSpent = Math.floor((now - currentTab.startTime) / 1000); // Convert to seconds
+    const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
     await updateTimeSpent(currentTab.url, timeSpent);
   }
 
-  // Update current tab info
   currentTab = {
     id: tabId,
     url: url,
@@ -50,7 +104,6 @@ async function handleTabChange(tabId, url) {
   };
 }
 
-// Listen for tab activation
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
   const tab = await chrome.tabs.get(activeInfo.tabId);
   if (tab.url) {
@@ -58,27 +111,22 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
   }
 });
 
-// Listen for tab URL updates
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url && tab.active) {
     handleTabChange(tabId, changeInfo.url);
   }
 });
 
-// Listen for tab removal
 chrome.tabs.onRemoved.addListener((tabId) => {
   if (currentTab.id === tabId) {
     handleTabChange(null, null);
   }
 });
 
-// Listen for windows focus change
 chrome.windows.onFocusChanged.addListener(async (windowId) => {
   if (windowId === chrome.windows.WINDOW_ID_NONE) {
-    // Chrome lost focus, update current tab's time
     await handleTabChange(null, null);
   } else {
-    // Chrome gained focus, get current active tab
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab?.url) {
       await handleTabChange(tab.id, tab.url);
@@ -86,7 +134,6 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
   }
 });
 
-// Initialize tracking when extension loads
 chrome.runtime.onStartup.addListener(async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.url) {
@@ -94,10 +141,8 @@ chrome.runtime.onStartup.addListener(async () => {
   }
 });
 
-// Update time on extension click
 chrome.runtime.onMessage.addListener(async (request) => {
   if (request.type === 'GET_CURRENT_TIME') {
-    // Update time for current tab before responding
     if (currentTab.id && currentTab.startTime && currentTab.url) {
       const now = Date.now();
       const timeSpent = Math.floor((now - currentTab.startTime) / 1000);

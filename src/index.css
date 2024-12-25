@@ -6,8 +6,6 @@
   font-style: italic;
 }
 
-
-
 html, body {
   font-family: 'Inter', sans-serif;
   margin: 0;
@@ -33,7 +31,6 @@ html, body {
   overflow: hidden;
 }
 
-/* Navbar styles */
 .navbar {
   background-color: #7B66FF;
   height: 90px;
@@ -50,7 +47,6 @@ html, body {
   margin-left: 24px;
 }
 
-/* Icons container */
 .icons {
   display: flex;
   gap: 13px;
@@ -58,7 +54,6 @@ html, body {
   margin-right: 27px;
 }
 
-/* Icon base styles */
 .icon {
   width: 28px;
   height: 28px;
@@ -83,7 +78,6 @@ html, body {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover state */
 .icon:hover {
   opacity: 0.8;
 }
@@ -92,7 +86,6 @@ html, body {
   transform: scale(1.05);
 }
 
-/* Active state */
 .icon.active {
   opacity: 1;
   position: relative;
@@ -118,10 +111,8 @@ html, body {
   }
 }  
 
-
-/* Content styles */
 .content {
-  padding: 10px 25px 25px 25px; /* Reduced padding-top */
+  padding: 10px 25px 25px 25px;
 }
 
 .total-time {
@@ -131,33 +122,36 @@ html, body {
   margin-bottom: 15px;
 }
 
-.section-title {
-  line-height: 1.2; /* Reduce line spacing if it adds extra height */
-  padding: 0; /* Remove padding */
-  margin-top: 0; /* Remove top margin */
-  margin-bottom: 5px; /* Adjust bottom margin as needed */
+.average-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
 
+.section-title {
+  line-height: 1.2;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 5px;
   font-size: 32px;
-  font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #4d4d4d;
 }
 
 .label {
   font-size: 32px;
-  font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #4d4d4d;
 }
 
 .value {
   font-size: 40px;
   font-style: italic;
-  font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #7B66FF;
 }
 
 .divider {
-  margin-top: 5px; /* Reduced space above divider */
-  margin-bottom: 5px; /* Reduced space below divider */
+  margin: 5px 0;
   display: block;
   width: 400px;
   border: none;
@@ -165,14 +159,14 @@ html, body {
 }
 
 .most-viewed {
-  margin-top: 10px; /* Reduced space above Most Viewed Sites */
+  margin-top: 10px;
 }
 
 .site-list {
   list-style-type: decimal;
   padding-left: 2px;
-  margin-top: 20px; /* Remove top margin from the list */
-  padding-top: 0; /* Remove padding if applicable */
+  margin-top: 20px;
+  padding-top: 0;
 }
 
 .site-item {
@@ -193,11 +187,6 @@ html, body {
   text-align: right;
   font-size: 16px;
   color: #7B66FF;
-}
-
-
-.section-title, .label, .value, .site-name, .site-time {
-  font-weight: normal;
 }
 
 .progress-bar {
@@ -224,7 +213,6 @@ html, body {
   font-weight: bold;
 }
 
-
 .scrollable-content {
   margin-right: -20px;
   padding-right: 29px;
@@ -234,7 +222,6 @@ html, body {
   position: relative;
 }
 
-/* Custom Scrollbar Styles */
 .scrollable-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -252,6 +239,141 @@ html, body {
 
 .scrollable-content:hover::-webkit-scrollbar-thumb {
   background: #7B66FF;
-  transition: background-color 0.3s ease;
+}
 
+.chart-container {
+  margin-top: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@font-face {
+  font-family: 'DINProCondensedBlackItalic';
+  src: url('/customfont.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Keep all existing styles from the original CSS file */
+
+/* Add new styles for the settings page */
+.settings {
+  padding: 20px 25px;
+}
+
+.settings-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+}
+
+.settings-header h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.settings-header p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #777;
+  margin: 0 0 16px 0;
+}
+
+.theme-select {
+  width: 120px;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-button {
+  padding: 8px 16px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #ff7875;
+}
+
+.contributors {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.contributor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contributor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.contributor-avatar.pink {
+  background-color: #ffd6e7;
+}
+
+.contributor-avatar.peach {
+  background-color: #ffe7ba;
+}
+
+.contributor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contributor-info h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+.contributor-links {
+  display: flex;
+  gap: 12px;
+}
+
+.contributor-links img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.contributor-links img:hover {
+  opacity: 1;
+}
+
+.thank-you {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #777;
+  margin-top: 30px;
 }

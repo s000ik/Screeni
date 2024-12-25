@@ -20,26 +20,3 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-.scrollable-content {
-  max-height: 400px; /* Adjust based on available space */
-  overflow-y: auto;
-  padding-right: 10px; /* Optional: Space for scrollbar */
-  margin-top: 10px; /* Space above the scrollable area */
-}
-
-.scrollable-content::-webkit-scrollbar {
-  width: 8px; /* Adjust scrollbar width */
-}
-
-.scrollable-content::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Light background */
-}
-
-.scrollable-content::-webkit-scrollbar-thumb {
-  background: #7B66FF; /* Match your theme color */
-  border-radius: 4px; /* Rounded scrollbar */
-}
-
-.scrollable-content::-webkit-scrollbar-thumb:hover {
-  background: #5e4ddb; /* Darker hover state */
-}
