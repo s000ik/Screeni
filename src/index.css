@@ -8,17 +8,18 @@
 
 
 /* General styles */
-body {
+html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .frame {
   width: 450px;
   height: 550px;
   background-color: #fff;
-  border: 1px solid #ddd;
   overflow: hidden;
 }
 
