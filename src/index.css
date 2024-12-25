@@ -177,3 +177,7 @@ body {
   background-color: #eee;
   border-radius: 2px;  /* half of height */
 }
+
+.bold {
+  font-weight: bold;
+}

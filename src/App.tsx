@@ -27,8 +27,6 @@ function App() {
 
     chrome.storage.onChanged.addListener(handleStorageChange);
 
-    
-
     return () => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
     };
@@ -57,7 +55,7 @@ function App() {
   
     const timeParts = [];
     if (hours > 0) timeParts.push(`${hours}h`);
-    if (mins > 0 || hours > 0) timeParts.push(`${mins}m`); // Only show minutes if hours are present or minutes are non-zero
+    if (mins > 0 || hours > 0) timeParts.push(`${mins}m`);
     timeParts.push(`${secs}s`);
   
     return timeParts.join(' ');
@@ -111,19 +109,22 @@ function App() {
           <div className="most-viewed">
             <h2 className="section-title">Most viewed sites</h2>
             <ol className="site-list">
-            {sortedTimings.map(([hostname, totalTime], index) => (
-              <li key={index} className="site-item">
-                <span className="site-name">{`${index + 1}. ${hostname}`}</span>
-                <span className="site-time">{formatTime(totalTime)}</span>
-                <div className="progress-bar-bg" />
-                <div 
-                  className="progress-bar" 
-                  style={{ 
-                    width: `${(totalTime / totalSessionTime) * 100}%` 
-                  }} 
-                />
-              </li>
-            ))}            </ol>
+              {sortedTimings.map(([hostname, totalTime], index) => (
+                <li key={index} className="site-item">
+                  <span className="site-name">
+                    {index + 1}. <span className="bold">{hostname}</span>
+                  </span>
+                  <span className="site-time bold">{formatTime(totalTime)}</span>
+                  <div className="progress-bar-bg" />
+                  <div 
+                    className="progress-bar" 
+                    style={{ 
+                      width: `${(totalTime / totalSessionTime) * 100}%` 
+                    }} 
+                  />
+                </li>
+              ))}
+            </ol>
           </div>
         </main>
       ) : (
@@ -132,8 +133,10 @@ function App() {
           <ol className="site-list">
             {Object.entries(aggregatedTimings).map(([hostname, totalTime], index) => (
               <li key={index} className="site-item">
-                <span className="site-name">{hostname}</span>
-                <span className="site-time">{formatTime(totalTime)}</span>
+                <span className="site-name">
+                  {index + 1}. <span className="bold">{hostname}</span>
+                </span>
+                <span className="site-time bold">{formatTime(totalTime)}</span>
               </li>
             ))}
           </ol>
