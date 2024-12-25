@@ -1,3 +1,5 @@
+import './index.css';
+
 interface SettingsProps {
     theme: 'system' | 'light' | 'dark';
     onThemeChange: (theme: 'system' | 'light' | 'dark') => void;
@@ -11,6 +13,7 @@ interface SettingsProps {
   }) => {
     return (
       <main className="content settings">
+        <div className="scrollable-content">
         <div className="settings-section">
           <div className="settings-header">
             <h2>Adjust UI Theme</h2>
@@ -93,6 +96,7 @@ interface SettingsProps {
         </div>
         
         <p className="thank-you">Thank you for using this extension</p>
+        </div>
       </main>
     );
   };

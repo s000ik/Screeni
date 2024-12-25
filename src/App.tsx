@@ -26,6 +26,10 @@ function App() {
 
   useEffect(() => {
     const fetchTimingsOnce = async () => {
+      await new Promise(resolve => {
+        chrome.runtime.sendMessage({ type: 'GET_CURRENT_TIME' }, resolve);
+      });
+      
       const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
         'sessionTimings',
         'dailyTimings',
@@ -217,68 +221,72 @@ function App() {
           </main>
         );
 
-      case 2:
-        const sortedWeeklySites = Object.entries(weeklySites)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 5); // Get top 5 sites
-        return (
-          <main className="content">
-            <div className="total-time">
-              <span className="label">Weekly browsing time</span>
-              <span className="value">{formatTime(liveWeeklyTime)}</span>
+        case 2:
+          const sortedWeeklySites = Object.entries(weeklySites)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5); // Get top 5 sites
+          return (
+            <main className="content">
+              <div className="scrollable-content">
+                <div className="total-time">
+                  <span className="label">Weekly browsing time</span>
+                  <span className="value">{formatTime(liveWeeklyTime)}</span>
+                </div>
+                <div className="average-time">
+                  <span className="label">Daily average</span>
+                  <span className="value">{formatTime(liveWeeklyTime / 7)}</span>
+                </div>
+                <hr className="divider" />
+                  <div className="chart-container">
+                    <h2 className="section-title">Weekly overview</h2>
+                    <ResponsiveContainer width="100%" height={200}>
+                      <BarChart data={weeklyData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="day" />
+                        <YAxis />
+                        <Tooltip
+                          formatter={(value: number) => formatTime(value)}
+                          labelStyle={{ color: '#4d4d4d' }}
+                        />
+                        <Bar dataKey="time" fill="#7B66FF" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="top-sites">
+                    <h2 className="section-title">Top viewed sites this week</h2>
+                    <ol className="site-list">
+                      {sortedWeeklySites.map(([site, time], index) => (
+                        <li key={index} className="site-item">
+                          <span className="site-name">
+                            {index + 1}. <span className="bold">{site}</span>
+                          </span>
+                          <span className="site-time bold">{formatTime(time)}</span>
+                          <div className="progress-bar-bg" />
+                          <div
+                            className="progress-bar"
+                            style={{
+                              width: `${(time / liveWeeklyTime) * 100}%`
+                            }}
+                          />
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+              </div>
+            </main>
+          );
+        
+        case 3:
+          return (
+            <div className="scrollable-content">
+              <Settings
+                theme={theme}
+                onThemeChange={handleThemeChange}
+                onClearData={handleClearData}
+              />
             </div>
-            <div className="average-time">
-              <span className="label">Daily average</span>
-              <span className="value">{formatTime(liveWeeklyTime / 7)}</span>
-            </div>
-            <hr className="divider" />
-            <div className="chart-container">
-              <h2 className="section-title">Weekly overview</h2>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={weeklyData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="day" />
-                  <YAxis />
-                  <Tooltip
-                    formatter={(value: number) => formatTime(value)}
-                    labelStyle={{ color: '#4d4d4d' }}
-                  />
-                  <Bar dataKey="time" fill="#7B66FF" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="top-sites">
-              <h2 className="section-title">Top viewed sites this week</h2>
-              <ol className="site-list">
-                {sortedWeeklySites.map(([site, time], index) => (
-                  <li key={index} className="site-item">
-                    <span className="site-name">
-                      {index + 1}. <span className="bold">{site}</span>
-                    </span>
-                    <span className="site-time bold">{formatTime(time)}</span>
-                    <div className="progress-bar-bg" />
-                    <div
-                      className="progress-bar"
-                      style={{
-                        width: `${(time / liveWeeklyTime) * 100}%`
-                      }}
-                    />
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </main>
-        );
-
-      case 3:
-        return (
-          <Settings
-            theme={theme}
-            onThemeChange={handleThemeChange}
-            onClearData={handleClearData}
-          />
-        );
-
+          );
+          
       default:
         return null;
     }

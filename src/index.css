@@ -215,9 +215,10 @@ html, body {
 
 .scrollable-content {
   margin-right: -20px;
-  padding-right: 29px;
+  padding-right: 20px;
   max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden; /* Add this to prevent horizontal scroll */
   margin-top: 10px;
   position: relative;
 }
@@ -376,4 +377,10 @@ html, body {
   font-size: 14px;
   color: #777;
   margin-top: 30px;
+}
+.settings .scrollable-content {
+  margin-right: -28px;  /* Align with the main content padding */
+  padding-right: 25px;  /* Match the margin to create proper spacing */
+  max-height: 400px;
+  overflow-y: auto;
 }

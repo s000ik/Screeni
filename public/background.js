@@ -85,7 +85,6 @@ async function updateTimeSpent(url, timeSpent) {
   });
 }
 
-// Rest of the background.js code remains the same
 async function handleTabChange(tabId, url) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://')) {
     return;
@@ -134,24 +133,24 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
   }
 });
 
-// Add this at the top of background.js where other listeners are defined
 chrome.runtime.onStartup.addListener(async () => {
-  // Clear session timings when Chrome starts
   await chrome.storage.local.set({ sessionTimings: [] });
-  
-  // Initialize current tab with active tab if any
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.url) {
     await handleTabChange(tab.id, tab.url);
   }
 });
 
-chrome.runtime.onMessage.addListener(async (request) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_CURRENT_TIME') {
     if (currentTab.id && currentTab.startTime && currentTab.url) {
       const now = Date.now();
       const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
-      await updateTimeSpent(currentTab.url, timeSpent);
+      // Wait for the update to complete before responding
+      updateTimeSpent(currentTab.url, timeSpent).then(() => {
+        sendResponse({ success: true });
+      });
+      return true; // Indicate async response
     }
   }
 });
