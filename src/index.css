@@ -81,23 +81,18 @@ body {
 
 .section-title { 
   font-size: 32px; /* Updated size */
-  font-weight: bold;
-  font-style: italic;
   font-family: 'DINProCondensedBlackItalic', sans-serif; /* Applied custom font */
   color: #4d4d4d;
 }
 
 .label {
   font-size: 32px; /* Updated size */
-  font-weight: bold;
-  font-style: italic;
   font-family: 'DINProCondensedBlackItalic', sans-serif; /* Applied custom font */
   color: #4d4d4d;
 }
 
 .value { /* Adjusts the font size and color of the total time value */
   font-size: 40px;
-  font-weight: bold;
   font-style: italic;
   font-family: 'DINProCondensedBlackItalic', sans-serif; /* Fallback to sans-serif */
   color: #7B66FF;
@@ -143,4 +138,8 @@ body {
   text-align: right;
   font-size: 16px;
   color: #7B66FF;
+}
+
+.section-title, .label, .value, .site-name, .site-time {
+  font-weight: normal;
 }
