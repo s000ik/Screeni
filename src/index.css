@@ -384,3 +384,85 @@ html, body {
   max-height: 400px;
   overflow-y: auto;
 }
+
+/* Site list styling */
+.site-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-list.with-icons .site-item {
+  padding: 12px;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site-list.with-icons .site-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.site-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.site-favicon {
+  width: 14px; /* Smaller icon size */
+  height: 14px;
+  flex-shrink: 0;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+.site-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.site-time {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0.9;
+}
+
+/* Progress bar styling */
+.progress-bar-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--background-tertiary);
+  border-radius: 0 0 8px 8px;
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: #7B66FF;
+  border-radius: 0 0 0 8px;
+  transition: width 0.3s ease;
+}
+
+/* Optional dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .site-list.with-icons .site-item {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .site-list.with-icons .site-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}

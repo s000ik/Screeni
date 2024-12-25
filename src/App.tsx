@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Settings } from './settings';
 import './index.css';
+import SiteCard from './siteCard';
 
 interface Timing {
   url: string;
@@ -11,7 +12,7 @@ interface Timing {
 interface WeeklyTiming {
   dayOfWeek: number;
   timeSpent: number;
-  url: string;  // Add url to WeeklyTiming
+  url: string;
 }
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   const [sessionTimings, setSessionTimings] = useState<Record<string, number>>({});
   const [dailyTimings, setDailyTimings] = useState<Record<string, number>>({});
   const [weeklyData, setWeeklyData] = useState<any[]>([]);
-  const [weeklySites, setWeeklySites] = useState<Record<string, number>>({}); // Track weekly top sites
+  const [weeklySites, setWeeklySites] = useState<Record<string, number>>({});
   const [liveWeeklyTime, setLiveWeeklyTime] = useState(0);  
   const [currentSite, setCurrentSite] = useState<string | null>(null);
   const [theme, setTheme] = useState<'system' | 'light' | 'dark'>('system');
@@ -68,7 +69,7 @@ function App() {
       // Process weekly timings
       const weeklyStats = Array(7).fill(0);
       let totalTime = 0;
-      const siteStats: Record<string, number> = {}; // Track time spent per site in a week
+      const siteStats: Record<string, number> = {};
       weeklyTimings.forEach((timing: WeeklyTiming) => {
         weeklyStats[timing.dayOfWeek] += timing.timeSpent;
         totalTime += timing.timeSpent;
@@ -83,7 +84,7 @@ function App() {
 
       setWeeklyData(weeklyChartData);
       setLiveWeeklyTime(totalTime);
-      setWeeklySites(siteStats); // Update weekly sites
+      setWeeklySites(siteStats);
     };
 
     fetchTimingsOnce();
@@ -97,16 +98,13 @@ function App() {
           updatedTimings[currentSite] = (updatedTimings[currentSite] || 0) + 1;
           return updatedTimings;
         });
-      }
 
-      if (currentSite) {
         setDailyTimings((prevTimings) => {
           const updatedTimings = { ...prevTimings };
           updatedTimings[currentSite] = (updatedTimings[currentSite] || 0) + 1;
           return updatedTimings;
         });
       }
-
     }, 1000);
 
     return () => {
@@ -158,31 +156,27 @@ function App() {
     return timeParts.join(' ');
   };
 
-  const renderTimingsList = (timings: Record<string, number>, totalTime: number) => {
+  const renderTimingsList = (timings: Record<string, number>, totalTime: number, useIcons: boolean = false) => {
     const sortedTimings = Object.entries(timings)
       .sort((a, b) => b[1] - a[1]);
-
+  
     return (
-      <ol className="site-list">
+      <div className={`site-list ${useIcons ? 'with-icons' : ''}`}>
         {sortedTimings.map(([hostname, time], index) => (
-          <li key={index} className="site-item">
-            <span className="site-name">
-              {index + 1}. <span className="bold">{hostname}</span>
-            </span>
-            <span className="site-time bold">{formatTime(time)}</span>
-            <div className="progress-bar-bg" />
-            <div
-              className="progress-bar"
-              style={{
-                width: `${(time / totalTime) * 100}%`
-              }}
-            />
-          </li>
+          <SiteCard
+            key={index}
+            index={index}  // Add this prop
+            hostname={hostname}
+            time={time}
+            totalTime={totalTime}
+            formatTime={formatTime}
+            useIcon={useIcons}
+          />
         ))}
-      </ol>
+      </div>
     );
   };
-
+    
   const getTotalTime = (timings: Record<string, number>) => {
     return Object.values(timings).reduce((acc, time) => acc + time, 0);
   };
@@ -216,77 +210,61 @@ function App() {
             <hr className="divider" />
             <div className="scrollable-content">
               <h2 className="section-title">All sites visited today</h2>
-              {renderTimingsList(dailyTimings, totalDailyTime)}
+              {renderTimingsList(dailyTimings, totalDailyTime, true)}
             </div>
           </main>
         );
 
-        case 2:
-          const sortedWeeklySites = Object.entries(weeklySites)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 5); // Get top 5 sites
-          return (
-            <main className="content">
-              <div className="scrollable-content">
-                <div className="total-time">
-                  <span className="label">Weekly browsing time</span>
-                  <span className="value">{formatTime(liveWeeklyTime)}</span>
-                </div>
-                <div className="average-time">
-                  <span className="label">Daily average</span>
-                  <span className="value">{formatTime(liveWeeklyTime / 7)}</span>
-                </div>
-                <hr className="divider" />
-                  <div className="chart-container">
-                    <h2 className="section-title">Weekly overview</h2>
-                    <ResponsiveContainer width="100%" height={200}>
-                      <BarChart data={weeklyData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip
-                          formatter={(value: number) => formatTime(value)}
-                          labelStyle={{ color: '#4d4d4d' }}
-                        />
-                        <Bar dataKey="time" fill="#7B66FF" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <div className="top-sites">
-                    <h2 className="section-title">Top viewed sites this week</h2>
-                    <ol className="site-list">
-                      {sortedWeeklySites.map(([site, time], index) => (
-                        <li key={index} className="site-item">
-                          <span className="site-name">
-                            {index + 1}. <span className="bold">{site}</span>
-                          </span>
-                          <span className="site-time bold">{formatTime(time)}</span>
-                          <div className="progress-bar-bg" />
-                          <div
-                            className="progress-bar"
-                            style={{
-                              width: `${(time / liveWeeklyTime) * 100}%`
-                            }}
-                          />
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-              </div>
-            </main>
-          );
-        
-        case 3:
-          return (
+      case 2:
+        const sortedWeeklySites = Object.entries(weeklySites)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+        return (
+          <main className="content">
             <div className="scrollable-content">
-              <Settings
-                theme={theme}
-                onThemeChange={handleThemeChange}
-                onClearData={handleClearData}
-              />
+              <div className="total-time">
+                <span className="label">Weekly browsing time</span>
+                <span className="value">{formatTime(liveWeeklyTime)}</span>
+              </div>
+              <div className="average-time">
+                <span className="label">Daily average</span>
+                <span className="value">{formatTime(liveWeeklyTime / 7)}</span>
+              </div>
+              <hr className="divider" />
+              <div className="chart-container">
+                <h2 className="section-title">Weekly overview</h2>
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={weeklyData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" />
+                    <YAxis />
+                    <Tooltip
+                      formatter={(value: number) => formatTime(value)}
+                      labelStyle={{ color: '#4d4d4d' }}
+                    />
+                    <Bar dataKey="time" fill="#7B66FF" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="top-sites">
+                <h2 className="section-title">Top viewed sites this week</h2>
+                {renderTimingsList(Object.fromEntries(sortedWeeklySites), liveWeeklyTime, true)}
+              </div>
             </div>
-          );
-          
+          </main>
+        );
+
+      case 3:
+        return (
+          <div className="scrollable-content">
+            <Settings
+              theme={theme}
+              onThemeChange={handleThemeChange}
+              onClearData={handleClearData}
+            />
+          </div>
+        );
+
       default:
         return null;
     }
