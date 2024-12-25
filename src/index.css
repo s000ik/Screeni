@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @font-face {
   font-family: 'DINProCondensedBlackItalic';
   src: url('/customfont.otf') format('opentype');
@@ -5,13 +6,24 @@
   font-style: italic;
 }
 
-/* General styles */
+
+
 html, body {
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   border: none;
   outline: none;
   box-shadow: none;
+}
+
+.section-title, .label, .value {
+  font-family: 'DINProCondensedBlackItalic', sans-serif;
+}
+
+.site-list, .site-item, .site-name, .site-time {
+  font-family: 'Inter', sans-serif;
+  font-weight: normal;
 }
 
 .frame {
@@ -109,16 +121,22 @@ html, body {
 
 /* Content styles */
 .content {
-  padding: 25px 25px 25px 25px;
+  padding: 10px 25px 25px 25px; /* Reduced padding-top */
 }
 
 .total-time {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-bottom: 15px;
 }
 
 .section-title {
+  line-height: 1.2; /* Reduce line spacing if it adds extra height */
+  padding: 0; /* Remove padding */
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: 5px; /* Adjust bottom margin as needed */
+
   font-size: 32px;
   font-family: 'DINProCondensedBlackItalic', sans-serif;
   color: #4d4d4d;
@@ -138,8 +156,8 @@ html, body {
 }
 
 .divider {
-  margin-top: 20px;
-  margin-bottom: 0;
+  margin-top: 5px; /* Reduced space above divider */
+  margin-bottom: 5px; /* Reduced space below divider */
   display: block;
   width: 400px;
   border: none;
@@ -147,14 +165,14 @@ html, body {
 }
 
 .most-viewed {
-  margin-top: 2px;
+  margin-top: 10px; /* Reduced space above Most Viewed Sites */
 }
 
 .site-list {
   list-style-type: decimal;
   padding-left: 2px;
-  margin: 0;
-  margin-top: 22px;
+  margin-top: 20px; /* Remove top margin from the list */
+  padding-top: 0; /* Remove padding if applicable */
 }
 
 .site-item {
@@ -176,6 +194,7 @@ html, body {
   font-size: 16px;
   color: #7B66FF;
 }
+
 
 .section-title, .label, .value, .site-name, .site-time {
   font-weight: normal;
