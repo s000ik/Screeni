@@ -81,20 +81,22 @@ function App() {
           <button
             className={`icon ${currentPage === 0 ? 'active' : ''}`}
             onClick={() => handlePageChange(0)}
+            title="This Session"
           >
-            <img src="/icon1.png" alt="Home" />
+            <img src="/icon1.png" alt="This Session" />
           </button>
           <button
             className={`icon ${currentPage === 1 ? 'active' : ''}`}
             onClick={() => handlePageChange(1)}
+            title="Today"
           >
-            <img src="/icon2.png" alt="Statistics" />
+            <img src="/icon2.png" alt="Today" />
           </button>
-          <button className="icon">
-            <img src="/icon3.png" alt="Settings" />
+          <button className="icon" title="7-day">
+            <img src="/icon3.png" alt="7-day" />
           </button>
-          <button className="icon">
-            <img src="/icon4.png" alt="Information" />
+          <button className="icon" title="Settings">
+            <img src="/icon4.png" alt="Settings" />
           </button>
         </div>
       </nav>
@@ -137,6 +139,13 @@ function App() {
                   {index + 1}. <span className="bold">{hostname}</span>
                 </span>
                 <span className="site-time bold">{formatTime(totalTime)}</span>
+                <div className="progress-bar-bg" />
+                <div 
+                  className="progress-bar" 
+                  style={{ 
+                    width: `${(totalTime / totalSessionTime) * 100}%` 
+                  }} 
+                />
               </li>
             ))}
           </ol>
