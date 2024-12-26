@@ -5,14 +5,14 @@ import './index.css';
 import SiteCard from './siteCard';
 
 interface Timing {
-  url: string;
+  hostname: string;
   timeSpent: number;
 }
 
 interface WeeklyTiming {
   dayOfWeek: number;
   timeSpent: number;
-  url: string;
+  hostname: string;
 }
 
 function App() {
@@ -39,14 +39,8 @@ function App() {
 
       // Process session timings
       const processedSessionTimings = sessionTimings.reduce((acc: Record<string, number>, site: Timing) => {
-        try {
-          const hostname = new URL(site.url).hostname;
-          acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
-          return acc;
-        } catch (err) {
-          console.error('Invalid URL:', site.url);
-          return acc;
-        }
+        acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+        return acc;
       }, {}); 
       setSessionTimings(processedSessionTimings);
 
@@ -55,14 +49,8 @@ function App() {
       today.setHours(0, 0, 0, 0);
       const todayTimings = dailyTimings.filter((timing: any) => timing.dayStart === today.getTime());
       const processedDailyTimings = todayTimings.reduce((acc: Record<string, number>, site: Timing) => {
-        try {
-          const hostname = new URL(site.url).hostname;
-          acc[hostname] = (acc[hostname] || 0) + site.timeSpent;
-          return acc;
-        } catch (err) {
-          console.error('Invalid URL:', site.url);
-          return acc;
-        }
+        acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+        return acc;
       }, {}); 
       setDailyTimings(processedDailyTimings);
 
@@ -73,7 +61,7 @@ function App() {
       weeklyTimings.forEach((timing: WeeklyTiming) => {
         weeklyStats[timing.dayOfWeek] += timing.timeSpent;
         totalTime += timing.timeSpent;
-        siteStats[timing.url] = (siteStats[timing.url] || 0) + timing.timeSpent;
+        siteStats[timing.hostname] = (siteStats[timing.hostname] || 0) + timing.timeSpent;
       });
 
       const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -115,9 +103,13 @@ function App() {
   useEffect(() => {
     const handleLocationChange = () => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length > 0) {
-          const site = new URL(tabs[0].url || '').hostname;
-          setCurrentSite(site);
+        if (tabs.length > 0 && tabs[0].url) {
+          try {
+            const hostname = new URL(tabs[0].url).hostname;
+            setCurrentSite(hostname);
+          } catch (err) {
+            console.error('Invalid URL:', tabs[0].url);
+          }
         }
       });
     };
@@ -165,7 +157,7 @@ function App() {
         {sortedTimings.map(([hostname, time], index) => (
           <SiteCard
             key={index}
-            index={index}  // Add this prop
+            index={index}
             hostname={hostname}
             time={time}
             totalTime={totalTime}

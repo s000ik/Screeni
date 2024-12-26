@@ -1,7 +1,7 @@
 // Store the current active tab's info
 let currentTab = {
   id: null,
-  url: null,
+  hostname: null,
   startTime: null
 };
 
@@ -29,8 +29,8 @@ function getHostname(url) {
   }
 }
 
-// Function to update time spent for a URL
-async function updateTimeSpent(url, timeSpent) {
+// Function to update time spent for a hostname
+async function updateTimeSpent(hostname, timeSpent) {
   const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
     'sessionTimings',
     'dailyTimings',
@@ -53,7 +53,7 @@ async function updateTimeSpent(url, timeSpent) {
 
   // Update session timings
   const newSessionTiming = {
-    url,
+    hostname,
     timeSpent,
     startTime: now
   };
@@ -61,7 +61,7 @@ async function updateTimeSpent(url, timeSpent) {
 
   // Update daily timings
   const newDailyTiming = {
-    url,
+    hostname,
     timeSpent,
     timestamp: now,
     dayStart: startOfDay
@@ -70,7 +70,7 @@ async function updateTimeSpent(url, timeSpent) {
 
   // Update weekly timings
   const newWeeklyTiming = {
-    url,
+    hostname,
     timeSpent,
     timestamp: now,
     weekStart: startOfWeek,
@@ -90,15 +90,16 @@ async function handleTabChange(tabId, url) {
     return;
   }
   const now = Date.now();
+  const hostname = getHostname(url);
 
-  if (currentTab.id && currentTab.startTime && currentTab.url) {
+  if (currentTab.id && currentTab.startTime && currentTab.hostname) {
     const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
-    await updateTimeSpent(currentTab.url, timeSpent);
+    await updateTimeSpent(currentTab.hostname, timeSpent);
   }
 
   currentTab = {
     id: tabId,
-    url: url,
+    hostname: hostname,
     startTime: now
   };
 }
@@ -143,11 +144,11 @@ chrome.runtime.onStartup.addListener(async () => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_CURRENT_TIME') {
-    if (currentTab.id && currentTab.startTime && currentTab.url) {
+    if (currentTab.id && currentTab.startTime && currentTab.hostname) {
       const now = Date.now();
       const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
       // Wait for the update to complete before responding
-      updateTimeSpent(currentTab.url, timeSpent).then(() => {
+      updateTimeSpent(currentTab.hostname, timeSpent).then(() => {
         sendResponse({ success: true });
       });
       return true; // Indicate async response
