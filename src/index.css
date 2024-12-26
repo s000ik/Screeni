@@ -155,7 +155,7 @@ html, body {
   display: block;
   width: 400px;
   border: none;
-  border-top: 2px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
 }
 
 .most-viewed {
@@ -216,11 +216,13 @@ html, body {
 .scrollable-content {
   margin-right: -20px;
   padding-right: 20px;
-  max-height: 400px;
+  max-height: 460px;
   overflow-y: auto;
   overflow-x: hidden; /* Add this to prevent horizontal scroll */
   margin-top: 10px;
   position: relative;
+  padding-bottom: 20px; /* Add padding at the bottom */
+
 }
 
 .scrollable-content::-webkit-scrollbar {
@@ -257,74 +259,194 @@ html, body {
 /* Keep all existing styles from the original CSS file */
 
 /* Add new styles for the settings page */
-.settings {
-  padding: 20px 25px;
+.settings-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.settings-section {
-  margin-bottom: 30px;
+/* Header */
+.header {
+  background-color: #7c5cfc;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo {
+  height: 32px;
+}
+
+.header-icons {
+  display: flex;
+  gap: 24px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.icon-button:hover,
+.icon-button.active {
+  opacity: 1;
+}
+
+.icon-button img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+/* Scrollable Content */
+.scrollable-content {
+  margin-right: -20px;
+  padding-right: 20px;
+  max-height: 460px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 10px;
+  position: relative;
   padding-bottom: 20px;
-  border-bottom: 1px solid #d9d9d9;
 }
 
-.settings-section:last-child {
-  border-bottom: none;
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;
 }
 
-.settings-header h2 {
-  font-family: 'Inter', sans-serif;
+.scrollable-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  width: 8px;
+  background: #b9b7c3;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.scrollable-content:hover::-webkit-scrollbar-thumb {
+  background: #7B66FF;
+}
+
+/* Main Content */
+.main-content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;  /* Reduced from 24px */
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.setting-text {
+  flex: 1;
+}
+
+.setting-text h2 {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 8px 0;
+  color: #1f2937;
+  margin: 0 0 4px 0;
 }
 
-.settings-header p {
-  font-family: 'Inter', sans-serif;
+.setting-text p {
   font-size: 14px;
-  color: #777;
-  margin: 0 0 16px 0;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
 }
 
 .theme-select {
-  width: 120px;
-  padding: 8px 12px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
   background-color: white;
-  color: #333;
-  font-family: 'Inter', sans-serif;
+  color: #7c5cfc;
   font-size: 14px;
+  min-width: 120px;
   cursor: pointer;
 }
 
 .delete-button {
   padding: 8px 16px;
-  background-color: #ff4d4f;
+  background-color: #ef4444;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-family: 'Inter', sans-serif;
+  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .delete-button:hover {
-  background-color: #ff7875;
+  background-color: #dc2626;
 }
 
-.contributors {
+.screeni-logo {
+  height: 48px;
+  width: auto;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 8px 0;  /* Reduced margin */
+}
+
+/* About Section */
+.about-section {
+  margin-top: 5px;  /* Increased from -8px */
+  margin-bottom: 5px; /* Added bottom margin */
+}
+
+/* Contributors Section */
+.contributors-section {
+  margin-top: 5px;  /* Increased from -8px */
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 16px;
+  gap: 16px;
+}
+
+.contributors-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.contributors-container {
+  display: flex;
+  flex-direction: row;  /* Keep contributors in a row */
+  gap: 48px;  /* Space between contributors */
+  width: 100%;
+  margin-top: 5px;
 }
 
 .contributor {
   display: flex;
   align-items: center;
-  gap: 16px;
+}
+
+.contributor-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;  /* Space between avatar and text */
 }
 
 .contributor-avatar {
@@ -333,56 +455,44 @@ html, body {
   border-radius: 50%;
 }
 
-.contributor-avatar.pink {
-  background-color: #ffd6e7;
-}
-
-.contributor-avatar.peach {
-  background-color: #ffe7ba;
-}
-
-.contributor-info {
+.contributor-details {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 4px;
 }
 
-.contributor-info h3 {
-  font-family: 'Inter', sans-serif;
+.contributor h3 {
   font-size: 16px;
   font-weight: 500;
-  color: #333;
+  color: #1f2937;
   margin: 0;
 }
 
-.contributor-links {
+.social-links {
   display: flex;
-  gap: 12px;
+  gap: 8px;  /* Reduced space between social icons */
 }
 
-.contributor-links img {
+.social-links img {
   width: 20px;
   height: 20px;
   opacity: 0.7;
   transition: opacity 0.2s;
 }
 
-.contributor-links img:hover {
+.social-links img:hover {
   opacity: 1;
 }
 
 .thank-you {
-  text-align: center;
-  font-family: 'Inter', sans-serif;
+  text-align: left;
+  color: #6b7280;
   font-size: 14px;
-  color: #777;
-  margin-top: 30px;
-}
-.settings .scrollable-content {
-  margin-right: -28px;  /* Align with the main content padding */
-  padding-right: 25px;  /* Match the margin to create proper spacing */
-  max-height: 400px;
-  overflow-y: auto;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 12px; /* Add smaller bottom margin to control spacing */
+
 }
 
 /* Site list styling */
