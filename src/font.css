@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Roboto Flex";
+  src: url("/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf")
+    format("truetype-variations");
+  font-weight: 775;
+  font-stretch: 25;
+  font-style: italic;
+}
+
+.purple-small-roboto {
+  font-family: "Roboto Flex";
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  color: #7b66ff;
+  font-variation-settings: "GRAD" -112, "slnt" -10, "XOPQ" 85, "YOPQ" 92,
+    "XTRA" 433, "YTUC" 712, "YTLC" 570, "YTAS" 787, "YTDE" -203, "YTFI" 788,
+    "opsz" 16;
+}
+
+.purple-large-roboto {
+  font-family: "Roboto Flex";
+  font-size: 32.2424px;
+  line-height: 38px;
+  text-align: right;
+  color: #7b66ff;
+  font-variation-settings: "GRAD" -112, "XOPQ" 85, "XTRA" 433, "YOPQ" 92,
+    "YTAS" 787, "YTDE" -203, "YTFI" 788, "YTLC" 570, "YTUC" 712, "slnt" -10,
+    "opsz" 28;
+}

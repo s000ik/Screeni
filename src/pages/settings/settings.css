@@ -1,0 +1,126 @@
+/* General Settings Container */
+.settings-container {
+    width: 400px;
+    margin: 0 auto;
+    padding-top: 25px;
+  }
+  
+  /* Content Section */
+  .content-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .section-head {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333333;
+  }
+  
+  .section-subhead {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #555555;
+    margin-top: 4px;
+  }
+  
+  .theme-select {
+    font-family: 'Roboto Flex', sans-serif;
+    font-style: italic;
+    font-weight: 775;
+    font-size: 32.2424px;
+    line-height: 38px;
+    color: #7B66FF;
+    font-stretch: 25;
+    font-variation-settings: 'GRAD' -112, 'XOPQ' 85, 'XTRA' 433, 'YOPQ' 92, 'YTAS' 787, 'YTDE' -203, 'YTFI' 788, 'YTLC' 570, 'YTUC' 712, 'slnt' -10, 'opsz' 28;
+  }
+  
+  .delete-text {
+    position: absolute;
+    width: 72px;
+    height: 38px;
+    left: 351px;
+    top: 184px;
+    font-family: 'Roboto Flex', sans-serif;
+    font-style: italic;
+    font-weight: 775;
+    font-size: 32.2424px;
+    line-height: 38px;
+    text-align: center;
+    color: #F54128;
+    font-stretch: 25;
+    font-variation-settings: 'GRAD' -112, 'XOPQ' 85, 'XTRA' 433, 'YOPQ' 92, 'YTAS' 787, 'YTDE' -203, 'YTFI' 788, 'YTLC' 570, 'YTUC' 712, 'slnt' -10, 'opsz' 28;
+  }
+  
+  .divider {
+    width: 400px;
+    border: 1.15px solid #D9D9D9;
+    margin: 15px 0;
+  }
+  
+  .special-section {
+    padding-top: 35px;
+  }
+  
+  .screeni-logo {
+    width: 50px;
+    height: auto;
+  }
+  
+  .about-section, .contributors-section {
+    margin-top: 15px;
+  }
+  
+  .contributors-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .contributor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .contributor-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .contributor-details h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  .social-links a {
+    margin-right: 10px;
+  }
+  
+  .social-links img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .thank-you {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #555;
+    margin-top: 20px;
+  }
+  

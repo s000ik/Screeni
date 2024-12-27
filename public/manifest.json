@@ -4,7 +4,9 @@
     "version": "1.0",
     "action": {
       "default_popup": "index.html",
-      "default_icon": "icon128.png"
+      "default_icon": "icon128.png",
+      "default_height": "550",
+      "default_width": "450"
     },
     "permissions": [
       "activeTab",

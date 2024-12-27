@@ -1,0 +1,26 @@
+.most-viewed {
+  margin-top: 10px;
+}
+
+.total-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+.section-title {
+  line-height: 1.2;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 32px;
+  color: #4d4d4d;
+}
+
+.scrollable-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
