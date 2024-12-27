@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-@font-face {
-  font-family: 'DINProCondensedBlackItalic';
-  src: url('/customfont.otf') format('opentype');
-  font-weight: normal;
-  font-style: italic;
-}
+
 
 html, body {
   font-family: 'Inter', sans-serif;
