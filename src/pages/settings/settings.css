@@ -23,14 +23,14 @@
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 16px;
-    color: #333333;
+    color: var(--text-primary);
   }
   
   .section-subhead {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 12px;
-    color: #555555;
+    color: var(--text-secondary);
     margin-top: 4px;
   }
   
@@ -40,7 +40,7 @@
     font-weight: 775;
     font-size: 32.2424px;
     line-height: 38px;
-    color: #7B66FF;
+    color: var(--text-accent);
     font-stretch: 25;
     font-variation-settings: 'GRAD' -112, 'XOPQ' 85, 'XTRA' 433, 'YOPQ' 92, 'YTAS' 787, 'YTDE' -203, 'YTFI' 788, 'YTLC' 570, 'YTUC' 712, 'slnt' -10, 'opsz' 28;
   }

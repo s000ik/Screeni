@@ -1,26 +1,35 @@
-.most-viewed {
-  margin-top: 10px;
-}
-
-.total-time {
+.table-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 15px;
+  padding: 0 10px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #666;
 }
 
-.section-title {
-  line-height: 1.2;
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 5px;
-  font-size: 32px;
-  color: #4d4d4d;
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  border-bottom: 1px solid #eaeaea;
 }
 
-.scrollable-content {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding-right: 20px;
-  box-sizing: border-box;
+.site-card-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.time-value {
+  flex-basis: 100px;
+  text-align: center;
+  font-family: 'Inter';
+  font-size: 12px;
+  color: #444;
+}
+
+.toggle-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex-basis: 60px;
 }

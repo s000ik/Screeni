@@ -22,16 +22,8 @@ export const ThisSession: React.FC<ThisSessionProps> = ({ sessionTimings, format
         <div className="site-list with-icons">
           {Object.entries(sessionTimings)
             .sort(([, a], [, b]) => b - a)
-            .map(([hostname, time], index) => (
-              <SiteCard
-                key={hostname}
-                hostname={hostname}
-                time={time}
-                totalTime={totalSessionTime}
-                formatTime={formatTime}
-                useIcon={true}
-                index={index}
-              />
+            .map(([hostname]) => (
+              <SiteCard hostname={hostname} useIcon={true} />
             ))}
         </div>
       </div>

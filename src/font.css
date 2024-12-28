@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "Roboto Flex";
   src: url("/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf")
     format("truetype-variations");
@@ -27,4 +27,44 @@
   font-variation-settings: "GRAD" -112, "XOPQ" 85, "XTRA" 433, "YOPQ" 92,
     "YTAS" 787, "YTDE" -203, "YTFI" 788, "YTLC" 570, "YTUC" 712, "slnt" -10,
     "opsz" 28;
+} */
+
+
+
+
+/* fonts.css */
+
+/* Define custom variables for font-variation-settings */
+:root {
+  /* Base font family */
+  --font-family-roboto: 'Roboto Flex', sans-serif;
+
+  /* Font settings */
+  --font-weight: 775;
+  --font-style: italic;
+  --font-stretch: 25;
+  
+  /* Font-variation-settings */
+  --font-grad: -112;
+  --font-slnt: -10;
+  --font-xopq: 85;
+  --font-yopq: 92;
+  --font-xtra: 433;
+  --font-ytuc: 712;
+  --font-ytlc: 570;
+  --font-ytas: 787;
+  --font-ytde: -203;
+  --font-ytfi: 788;
+  --font-opsz: auto; /* Set optical size to auto */
 }
+
+/* Font-face definition for Roboto Flex */
+@font-face {
+  font-family: "Roboto Flex";
+  src: url("../public/fonts/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf")
+    format("truetype-variations");
+  font-weight: var(--font-weight);
+  font-stretch: var(--font-stretch);
+  font-style: var(--font-style);
+}
+

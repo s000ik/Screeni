@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+.site-card {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.site-favicon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+
+.site-name {
+  position: absolute;
+  width: 111px;
+  height: 15px;
+  left: 15px; /* Adjusted for proper spacing */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  color: #444444;
+}

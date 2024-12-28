@@ -1,160 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Base styles */
-html, body, #root {
-  height: 100%;
-  width: 100%;
+/* Basic reset and global styles */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
 }
 
-/* Frame container */
+/* Root variables for theming */
+:root {
+  --background-primary: #ffffff;
+  --background-navbar: #7b66ff;
+  --text-heading: #4d4d4d;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --border-color: #d9d9d9;
+  --text-accent: #7b66ff;
+}
+
+[data-theme='dark'] {
+  --background-primary: #1a1a1a;
+  --background-navbar: #7b66ff;
+  --text-heading: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --border-color: #404040;
+  --text-accent: #7b66ff;
+}
+
+/* Base HTML element styles */
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--background);
+}
+
+/* Extension frame styles */
+#root {
+  width: 450px;
+  height: 550px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Common utility classes */
 .frame {
   width: 450px;
   height: 550px;
-  background-color: #fff;
+  background: var(--background);
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
-/* Content area */
 .content {
   flex-grow: 1;
-  overflow: hidden;
-  padding: 10px 25px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  padding: 25px;
+  overflow-y: auto;
 }
 
-/* Typography */
-.label {
-  font-size: 32px;
-  color: #4d4d4d;
+.divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 15px 0;
 }
 
-.value {
-  font-size: 40px;
-  font-style: italic;
-  color: #7B66FF;
-}
-
-/* Site list common styles */
-.site-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.site-list.with-icons .site-item {
-  padding: 12px;
-  background: var(--background-secondary);
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-}
-
-.site-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-}
-
-.site-favicon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  object-fit: contain;
-  opacity: 0.9;
-}
-
-.site-name {
-  flex: 1;
-  font-size: 14px;
-  color: var(--text-primary);
-}
-
-.site-time {
-  margin-left: auto;
-  font-size: 14px;
-  color: var(--text-secondary);
-  opacity: 0.9;
-}
-
-/* Progress bar */
-.progress-bar-bg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--background-tertiary);
-  border-radius: 0 0 8px 8px;
-}
-
-.progress-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  background: #7B66FF;
-  border-radius: 0 0 0 8px;
-  transition: width 0.3s ease;
+.scrollable-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Scrollbar styling */
-.scrollable-content::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 8px;
 }
 
-.scrollable-content::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.scrollable-content::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #b9b7c3;
   border-radius: 4px;
 }
 
-.scrollable-content:hover::-webkit-scrollbar-thumb {
-  background: #7B66FF;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
 }
 
-/* Font styles */
-@font-face {
-  font-family: "Roboto Flex";
-  src: url("/fonts/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf")
-    format("truetype-variations");
-  font-weight: 775;
-  font-stretch: 25;
-  font-style: italic;
+/* Common text styles */
+.label {
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
-.purple-small-roboto {
-  font-family: "Roboto Flex";
-  font-size: 16px;
-  line-height: 19px;
-  text-align: right;
-  color: #7b66ff;
-  font-variation-settings: "GRAD" -112, "slnt" -10, "XOPQ" 85, "YOPQ" 92,
-    "XTRA" 433, "YTUC" 712, "YTLC" 570, "YTAS" 787, "YTDE" -203, "YTFI" 788,
-    "opsz" 16;
+.value {
+  color: var(--accent-color);
 }
 
-.purple-large-roboto {
-  font-family: "Roboto Flex";
-  font-size: 32.2424px;
-  line-height: 38px;
-  text-align: right;
-  color: #7b66ff;
-  font-variation-settings: "GRAD" -112, "XOPQ" 85, "XTRA" 433, "YOPQ" 92,
-    "YTAS" 787, "YTDE" -203, "YTFI" 788, "YTLC" 570, "YTUC" 712, "slnt" -10,
-    "opsz" 28;
+/* Animation utilities */
+.animate-fade {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -1,30 +1,150 @@
-.total-time {
+/* Style for small purple text */
+.purple-small-roboto {
+  font-family: var(--font-family-roboto);
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  color: #7B66FF;
+  font-variation-settings: "GRAD" var(--font-grad), "slnt" var(--font-slnt), "XOPQ" var(--font-xopq),
+                          "YOPQ" var(--font-yopq), "XTRA" var(--font-xtra), "YTUC" var(--font-ytuc),
+                          "YTLC" var(--font-ytlc), "YTAS" var(--font-ytas), "YTDE" var(--font-ytde),
+                          "YTFI" var(--font-ytfi), "opsz" var(--font-opsz); /* opsz set to auto */
+}
+
+/* Large purple text styling */
+.purple-large-roboto {
+  font-family: var(--font-family-roboto);
+  font-size: 32px;
+  line-height: 38px;
+  text-align: right;
+  color: #7B66FF;
+  font-variation-settings: "GRAD" var(--font-grad), "XOPQ" var(--font-xopq), "XTRA" var(--font-xtra),
+                          "YOPQ" var(--font-yopq), "YTAS" var(--font-ytas), "YTDE" var(--font-ytde),
+                          "YTFI" var(--font-ytfi), "YTLC" var(--font-ytlc), "YTUC" var(--font-ytuc),
+                          "slnt" var(--font-slnt), "opsz" var(--font-opsz); /* opsz set to auto */
+}
+
+/* Time value styling */
+.time-value {
+  font-family: var(--font-family-roboto);
+  font-style: var(--font-style);
+  font-weight: var(--font-weight);
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  color: #7B66FF;
+  font-stretch: var(--font-stretch);
+  font-variation-settings: "GRAD" var(--font-grad), "slnt" var(--font-slnt), "XOPQ" var(--font-xopq),
+                           "YOPQ" var(--font-yopq), "XTRA" var(--font-xtra), "YTUC" var(--font-ytuc),
+                           "YTLC" var(--font-ytlc), "YTAS" var(--font-ytas), "YTDE" var(--font-ytde),
+                           "YTFI" var(--font-ytfi), "opsz" var(--font-opsz); /* opsz set to auto */
+}
+
+
+/* Table row styling */
+.table-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 15px;
+  align-items: center;
+  gap: 10px;
+  border-bottom: none;  /* Remove bottom border line */
+  margin-bottom: 0; /* Remove margin if causing extra space */
+  padding: 5px 0;  /* Adjust padding to ensure space between elements */
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 10px;
 }
 
-.section-title {
-  line-height: 1.2;
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 5px;
-  font-size: 32px;
-  color: #4d4d4d;
+/* Column Label Styling */
+.table-column-header {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--text-secondary);
 }
 
-.divider {
-  margin: 5px 0;
-  display: block;
-  width: 400px;
-  border: none;
-  border-top: 1px solid #d9d9d9;
+/* Time column label positioned 110px to the left of the Block label */
+.table-column-header.time-label {
+  margin-right: 110px; /* 110px space between Time and Block labels */
+  margin-left: 25px; /* Align Time label with Website label */
 }
 
-.scrollable-content {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding-right: 20px;
-  box-sizing: border-box;
+/* Block column label */
+.table-column-header.block-label {
+  margin-right: 25px; /* 25px from the right edge */
+}
+
+/* Website column label */
+.table-column-header.website-label {
+  margin-left: 25px; /* 25px from the left edge */
+}
+
+/* Site name styling inside table */
+.site-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-left: 15px;
+}
+
+
+
+/* Toggle switch styling */
+.toggle-switch {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  margin-left: 100px; /* Adds 100px space to the left of the toggle */
+}
+
+/* Hide the checkbox input */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider styling */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* Slider circle before the switch */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Slider switch when checked */
+input:checked + .slider {
+  background-color: #7B66FF;
+}
+
+/* Move the circle when the switch is checked */
+input:checked + .slider:before {
+  transform: translateX(14px);
 }

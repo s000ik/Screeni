@@ -23,3 +23,15 @@
   padding-right: 20px;
   box-sizing: border-box;
 }
+.label {
+  color: var(--text-heading);
+}
+
+.value {
+  color: var(--text-accent);
+}
+
+/* For the chart */
+.recharts-bar-rectangle {
+  fill: var(--text-accent);
+}

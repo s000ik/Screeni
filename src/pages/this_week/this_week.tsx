@@ -55,16 +55,8 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
         <div className="top-sites">
           <h2 className="section-title">Top viewed sites this week</h2>
           <div className="site-list with-icons">
-            {sortedWeeklySites.map(([hostname, time], index) => (
-              <SiteCard
-                key={hostname}
-                hostname={hostname}
-                time={time}
-                totalTime={liveWeeklyTime}
-                formatTime={formatTime}
-                useIcon={true}
-                index={index}
-              />
+            {sortedWeeklySites.map(([hostname]) => (
+             <SiteCard hostname={hostname} useIcon={true} />
             ))}
           </div>
         </div>
