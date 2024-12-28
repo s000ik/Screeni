@@ -1,5 +1,5 @@
 import React from "react";
-import "./siteCard.css";
+import favicon_style from "./siteCard.module.css";
 
 interface SiteCardProps {
   hostname: string;
@@ -12,18 +12,18 @@ const SiteCard: React.FC<SiteCardProps> = ({ hostname, useIcon = false }) => {
   };
 
   return (
-    <div className="site-card">
+    <div className={favicon_style.siteCard}>
       {useIcon && (
         <img
           src={getFaviconUrl(hostname)}
           alt=""
-          className="site-favicon"
+          className={favicon_style.siteFavicon}
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/default-favicon.png";
           }}
         />
       )}
-      <span className="site-name">{hostname}</span>
+      <span className={favicon_style.siteName}>{hostname}</span>
     </div>
   );
 };

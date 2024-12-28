@@ -1,84 +1,81 @@
-/* navbar.css */
-/* Make navbar styles more specific and consistent */
 .navbar {
   background-color: var(--background-navbar);
-  height: 90px !important; /* Force consistent height */
-  min-height: 90px; /* Ensure minimum height */
+  height: 90px;
+  min-height: 90px;
   width: 100%;
   display: flex;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 10;
-  flex-shrink: 0; /* Prevent navbar from shrinking */
+  flex-shrink: 0;
 }
-  
-  .logo {
-    height: 44px;
-    margin-left: 24px;
-  }
-  
-  .icons {
-    display: flex;
-    gap: 13px;
-    margin-left: auto;
-    margin-right: 27px;
-  }
-  
-  .icon {
-    width: 28px;
-    height: 28px;
-    margin-left: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
+
+.logo {
+  height: 44px;
+  margin-left: 24px;
+}
+
+.icons {
+  display: flex;
+  gap: 13px;
+  margin-left: auto;
+  margin-right: 27px;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon:hover {
+  opacity: 0.8;
+}
+
+.icon:hover img {
+  transform: scale(1.05);
+}
+
+.icon.active {
+  opacity: 1;
+  position: relative;
+}
+
+.icon.active::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  animation: pulseGlow 1s forwards;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1.1);
     opacity: 0.5;
-    position: relative;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
-  .icon img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  50%, 100% {
+    transform: scale(1.2);
+    opacity: 0.3;
   }
-  
-  .icon:hover {
-    opacity: 0.8;
-  }
-  
-  .icon:hover img {
-    transform: scale(1.05);
-  }
-  
-  .icon.active {
-    opacity: 1;
-    position: relative;
-  }
-  
-  .icon.active::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    animation: pulseGlow 1s forwards;
-  }
-  
-  @keyframes pulseGlow {
-    0% {
-      transform: scale(1.1);
-      opacity: 0.5;
-    }
-    50%, 100% {
-      transform: scale(1.2);
-      opacity: 0.3;
-    }
-  }
-  
+}

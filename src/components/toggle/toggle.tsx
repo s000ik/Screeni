@@ -1,5 +1,5 @@
 import React from 'react';
-import './toggle.css';
+import toggle_style from './toggle.module.css';
 
 interface ToggleProps {
   isOn: boolean;
@@ -8,8 +8,11 @@ interface ToggleProps {
 
 const Toggle: React.FC<ToggleProps> = ({ isOn, onToggle }) => {
   return (
-    <div className={`toggle ${isOn ? 'toggle-on' : 'toggle-off'}`} onClick={onToggle}>
-      <div className="toggle-circle" />
+    <div 
+      className={`${toggle_style.toggle} ${isOn ? toggle_style.toggleOn : toggle_style.toggleOff}`} 
+      onClick={onToggle}
+    >
+      <div className={toggle_style.toggleCircle} />
     </div>
   );
 };

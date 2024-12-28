@@ -1,5 +1,5 @@
 import React from 'react';
-import './progress-bar.css';
+import progbar_style from './progress-bar.module.css';
 
 interface ProgressBarProps {
   percentage: number;  // Value between 0 and 100
@@ -7,9 +7,9 @@ interface ProgressBarProps {
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ percentage }) => {
   return (
-    <div className="progress-bar-container">
+    <div className={progbar_style.progressBarContainer}>
       <div 
-        className="progress-bar-fill" 
+        className={progbar_style.progressBarFill} 
         style={{ width: `${Math.min(100, Math.max(0, percentage))}%` }}
       />
     </div>
