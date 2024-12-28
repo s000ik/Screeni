@@ -74,7 +74,7 @@ async function showBlockedNotification(hostname, tabId) {
     message: `${cleanHostname} is blocked. It will close in 10 seconds.\nGreat job maintaining your screentime habits!`,
     buttons: [
       {
-        title: 'Extend (5 minutes)'
+        title: 'Snooze (5 minutes)'
       },
       {
         title: 'Unblock'
@@ -95,7 +95,7 @@ async function showBlockedNotification(hostname, tabId) {
         clearTimeout(timeoutId);
       }
 
-      if (buttonIndex === 0) {  // Extend button
+      if (buttonIndex === 0) {  // Snooze button
         // Close in 5 minutes instead
         closeTabWithDelay(tabId, 300000); // 5 minutes in milliseconds
       } else if (buttonIndex === 1) {  // Unblock button
