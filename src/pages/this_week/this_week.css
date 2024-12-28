@@ -9,6 +9,11 @@
   margin-top: 15px;
 }
 
+.content {
+  height: calc(100% - 90px); /* Subtract navbar height */
+  overflow-y: auto;
+}
+
 .chart-container {
   margin-top: 20px;
 }
