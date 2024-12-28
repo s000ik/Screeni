@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SiteCard from "@/components/favicons/siteCard";
 import Toggle from "@/components/toggle/toggle";
 import "./this_day.css";
@@ -18,11 +18,28 @@ export const ThisDay: React.FC<ThisDayProps> = ({
   );
   const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({});
 
-  const handleToggle = (hostname: string) => {
-    setToggleStates((prevState) => ({
-      ...prevState,
-      [hostname]: !prevState[hostname],
+  useEffect(() => {
+    chrome.storage.local.get('blockedSites', ({ blockedSites = [] }) => {
+      const initialStates: Record<string, boolean> = {};
+      blockedSites.forEach((hostname: string) => {
+        initialStates[hostname] = true;
+      });
+      setToggleStates(initialStates);
+    });
+  }, []);
+
+  const handleToggle = async (hostname: string) => {
+    const newState = !toggleStates[hostname];
+    setToggleStates(prev => ({
+      ...prev,
+      [hostname]: newState
     }));
+
+    await chrome.runtime.sendMessage({
+      type: 'TOGGLE_BLOCK_SITE',
+      hostname,
+      shouldBlock: newState
+    });
   };
 
   return (
