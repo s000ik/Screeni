@@ -52,7 +52,7 @@ export const ThisDay: React.FC<ThisDayProps> = ({
                 <span className="site-card-wrapper">
                   <SiteCard hostname={hostname} useIcon={true} />
                 </span>
-                <span className="time-value purple-small-roboto">
+                <span className="purple-small-roboto">
                   {formatTime(time)}
                 </span>
                 <span className="toggle-wrapper">

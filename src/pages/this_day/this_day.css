@@ -95,21 +95,6 @@
     'opsz' 28;     /* Optical size */
 }
 
-/* Time value styling */
-.time-value {
-  font-family: var(--font-family-roboto);
-  font-style: var(--font-style);
-  font-weight: var(--font-weight);
-  font-size: 16px;
-  line-height: 19px;
-  text-align: right;
-  color: #7B66FF;
-  font-stretch: var(--font-stretch);
-  font-variation-settings: "GRAD" var(--font-grad), "slnt" var(--font-slnt), "XOPQ" var(--font-xopq),
-                           "YOPQ" var(--font-yopq), "XTRA" var(--font-xtra), "YTUC" var(--font-ytuc),
-                           "YTLC" var(--font-ytlc), "YTAS" var(--font-ytas), "YTDE" var(--font-ytde),
-                           "YTFI" var(--font-ytfi), "opsz" var(--font-opsz); /* opsz set to auto */
-}
 
 /* Table row styling */
 .table-row {

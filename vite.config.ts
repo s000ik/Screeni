@@ -10,4 +10,7 @@ export default defineConfig({
     },
   },
   publicDir : "public", 
+  build: {
+    chunkSizeWarningLimit: 1000, // Increase chunk size limit (in KB)
+  }
 })
