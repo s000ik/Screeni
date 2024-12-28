@@ -1,27 +1,98 @@
-/* Style for small purple text */
+/* thisday.css */
+/* font.css */
+
+/* Define custom variables for font-variation-settings */
+:root {
+  /* Base font family */
+  --font-family-roboto: 'Roboto Flex', sans-serif;
+
+  /* Font settings */
+  --font-weight: 780; /* Adjusted weight as per the suggestion */
+  --font-style: italic;
+  --font-stretch: 25%; /* Adjusted to percentage value */
+
+  /* Font-variation-settings */
+  --font-grad: -113;   /* Grade */
+  --font-slnt: -10;    /* Slant */
+  --font-xopq: 86;     /* Thick stroke */
+  --font-yopq: 92;
+  --font-xtra: 440;    /* Counter width */
+  --font-ytuc: 712;
+  --font-ytlc: 570;
+  --font-ytas: 786;    /* Ascender height */
+  --font-ytde: -203;
+  --font-ytfi: 788;
+  --font-opsz: 16;     /* Optical size */
+}
+
+/* Font-face definition for Roboto Flex with variation settings */
+@font-face {
+  font-family: 'Roboto Flex';
+  src: url("../../../public/fonts/RobotoFlex.woff2") format("woff2-variations");
+  font-weight: var(--font-weight);
+  font-stretch: var(--font-stretch);
+  font-style: var(--font-style);
+  font-variation-settings: 
+    "wdth" 25,        /* Width value to make it condensed */
+    "GRAD" var(--font-grad),
+    "slnt" var(--font-slnt),
+    "XOPQ" var(--font-xopq),
+    "YOPQ" var(--font-yopq),
+    "XTRA" var(--font-xtra),
+    "YTUC" var(--font-ytuc),
+    "YTLC" var(--font-ytlc),
+    "YTAS" var(--font-ytas),
+    "YTDE" var(--font-ytde),
+    "YTFI" var(--font-ytfi),
+    "opsz" var(--font-opsz);
+}
+
+
+
+/* Small purple text */
 .purple-small-roboto {
   font-family: var(--font-family-roboto);
   font-size: 16px;
   line-height: 19px;
   text-align: right;
-  color: #7B66FF;
-  font-variation-settings: "GRAD" var(--font-grad), "slnt" var(--font-slnt), "XOPQ" var(--font-xopq),
-                          "YOPQ" var(--font-yopq), "XTRA" var(--font-xtra), "YTUC" var(--font-ytuc),
-                          "YTLC" var(--font-ytlc), "YTAS" var(--font-ytas), "YTDE" var(--font-ytde),
-                          "YTFI" var(--font-ytfi), "opsz" var(--font-opsz); /* opsz set to auto */
+  color: #7b66ff;
+  font-weight: 780; /* From the tester showing Weight: 780 */
+  font-variation-settings: 
+    'wdth' 25,     /* Width value to make it condensed */
+    'GRAD' -113,   /* Grade from tester */
+    'slnt' -10,    /* Slant */
+    'XOPQ' 86,     /* Thick stroke from tester */
+    'YOPQ' 92,
+    'XTRA' 440,    /* Counter width from tester */
+    'YTUC' 712,
+    'YTLC' 570,
+    'YTAS' 786,    /* Ascender height from tester */
+    'YTDE' -203,
+    'YTFI' 788,
+    'opsz' 16;     /* Optical size */
 }
 
-/* Large purple text styling */
+/* Large purple text */
 .purple-large-roboto {
   font-family: var(--font-family-roboto);
-  font-size: 32px;
+  font-size: 32.2424px;
   line-height: 38px;
   text-align: right;
-  color: #7B66FF;
-  font-variation-settings: "GRAD" var(--font-grad), "XOPQ" var(--font-xopq), "XTRA" var(--font-xtra),
-                          "YOPQ" var(--font-yopq), "YTAS" var(--font-ytas), "YTDE" var(--font-ytde),
-                          "YTFI" var(--font-ytfi), "YTLC" var(--font-ytlc), "YTUC" var(--font-ytuc),
-                          "slnt" var(--font-slnt), "opsz" var(--font-opsz); /* opsz set to auto */
+  color: #7b66ff;
+  font-weight: 780; /* From the tester showing Weight: 780 */
+  font-variation-settings: 
+    'wdth' 25,     /* Width value to make it condensed */
+    'GRAD' -113,   /* Grade from tester */
+    'slnt' -10,    /* Slant */
+    'XOPQ' 86,     /* Thick stroke from tester */
+    'YOPQ' 92,
+    'XTRA' 440,    /* Counter width from tester */
+    'YTUC' 712,
+    'YTLC' 570,
+    'YTAS' 786,    /* Ascender height from tester */
+    'YTDE' -203,
+    'YTFI' 788,
+    'opsz' 28;     /* Optical size */
 }
 
 /* Time value styling */
@@ -40,7 +111,6 @@
                            "YTFI" var(--font-ytfi), "opsz" var(--font-opsz); /* opsz set to auto */
 }
 
-
 /* Table row styling */
 .table-row {
   display: flex;
@@ -51,6 +121,7 @@
   margin-bottom: 0; /* Remove margin if causing extra space */
   padding: 5px 0;  /* Adjust padding to ensure space between elements */
 }
+
 .table-header {
   display: flex;
   justify-content: space-between;
@@ -96,8 +167,6 @@
   margin-left: 15px;
 }
 
-
-
 /* Toggle switch styling */
 .toggle-switch {
   position: relative;
@@ -111,40 +180,4 @@
   opacity: 0;
   width: 0;
   height: 0;
-}
-
-/* Slider styling */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-
-/* Slider circle before the switch */
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-/* Slider switch when checked */
-input:checked + .slider {
-  background-color: #7B66FF;
-}
-
-/* Move the circle when the switch is checked */
-input:checked + .slider:before {
-  transform: translateX(14px);
 }
