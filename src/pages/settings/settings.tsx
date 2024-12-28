@@ -45,8 +45,10 @@ export const Settings: React.FC<SettingsProps> = ({
 
       {/* Special Section: Screeni */}
       <div className="special-section">
-        <h2 className="section-head">Screeni</h2>
-        <p className="section-subhead">Version 5.0.0</p>
+        <div className="screeni-info">
+          <h2 className="section-head">Screeni</h2>
+          <p className="version-text">Version 5.0.0</p>
+        </div>
         <img src="/Screeni-logotype-purple.png" alt="Screeni Logo" className="screeni-logo" />
       </div>
 
@@ -60,50 +62,44 @@ export const Settings: React.FC<SettingsProps> = ({
         </p>
       </div>
 
-      <div className="divider" />
-
       {/* Contributors Section */}
       <div className="contributors-section">
         <h2 className="section-head">Contributors</h2>
         <div className="contributors-container">
           <div className="contributor">
+            <img 
+              src="https://avatars.githubusercontent.com/u/93423572?v=4" 
+              alt="Satwik Singh" 
+              className="contributor-avatar"
+            />
             <div className="contributor-info">
-              <img 
-                src="https://avatars.githubusercontent.com/u/93423572?v=4" 
-                alt="Satwik Singh" 
-                className="contributor-avatar"
-              />
-              <div className="contributor-details">
-                <h3>Satwik Singh</h3>
-                <div className="social-links">
-                  <a href="https://github.com/s000ik" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
-                  </a>
-                  <a href="https://linkedin.com/in/singhsatwik/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
-                  </a>
-                </div>
+              <h3 className="contributor-name">Satwik Singh</h3>
+              <div className="social-links">
+                <a href="https://github.com/s000ik" target="_blank" rel="noopener noreferrer">
+                  <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
+                </a>
+                <a href="https://linkedin.com/in/singhsatwik/" target="_blank" rel="noopener noreferrer">
+                  <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+                </a>
               </div>
             </div>
           </div>
 
           <div className="contributor">
+            <img 
+              src="https://i.imgur.com/6SnhKop.png" 
+              alt="Parth Gupta" 
+              className="contributor-avatar"
+            />
             <div className="contributor-info">
-              <img 
-                src="https://i.imgur.com/6SnhKop.png" 
-                alt="Parth Gupta" 
-                className="contributor-avatar"
-              />
-              <div className="contributor-details">
-                <h3>Parth Gupta</h3>
-                <div className="social-links">
-                  <a href="https://github.com/P4R1H" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
-                  </a>
-                  <a href="https://www.linkedin.com/in/p4r1h/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
-                  </a>
-                </div>
+              <h3 className="contributor-name">Parth Gupta</h3>
+              <div className="social-links">
+                <a href="https://github.com/P4R1H" target="_blank" rel="noopener noreferrer">
+                  <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
+                </a>
+                <a href="https://www.linkedin.com/in/p4r1h/" target="_blank" rel="noopener noreferrer">
+                  <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+                </a>
               </div>
             </div>
           </div>
