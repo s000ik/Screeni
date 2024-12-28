@@ -64,7 +64,7 @@ async function showBlockedNotification(hostname, tabId) {
     type: 'basic',
     iconUrl: 'icon48.png',
     title: 'Site Blocked',
-    message: `${cleanHostname} is blocked. It will close in 10 seconds.\n Great job maintaining your screentime habits!`
+    message: `${cleanHostname} is blocked. It will close in 10 seconds.\nGreat job maintaining your screentime habits!`
   });
 }
 
