@@ -1,0 +1,110 @@
+@font-face {
+  font-family: "Roboto Flex";
+  src: url("/fonts/RobotoFlex.woff2") format("woff2-variations");
+  font-weight: 780;
+  font-style: italic;
+}
+
+.container {
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 25px;
+}
+
+.contentSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.sectionText {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sectionHead {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.sectionSubhead {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.sectionValue {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.divider {
+  width: 400px;
+  border: none;
+  border-top: 1.15px solid var(--border-color);
+  margin: 20px auto 15px auto;
+}
+
+.siteList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 400px;
+}
+
+.siteItem {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.siteItemContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  height: 19px;
+  margin-bottom: 10px;
+}
+
+.siteCardContainer {
+  display: flex;
+  align-items: center;
+  padding: 2px 0;
+  height: 19px;
+}
+
+.siteCardTime {
+  font-family: "Roboto Flex";
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  color: var(--text-accent);
+  font-weight: 780;
+  font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
+    "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
+    "YTFI" 788, "opsz" 16;
+  margin: 0 20px;
+}
+
+.purpleLargeRoboto {
+  font-family: "Roboto Flex";
+  font-size: 32.2424px;
+  line-height: 38px;
+  text-align: right;
+  color: var(--text-accent);
+  font-weight: 780;
+  font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
+    "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
+    "YTFI" 788, "opsz" 28;
+}

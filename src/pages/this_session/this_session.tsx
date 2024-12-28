@@ -1,7 +1,7 @@
 import React from "react";
 import SiteCard from "@/components/favicons/siteCard";
 import ProgressBar from "@/components/progress-bar/progress-bar";
-import "./this_session.css";
+import session_style from "./this_session.module.css";
 
 interface ThisSessionProps {
   sessionTimings: Record<string, number>;
@@ -18,40 +18,40 @@ export const ThisSession: React.FC<ThisSessionProps> = ({
   );
 
   return (
-    <main className="this-session-container">
-      <div className="content-section">
-        <div className="section-text">
-          <span className="section-head">Total Browsing Time</span>
-          <span className="section-subhead">
+    <main className={session_style.container}>
+      <div className={session_style.contentSection}>
+        <div className={session_style.sectionText}>
+          <span className={session_style.sectionHead}>Total Browsing Time</span>
+          <span className={session_style.sectionSubhead}>
             Total screen-time this session
           </span>
         </div>
-        <div className="section-value purple-large-roboto">
-          {formatTime(totalTime)}
+        <div className={session_style.sectionValue}>
+          <span className={session_style.purpleLargeRoboto}>{formatTime(totalTime)}</span>
         </div>
       </div>
 
-      <hr className="divider" />
+      <hr className={session_style.divider} />
 
-      <div className="content-section">
-        <div className="section-text">
-          <span className="section-head">Top Viewed Sites</span>
-          <span className="section-subhead">
+      <div className={session_style.contentSection}>
+        <div className={session_style.sectionText}>
+          <span className={session_style.sectionHead}>Top Viewed Sites</span>
+          <span className={session_style.sectionSubhead}>
             Most viewed sites this browsing session
           </span>
         </div>
       </div>
 
-      <div className="site-list">
+      <div className={session_style.siteList}>
         {Object.entries(sessionTimings)
           .sort(([, timeA], [, timeB]) => timeB - timeA)
           .map(([hostname, siteTime]) => (
-            <div key={hostname} className="site-item">
-              <div className="site-item-content">
-                <div className="site-card-container">
+            <div key={hostname} className={session_style.siteItem}>
+              <div className={session_style.siteItemContent}>
+                <div className={session_style.siteCardContainer}>
                   <SiteCard hostname={hostname} useIcon={true} />
                 </div>
-                <span className="site-card-time">{formatTime(siteTime)}</span>
+                <span className={session_style.siteCardTime}>{formatTime(siteTime)}</span>
               </div>
               <ProgressBar percentage={(siteTime / totalTime) * 100} />
             </div>

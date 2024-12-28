@@ -1,8 +1,7 @@
-// Updated this_day.tsx
 import React, { useState, useEffect } from "react";
 import SiteCard from "@/components/favicons/siteCard";
 import Toggle from "@/components/toggle/toggle";
-import "./this_day.css";
+import daily_style from "./this_day.module.css";
 
 interface ThisDayProps {
   dailyTimings: Record<string, number>;
@@ -44,43 +43,34 @@ export const ThisDay: React.FC<ThisDayProps> = ({
   };
 
   return (
-    <main className="this-day-container">
-      <div className="content-section">
-        <div className="section-text">
-          <span className="section-head">Total Browsing Time Today</span>
-          <span className="section-subhead">Total screen-time today</span>
+    <main className={daily_style.container}>
+      <div className={daily_style.contentSection}>
+        <div className={daily_style.sectionText}>
+          <span className={daily_style.sectionHead}>Total Browsing Time Today</span>
+          <span className={daily_style.sectionSubhead}>Total screen-time today</span>
         </div>
-        <div className="section-value purple-large-roboto">
-          {formatTime(totalDailyTime)}
+        <div className={daily_style.sectionValue}>
+          <span className={daily_style.purpleLargeRoboto}>{formatTime(totalDailyTime)}</span>
         </div>
       </div>
 
-      <hr className="divider" />
+      <hr className={daily_style.divider} />
 
-      <div className="table-container">
-        <div className="table-header">
-          <span className="table-column-header website-label">Website</span>
-          <span className="table-column-header time-label">Time</span>
-          <span className="table-column-header block-label">Block</span>
-        </div>
+      <div className={daily_style.siteList}>
         {Object.entries(dailyTimings)
-          .sort(([, a], [, b]) => b - a)
-          .map(([hostname, time]) => (
-            <div
-              className="table-row"
-              key={hostname}
-              style={{ marginBottom: "10px" }}
-            >
-              <span className="site-name">
-                <SiteCard hostname={hostname} useIcon={true} />
-              </span>
-              <span className="purple-small-roboto list-time">{formatTime(time)}</span>
-              <span>
+          .sort(([, timeA], [, timeB]) => timeB - timeA)
+          .map(([hostname, siteTime]) => (
+            <div key={hostname} className={daily_style.siteItem}>
+              <div className={daily_style.siteItemContent}>
+                <div className={daily_style.siteCardContainer}>
+                  <SiteCard hostname={hostname} useIcon={true} />
+                </div>
+                <span className={daily_style.siteCardTime}>{formatTime(siteTime)}</span>
                 <Toggle
                   isOn={toggleStates[hostname] || false}
                   onToggle={() => handleToggle(hostname)}
                 />
-              </span>
+              </div>
             </div>
           ))}
       </div>
