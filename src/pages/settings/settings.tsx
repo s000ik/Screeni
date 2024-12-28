@@ -15,7 +15,7 @@ export const Settings: React.FC<SettingsProps> = ({
     <div className="settings-container">
       {/* Content Section: Adjust UI Theme */}
       <div className="content-section">
-        <div className="section-left">
+        <div className="section-text">
           <h2 className="section-head">Adjust UI Theme</h2>
           <p className="section-subhead">Set the UI theme to light or dark</p>
         </div>
@@ -34,7 +34,7 @@ export const Settings: React.FC<SettingsProps> = ({
 
       {/* Content Section: Clear Data */}
       <div className="content-section">
-        <div className="section-left">
+        <div className="section-text">
           <h2 className="section-head">Clear Data</h2>
           <p className="section-subhead">Remove all history and time-tracking data</p>
         </div>

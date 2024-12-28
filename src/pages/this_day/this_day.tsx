@@ -44,7 +44,7 @@ export const ThisDay: React.FC<ThisDayProps> = ({
   };
 
   return (
-    <main className="content">
+    <main className="this-day-container">
       <div className="content-section">
         <div className="section-text">
           <span className="section-head">Total Browsing Time Today</span>
@@ -54,7 +54,9 @@ export const ThisDay: React.FC<ThisDayProps> = ({
           {formatTime(totalDailyTime)}
         </div>
       </div>
+
       <hr className="divider" />
+
       <div className="table-container">
         <div className="table-header">
           <span className="table-column-header website-label">Website</span>

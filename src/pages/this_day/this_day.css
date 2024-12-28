@@ -34,13 +34,10 @@
 /* ...existing table styling code... */
 
 /* Content wrapper adjustment */
-.content {
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  align-items: flex-start; /* Add this */
-  width: 100%; /* Add this */
-  box-sizing: border-box; /* Add this */
+.this-day-container {
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 25px;
 }
 
 /* Content Section Styling */
@@ -49,7 +46,7 @@
   justify-content: space-between;
   align-items: center;
   width: 400px;
-  margin-bottom :20px;
+  margin-bottom: 20px;
 }
 
 .section-text {
@@ -59,22 +56,21 @@
 }
 
 .section-head {
-  font-family: "Inter";
-  font-style: normal;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 16px;
   letter-spacing: -0.02em;
-  color: #333333;
-  margin-bottom: 2px;
-  transform: translateY(1px);
+  color: var(--text-primary);
+  /* margin-bottom: 2px;
+  transform: translateY(1px); */
 }
 
 .section-subhead {
-  font-family: "Inter";
-  font-style: normal;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 12px;
-  color: #555555;
+  color: var(--text-secondary);
+  margin-top: 4px;
 }
 
 .section-value {
