@@ -33,10 +33,14 @@
 
 /* ...existing table styling code... */
 
+/* Content wrapper adjustment */
 .content {
   display: flex;
   flex-direction: column;
   padding: 25px;
+  align-items: flex-start; /* Add this */
+  width: 100%; /* Add this */
+  box-sizing: border-box; /* Add this */
 }
 
 /* Content Section Styling */
@@ -45,6 +49,7 @@
   justify-content: space-between;
   align-items: center;
   width: 400px;
+  margin-bottom :20px;
 }
 
 .section-text {
@@ -58,7 +63,6 @@
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  line-height: 19px;
   letter-spacing: -0.02em;
   color: #333333;
   margin-bottom: 2px;
@@ -70,7 +74,6 @@
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  line-height: 15px;
   color: #555555;
 }
 
@@ -78,6 +81,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin: 0; /* Ensure no extra margin */
 }
 
 
@@ -85,77 +89,73 @@
   width: 400px;
   border: none;
   border-top: 1.15px solid #D9D9D9;
-  margin: 20px auto 15px auto;  /* top right bottom left */
+  margin: 0 auto 15px auto;  /* top right bottom left */
 }
 
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  padding: 0; /* Add this */
+  margin-left: 0; /* Add this */
+  box-sizing: border-box; /* Add this */
+}
+
+/* Table container */
+.table-container { /* Add this new class to your table wrapper div */
+  width: 400px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Column label specific widths */
+.table-column-header.website-label {
+  flex: 0 0 183px; /* Fixed width for Website column */
+  text-align: left;
+}
+
+.table-column-header.time-label {
+  flex: 0 0 111px; /* Fixed width for Time column */
+  text-align: center;
+}
+
+.table-column-header.block-label {
+  flex: 0 0 106px; /* Remaining width for Block column */
+  text-align: right;
+}
 
 /* Table row styling */
 .table-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  border-bottom: none; /* Remove bottom border line */
-  margin-bottom: 0; /* Remove margin if causing extra space */
-  padding: 5px 0; /* Adjust padding to ensure space between elements */
+  width: 400px; /* Ensure consistent width with headers */
+  gap: 0; /* Remove unnecessary gaps */
+  padding: 5px 0; /* Adjust padding for consistent spacing */
+  border : none; /* Remove border */
+  border-bottom: none; /* Remove bottom border */
 }
 
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  color: var(--text-primary);
-  margin-bottom: 10px;
-}
-
-/* Column Label Styling */
-.table-column-header {
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: var(--text-secondary);
-}
-
-/* Time column label positioned 110px to the left of the Block label */
-.table-column-header.time-label {
-  margin-right: 110px; /* 110px space between Time and Block labels */
-  margin-left: 25px; /* Align Time label with Website label */
-}
-
-/* Block column label */
-.table-column-header.block-label {
-  margin-right: 25px; /* 25px from the right edge */
-}
-
-/* Website column label */
-.table-column-header.website-label {
-  margin-left: 25px; /* 25px from the left edge */
-}
 
 /* Site name styling inside table */
 .site-name {
   font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   margin-left: 15px;
 }
 
-/* Toggle switch styling */
-.toggle-switch {
-  position: relative;
-  width: 34px;
-  height: 20px;
-  margin-left: 100px; /* Adds 100px space to the left of the toggle */
-}
 
-/* Hide the checkbox input */
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.list-time{
+  /* Here I will define that the time value should be 183px to the right of the toggle*/
+  margin-left: 226px; 
+  
 }

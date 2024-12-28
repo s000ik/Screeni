@@ -20,7 +20,7 @@ export const ThisDay: React.FC<ThisDayProps> = ({
   const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    chrome.storage.local.get('blockedSites', ({ blockedSites = [] }) => {
+    chrome.storage.local.get("blockedSites", ({ blockedSites = [] }) => {
       const initialStates: Record<string, boolean> = {};
       blockedSites.forEach((hostname: string) => {
         initialStates[hostname] = true;
@@ -31,15 +31,15 @@ export const ThisDay: React.FC<ThisDayProps> = ({
 
   const handleToggle = async (hostname: string) => {
     const newState = !toggleStates[hostname];
-    setToggleStates(prev => ({
+    setToggleStates((prev) => ({
       ...prev,
-      [hostname]: newState
+      [hostname]: newState,
     }));
 
     await chrome.runtime.sendMessage({
-      type: 'TOGGLE_BLOCK_SITE',
+      type: "TOGGLE_BLOCK_SITE",
       hostname,
-      shouldBlock: newState
+      shouldBlock: newState,
     });
   };
 
@@ -55,36 +55,32 @@ export const ThisDay: React.FC<ThisDayProps> = ({
         </div>
       </div>
       <hr className="divider" />
-      <div className="scrollable-content">
-        <div className="site-list">
-          <div className="table-header">
-            <span className="table-column-header website-label">Website</span>
-            <span className="table-column-header time-label">Time</span>
-            <span className="table-column-header block-label">Block</span>
-          </div>
-          {Object.entries(dailyTimings)
-            .sort(([, a], [, b]) => b - a)
-            .map(([hostname, time]) => (
-              <div
-                className="table-row"
-                key={hostname}
-                style={{ marginBottom: "10px" }}
-              >
-                <span className="site-card-wrapper">
-                  <SiteCard hostname={hostname} useIcon={true} />
-                </span>
-                <span className="purple-small-roboto">
-                  {formatTime(time)}
-                </span>
-                <span className="toggle-wrapper">
-                  <Toggle
-                    isOn={toggleStates[hostname] || false}
-                    onToggle={() => handleToggle(hostname)}
-                  />
-                </span>
-              </div>
-            ))}
+      <div className="table-container">
+        <div className="table-header">
+          <span className="table-column-header website-label">Website</span>
+          <span className="table-column-header time-label">Time</span>
+          <span className="table-column-header block-label">Block</span>
         </div>
+        {Object.entries(dailyTimings)
+          .sort(([, a], [, b]) => b - a)
+          .map(([hostname, time]) => (
+            <div
+              className="table-row"
+              key={hostname}
+              style={{ marginBottom: "10px" }}
+            >
+              <span className="site-name">
+                <SiteCard hostname={hostname} useIcon={true} />
+              </span>
+              <span className="purple-small-roboto list-time">{formatTime(time)}</span>
+              <span>
+                <Toggle
+                  isOn={toggleStates[hostname] || false}
+                  onToggle={() => handleToggle(hostname)}
+                />
+              </span>
+            </div>
+          ))}
       </div>
     </main>
   );
