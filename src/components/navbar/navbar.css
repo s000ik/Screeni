@@ -1,14 +1,17 @@
 /* navbar.css */
+/* Make navbar styles more specific and consistent */
 .navbar {
   background-color: var(--background-navbar);
-    height: 90px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
+  height: 90px !important; /* Force consistent height */
+  min-height: 90px; /* Ensure minimum height */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-shrink: 0; /* Prevent navbar from shrinking */
+}
   
   .logo {
     height: 44px;

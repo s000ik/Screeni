@@ -39,8 +39,10 @@ async function isHostnameBlocked(hostname) {
 
 async function closeTabWithDelay(tabId, delayMs = 10000) {
   notifiedTabs.add(tabId);
-  
-  setTimeout(async () => {
+  const notificationId = `block-notification-${tabId}`;
+
+  const timeoutId = setTimeout(async () => {
+    chrome.notifications.clear(notificationId);
     try {
       const tab = await chrome.tabs.get(tabId).catch(() => null);
       if (tab) {
@@ -52,6 +54,9 @@ async function closeTabWithDelay(tabId, delayMs = 10000) {
       notifiedTabs.delete(tabId);
     }
   }, delayMs);
+
+  // Store the timeout ID so we can clear it if needed
+  chrome.storage.local.set({ [`timeout_${tabId}`]: timeoutId });
 }
 
 async function showBlockedNotification(hostname, tabId) {
@@ -60,11 +65,48 @@ async function showBlockedNotification(hostname, tabId) {
   }
   
   const cleanHostname = hostname.replace(/^www\./, '').replace(/\.com$/, '');
-  chrome.notifications.create({
+  const notificationId = `block-notification-${tabId}`;
+  
+  chrome.notifications.create(notificationId, {
     type: 'basic',
     iconUrl: 'icon48.png',
     title: 'Site Blocked',
-    message: `You have blocked ${cleanHostname}. It will close in 10 seconds.\nGreat job maintaining your screentime habits!`
+    message: `${cleanHostname} is blocked. It will close in 10 seconds.\nGreat job maintaining your screentime habits!`,
+    buttons: [
+      {
+        title: 'Extend (5 minutes)'
+      },
+      {
+        title: 'Unblock'
+      }
+    ],
+    requireInteraction: true
+  });
+
+  // Start the initial 10-second timer
+  closeTabWithDelay(tabId);
+
+  // Add notification click listener
+  chrome.notifications.onButtonClicked.addListener(async (clickedId, buttonIndex) => {
+    if (clickedId === notificationId) {
+      // Clear the existing timeout
+      const { [`timeout_${tabId}`]: timeoutId } = await chrome.storage.local.get(`timeout_${tabId}`);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      if (buttonIndex === 0) {  // Extend button
+        // Close in 5 minutes instead
+        closeTabWithDelay(tabId, 300000); // 5 minutes in milliseconds
+      } else if (buttonIndex === 1) {  // Unblock button
+        // Remove from blocked sites
+        handleSiteBlock(hostname, false);
+        notifiedTabs.delete(tabId);
+      }
+
+      // Clear the notification
+      chrome.notifications.clear(notificationId);
+    }
   });
 }
 
@@ -131,7 +173,6 @@ async function handleTabChange(tabId, url) {
   
   if (await isHostnameBlocked(hostname)) {
     await showBlockedNotification(hostname, tabId);
-    await closeTabWithDelay(tabId);
     return;
   }
 
@@ -167,7 +208,6 @@ async function handleSiteBlock(hostname, shouldBlock) {
       if (tab.url && getHostname(tab.url) === hostname) {
         if (!notifiedTabs.has(tab.id)) {
           await showBlockedNotification(hostname, tab.id);
-          await closeTabWithDelay(tab.id);
         }
       }
     }
