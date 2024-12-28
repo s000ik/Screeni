@@ -1,98 +1,91 @@
-/* thisday.css */
-/* font.css */
-
-/* Define custom variables for font-variation-settings */
-:root {
-  /* Base font family */
-  --font-family-roboto: 'Roboto Flex', sans-serif;
-
-  /* Font settings */
-  --font-weight: 780; /* Adjusted weight as per the suggestion */
-  --font-style: italic;
-  --font-stretch: 25%; /* Adjusted to percentage value */
-
-  /* Font-variation-settings */
-  --font-grad: -113;   /* Grade */
-  --font-slnt: -10;    /* Slant */
-  --font-xopq: 86;     /* Thick stroke */
-  --font-yopq: 92;
-  --font-xtra: 440;    /* Counter width */
-  --font-ytuc: 712;
-  --font-ytlc: 570;
-  --font-ytas: 786;    /* Ascender height */
-  --font-ytde: -203;
-  --font-ytfi: 788;
-  --font-opsz: 16;     /* Optical size */
-}
-
-/* Font-face definition for Roboto Flex with variation settings */
 @font-face {
-  font-family: 'Roboto Flex';
-  src: url("../../../public/fonts/RobotoFlex.woff2") format("woff2-variations");
-  font-weight: var(--font-weight);
-  font-stretch: var(--font-stretch);
-  font-style: var(--font-style);
-  font-variation-settings: 
-    "wdth" 25,        /* Width value to make it condensed */
-    "GRAD" var(--font-grad),
-    "slnt" var(--font-slnt),
-    "XOPQ" var(--font-xopq),
-    "YOPQ" var(--font-yopq),
-    "XTRA" var(--font-xtra),
-    "YTUC" var(--font-ytuc),
-    "YTLC" var(--font-ytlc),
-    "YTAS" var(--font-ytas),
-    "YTDE" var(--font-ytde),
-    "YTFI" var(--font-ytfi),
-    "opsz" var(--font-opsz);
+  font-family: "Roboto Flex";
+  src: url("/fonts/RobotoFlex.woff2") format("woff2-variations");
+  font-weight: 780;
+  font-style: italic;
 }
-
-
 
 /* Small purple text */
 .purple-small-roboto {
-  font-family: var(--font-family-roboto);
+  font-family: "Roboto Flex";
   font-size: 16px;
   line-height: 19px;
   text-align: right;
   color: #7b66ff;
-  font-weight: 780; /* From the tester showing Weight: 780 */
-  font-variation-settings: 
-    'wdth' 25,     /* Width value to make it condensed */
-    'GRAD' -113,   /* Grade from tester */
-    'slnt' -10,    /* Slant */
-    'XOPQ' 86,     /* Thick stroke from tester */
-    'YOPQ' 92,
-    'XTRA' 440,    /* Counter width from tester */
-    'YTUC' 712,
-    'YTLC' 570,
-    'YTAS' 786,    /* Ascender height from tester */
-    'YTDE' -203,
-    'YTFI' 788,
-    'opsz' 16;     /* Optical size */
+  font-weight: 780;
+  font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
+    "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
+    "YTFI" 788, "opsz" 16;
 }
 
 /* Large purple text */
 .purple-large-roboto {
-  font-family: var(--font-family-roboto);
+  font-family: "Roboto Flex";
   font-size: 32.2424px;
   line-height: 38px;
   text-align: right;
   color: #7b66ff;
-  font-weight: 780; /* From the tester showing Weight: 780 */
-  font-variation-settings: 
-    'wdth' 25,     /* Width value to make it condensed */
-    'GRAD' -113,   /* Grade from tester */
-    'slnt' -10,    /* Slant */
-    'XOPQ' 86,     /* Thick stroke from tester */
-    'YOPQ' 92,
-    'XTRA' 440,    /* Counter width from tester */
-    'YTUC' 712,
-    'YTLC' 570,
-    'YTAS' 786,    /* Ascender height from tester */
-    'YTDE' -203,
-    'YTFI' 788,
-    'opsz' 28;     /* Optical size */
+  font-weight: 780;
+  font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
+    "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
+    "YTFI" 788, "opsz" 28;
+}
+
+/* ...existing table styling code... */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+/* Content Section Styling */
+.content-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+}
+
+.section-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.section-head {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.02em;
+  color: #333333;
+  margin-bottom: 2px;
+  transform: translateY(1px);
+}
+
+.section-subhead {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #555555;
+}
+
+.section-value {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+.divider {
+  width: 400px;
+  border: none;
+  border-top: 1.15px solid #D9D9D9;
+  margin: 20px auto 15px auto;  /* top right bottom left */
 }
 
 
@@ -102,15 +95,15 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  border-bottom: none;  /* Remove bottom border line */
+  border-bottom: none; /* Remove bottom border line */
   margin-bottom: 0; /* Remove margin if causing extra space */
-  padding: 5px 0;  /* Adjust padding to ensure space between elements */
+  padding: 5px 0; /* Adjust padding to ensure space between elements */
 }
 
 .table-header {
   display: flex;
   justify-content: space-between;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: bold;
   color: var(--text-primary);
@@ -119,7 +112,7 @@
 
 /* Column Label Styling */
 .table-column-header {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -145,7 +138,7 @@
 
 /* Site name styling inside table */
 .site-name {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: var(--text-primary);

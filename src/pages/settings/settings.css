@@ -1,3 +1,59 @@
+@font-face {
+  font-family: 'Roboto Flex';
+  src: url("/fonts/RobotoFlex.woff2") format("woff2-variations");
+  font-weight: 780;
+  font-style: italic;
+}
+
+/* Small purple text */
+.purple-small-roboto {
+  font-family: 'Roboto Flex';
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  color: #7b66ff;
+  font-weight: 780;
+  font-variation-settings: 
+    'wdth' 25,
+    'GRAD' -113,
+    'slnt' -10,
+    'XOPQ' 86,
+    'YOPQ' 92,
+    'XTRA' 440,
+    'YTUC' 712,
+    'YTLC' 570,
+    'YTAS' 786,
+    'YTDE' -203,
+    'YTFI' 788,
+    'opsz' 16;
+}
+
+/* Large purple text */
+.purple-large-roboto {
+  font-family: 'Roboto Flex';
+  font-size: 32.2424px;
+  line-height: 38px;
+  text-align: right;
+  color: #7b66ff;
+  font-weight: 780;
+  font-variation-settings: 
+    'wdth' 25,
+    'GRAD' -113,
+    'slnt' -10,
+    'XOPQ' 86,
+    'YOPQ' 92,
+    'XTRA' 440,
+    'YTUC' 712,
+    'YTLC' 570,
+    'YTAS' 786,
+    'YTDE' -203,
+    'YTFI' 788,
+    'opsz' 28;
+}
+
+
+
+
 /* General Settings Container */
 .settings-container {
     width: 400px;
