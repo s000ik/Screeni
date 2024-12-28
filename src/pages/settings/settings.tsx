@@ -90,7 +90,7 @@ export const Settings: React.FC<SettingsProps> = ({
           <div className="contributor">
             <div className="contributor-info">
               <img 
-                src="https://avatars.githubusercontent.com/u/76397616?v=4" 
+                src="https://i.imgur.com/6SnhKop.png" 
                 alt="Parth Gupta" 
                 className="contributor-avatar"
               />
