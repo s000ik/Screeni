@@ -55,13 +55,15 @@
   margin: 0 auto 15px auto;
 }
 
+/* Fix the vertical spacing between site items */
 .siteList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px; /* Reduce from 20px to 10px */
   width: 400px;
 }
 
+/* Ensure consistent site item spacing */
 .siteItem {
   display: flex;
   flex-direction: column;
@@ -74,7 +76,7 @@
   align-items: center;
   width: 400px;
   height: 19px;
-  margin-bottom: 10px;
+  margin-bottom: 0; /* Remove extra bottom margin */
 }
 
 .siteCardContainer {
@@ -107,4 +109,39 @@
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 28;
+}
+
+/* Adjust table header alignment */
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  margin-bottom: 15px;
+  padding: 0;
+}
+
+.rightColumns {
+  display: flex;
+  align-items: center;
+  gap: 80px; /* Adjust space between Time and Block */
+  margin-right: 0px; /* Align Block with toggle switch */
+}
+
+.columnHeader {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--text-secondary);
+}
+
+/* Website column header alignment */
+.columnHeader:first-child {
+  margin-left: 0px; /* Align with site names */
+}
+
+/* Adjust time column to align with time values */
+.rightColumns .columnHeader:first-child {
+  margin-right: 20px; /* Align with time values */
 }

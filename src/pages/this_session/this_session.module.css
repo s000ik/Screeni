@@ -8,7 +8,22 @@
 .container {
   width: 400px;
   margin: 0 auto;
+  height: 460px; /* 550px - 90px navbar */
+  display: flex;
+  flex-direction: column;
+}
+
+.fixedContent {
   padding-top: 25px;
+  flex-shrink: 0;
+}
+
+.scrollableContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -8px; /* Compensate for scrollbar width */
+  padding-right: 8px;
 }
 
 .contentSection {
@@ -58,7 +73,7 @@
 .siteList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   width: 400px;
 }
 
@@ -107,4 +122,48 @@
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 28;
+}
+
+
+.scrollableContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.scrollableContainer::-webkit-scrollbar {
+  width: 4px;
+  transition: width 0.2s ease;
+}
+
+.scrollableContainer:hover::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollableContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollableContainer::-webkit-scrollbar-thumb {
+  background-color: #E8E8E8;
+  border-radius: 10px;
+  opacity: 0;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.scrollableContainer:hover::-webkit-scrollbar-thumb,
+.scrollableContainer::-webkit-scrollbar-thumb:active {
+  opacity: 1;
+  background-color: var(--text-accent);
+}
+
+/* Auto-hide scrollbar after inactivity */
+.scrollableContainer:not(:hover)::-webkit-scrollbar-thumb {
+  animation: fadeOut 5s forwards;
+}
+
+@keyframes fadeOut {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; }
 }
