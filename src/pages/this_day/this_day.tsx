@@ -46,34 +46,59 @@ export const ThisDay: React.FC<ThisDayProps> = ({
     <main className={daily_style.container}>
       <div className={daily_style.contentSection}>
         <div className={daily_style.sectionText}>
-          <span className={daily_style.sectionHead}>Total Browsing Time Today</span>
-          <span className={daily_style.sectionSubhead}>Total screen-time today</span>
+          <span className={daily_style.sectionHead}>
+            Total Browsing Time Today
+          </span>
+          <span className={daily_style.sectionSubhead}>
+            Total screen-time today
+          </span>
         </div>
         <div className={daily_style.sectionValue}>
-          <span className={daily_style.purpleLargeRoboto}>{formatTime(totalDailyTime)}</span>
+          <span className={daily_style.purpleLargeRoboto}>
+            {formatTime(totalDailyTime)}
+          </span>
         </div>
       </div>
 
       <hr className={daily_style.divider} />
 
-      <div className={daily_style.siteList}>
-        {Object.entries(dailyTimings)
-          .sort(([, timeA], [, timeB]) => timeB - timeA)
-          .map(([hostname, siteTime]) => (
-            <div key={hostname} className={daily_style.siteItem}>
-              <div className={daily_style.siteItemContent}>
-                <div className={daily_style.siteCardContainer}>
-                  <SiteCard hostname={hostname} useIcon={true} />
-                </div>
-                <span className={daily_style.siteCardTime}>{formatTime(siteTime)}</span>
-                <Toggle
-                  isOn={toggleStates[hostname] || false}
-                  onToggle={() => handleToggle(hostname)}
-                />
-              </div>
-            </div>
-          ))}
+      <div className={daily_style.contentSection}>
+        <div className={daily_style.sectionText}>
+          <span className={daily_style.sectionHead}>Sites Visited</span>
+          <span className={daily_style.sectionSubhead}>
+            View time spent on each site, and block them if needed
+          </span>
+        </div>
       </div>
+
+        <div className={daily_style.tableHeader}>
+          <span className={daily_style.columnHeader}>Website</span>
+          <div className={daily_style.rightColumns}>
+            <span className={daily_style.columnHeader}>Time</span>
+            <span className={daily_style.columnHeader}>Block</span>
+          </div>
+        </div>
+
+        <div className={daily_style.siteList}>
+          {Object.entries(dailyTimings)
+            .sort(([, timeA], [, timeB]) => timeB - timeA)
+            .map(([hostname, siteTime]) => (
+              <div key={hostname} className={daily_style.siteItem}>
+                <div className={daily_style.siteItemContent}>
+                  <div className={daily_style.siteCardContainer}>
+                    <SiteCard hostname={hostname} useIcon={true} />
+                  </div>
+                  <span className={daily_style.siteCardTime}>
+                    {formatTime(siteTime)}
+                  </span>
+                  <Toggle
+                    isOn={toggleStates[hostname] || false}
+                    onToggle={() => handleToggle(hostname)}
+                  />
+                </div>
+              </div>
+            ))}
+        </div>
     </main>
   );
 };
