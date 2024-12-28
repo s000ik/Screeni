@@ -17,6 +17,27 @@ interface WeeklyTiming {
   hostname: string;
 }
 
+const isValidHostname = (hostname: string): boolean => {
+  if (!hostname) return false;
+  const invalidPrefixes = [
+    'chrome://',
+    'chrome-extension://',
+    'edge://',
+    'about:',
+    'chrome-search://'
+  ];
+  const invalidExactMatches = [
+    '',
+    'newtab',
+    'extensions'
+  ];
+
+  if (invalidPrefixes.some(prefix => hostname.startsWith(prefix))) return false;
+  if (invalidExactMatches.includes(hostname)) return false;
+  return true;
+  
+};
+
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [sessionTimings, setSessionTimings] = useState<Record<string, number>>({});
@@ -41,7 +62,9 @@ function App() {
 
       // Process session timings
       const processedSessionTimings = sessionTimings.reduce((acc: Record<string, number>, site: Timing) => {
-        acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+        if (isValidHostname(site.hostname)) {
+          acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+        }
         return acc;
       }, {}); 
       setSessionTimings(processedSessionTimings);
@@ -51,7 +74,9 @@ function App() {
       today.setHours(0, 0, 0, 0);
       const todayTimings = dailyTimings.filter((timing: any) => timing.dayStart === today.getTime());
       const processedDailyTimings = todayTimings.reduce((acc: Record<string, number>, site: Timing) => {
-        acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+        if (isValidHostname(site.hostname)) {
+          acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+        }
         return acc;
       }, {}); 
       setDailyTimings(processedDailyTimings);
@@ -61,9 +86,11 @@ function App() {
       let totalTime = 0;
       const siteStats: Record<string, number> = {};
       weeklyTimings.forEach((timing: WeeklyTiming) => {
-        weeklyStats[timing.dayOfWeek] += timing.timeSpent;
-        totalTime += timing.timeSpent;
-        siteStats[timing.hostname] = (siteStats[timing.hostname] || 0) + timing.timeSpent;
+        if (isValidHostname(timing.hostname)) {
+          weeklyStats[timing.dayOfWeek] += timing.timeSpent;
+          totalTime += timing.timeSpent;
+          siteStats[timing.hostname] = (siteStats[timing.hostname] || 0) + timing.timeSpent;
+        }
       });
 
       const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -82,7 +109,7 @@ function App() {
     const interval = setInterval(() => {
       setLiveWeeklyTime((prevTime) => prevTime + 1);
 
-      if (currentSite) {
+      if (currentSite && isValidHostname(currentSite)) {
         setSessionTimings((prevTimings) => {
           const updatedTimings = { ...prevTimings };
           updatedTimings[currentSite] = (updatedTimings[currentSite] || 0) + 1;
@@ -108,9 +135,14 @@ function App() {
         if (tabs.length > 0 && tabs[0].url) {
           try {
             const hostname = new URL(tabs[0].url).hostname;
-            setCurrentSite(hostname);
+            if (isValidHostname(hostname)) {
+              setCurrentSite(hostname);
+            } else {
+              setCurrentSite(null);
+            }
           } catch (err) {
             console.error('Invalid URL:', tabs[0].url);
+            setCurrentSite(null);
           }
         }
       });
@@ -149,10 +181,6 @@ function App() {
 
     return timeParts.join(' ');
   };
-
-  
-    
-  
 
   const renderContent = () => {
     switch (currentPage) {
