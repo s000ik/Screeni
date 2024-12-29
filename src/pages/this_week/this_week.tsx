@@ -49,12 +49,12 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
 
         <hr className={styles.divider} />
 
-        <div className={styles.contentSection}>
+        {/* <div className={styles.contentSection}>
           <div className={styles.sectionText}>
             <span className={styles.sectionHead}>Weekly Overview</span>
             <span className={styles.sectionSubhead}>Time spent browsing each day</span>
           </div>
-        </div>
+        </div> */}
 
         <div className={styles.chartContainer}>
           <ResponsiveContainer width="100%" height={200}>
