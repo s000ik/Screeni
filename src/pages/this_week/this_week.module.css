@@ -16,6 +16,7 @@
 }
 
 .scrollableContainer {
+  scroll-behavior: smooth;
   overflow-y: auto;
   margin-right: 2px;
   width: calc(100% - 2px); /* This ensures the total width including margin is correct */

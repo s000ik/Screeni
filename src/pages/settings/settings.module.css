@@ -51,7 +51,34 @@
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 28;
+  position: relative;
+  
+  /* Remove default arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  /* Add padding for custom arrow */
+  padding-right: 30px;
+  
+  /* Add custom arrow using background image */
+  background-image: url("/dropdown.png");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
 }
+
+/* Hide arrow in IE */
+.themeSelect::-ms-expand {
+  display: none;
+}
+
+/* Optional: Style focus state */
+.themeSelect:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--text-accent), 0.2);
+}
+
 
 .deleteText {
   font-family: "Roboto Flex";
