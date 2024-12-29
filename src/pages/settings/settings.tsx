@@ -17,7 +17,7 @@ export const Settings: React.FC<SettingsProps> = ({
         <div className={setting_style.sectionText}>
           <span className={setting_style.sectionHead}>Adjust UI Theme</span>
           <span className={setting_style.sectionSubhead}>
-            Set the UI theme to light or dark
+            Set the UI theme to light, dark or follow system
           </span>
         </div>
         <select
@@ -55,7 +55,11 @@ export const Settings: React.FC<SettingsProps> = ({
           <span className={setting_style.sectionSubhead}>Version 5.0.0</span>
         </div>
         <img
-          src="/Screeni-logotype-purple.png"
+          src={
+            theme === "dark"
+              ? "/Screeni-logotype.png"
+              : "/Screeni-logotype-purple.png"
+          }
           alt="Screeni Logo"
           className={setting_style.screeniLogo}
         />
@@ -76,9 +80,9 @@ export const Settings: React.FC<SettingsProps> = ({
           About Screeni
         </span>
         <p className={setting_style.aboutText}>
-          Screeni is a flexible productivity tool that helps with tracking and
-          management of time spent on websites. With Screeni, you can view your
-          browsing habits from a simple, intuitive interface.
+          Screeni helps you stay mindful of your browsing habits with clear
+          insights and tools to track activity and block distractions. Stay
+          focused, balanced, and in control of your digital life.
         </p>
       </div>
 

@@ -205,16 +205,19 @@
 .contributorName {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 15px; /* Fixed height for name */
   color: var(--text-primary);
+  letter-spacing: -0.02em;
+  transform: translateY(4px); /* Aligns text with avatar */
 }
 
 .socialLinks {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   margin-top: 6px;
   height: 14px;
+  transform: translateY(2px); /* Aligns text with avatar */
 }
 
 .socialLinks img {
