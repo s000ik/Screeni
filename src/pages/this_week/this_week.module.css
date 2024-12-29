@@ -9,7 +9,6 @@
 .container {
   margin: 0 auto;
   height: 460px; /* 550px - 90px navbar */
-  /*width: 400px;*/
   width: 100%;
   display: flex;
   flex-direction: column;
