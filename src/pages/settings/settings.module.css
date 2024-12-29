@@ -91,6 +91,16 @@
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 28;
+  transition: transform 0.1s ease;
+  user-select: none;
+}
+
+.deleteText:active {
+  transform: scale(0.90);
+}
+
+.deleteText:hover {
+  opacity: 0.8;
 }
 
 .divider {
