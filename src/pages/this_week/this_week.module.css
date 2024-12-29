@@ -112,7 +112,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: calc(400px - 6px); /* Compensate for the scrollbar width */
+  width: 400px; 
 }
 
 .siteItem {
@@ -133,7 +133,7 @@
 .siteCardContainer {
   display: flex;
   align-items: center;
-  padding: 2px 0;
+  padding: 0;
   height: 19px;
 }
 
@@ -147,8 +147,11 @@
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 16;
-  margin: 0 20px;
+    margin: 0; /* Remove all margins */
+    margin-left: auto; /* Push to the right */
+    padding-right: 0; /* Remove any right padding */
 }
+
 
 .purpleLargeRoboto {
   font-family: "Roboto Flex";

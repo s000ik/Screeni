@@ -17,17 +17,21 @@
   --text-primary: #333333;
   --text-secondary: #555555;
   --border-color: #d9d9d9;
+  --progress-bar-colour: #eeeeee;
   --text-accent: #7b66ff;
+  --toggle-bg: #e9e9ea;
 }
 
 [data-theme='dark'] {
-  --background-primary: #1a1a1a;
-  --background-navbar: #7b66ff;
-  --text-heading: #ffffff;
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
-  --border-color: #404040;
+  --background-primary: #222222;
+  --background-navbar: #2D2D2D;
+  --text-heading: #DDDDDD;
+  --text-primary: #DDDDDD;
+  --text-secondary: #D9D9D9;
+  --border-color: #666666;
+  --progress-bar-colour: #666666;
   --text-accent: #7b66ff;
+  --toggle-bg: #454547;
 }
 
 /* Base HTML element styles */
@@ -39,10 +43,18 @@ html, body {
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-primary);
-  background-color: var(--background);
+  background-color: var(--background-primary); /* Changed from --background to --background-primary */
 }
 
 /* Extension frame styles */
+.frame {
+  width: 450px;
+  height: 550px;
+  background: var(--background-primary); /* Changed from --background to --background-primary */
+  display: flex;
+  flex-direction: column;
+}
+
 #root {
   width: 450px;
   height: 550px;
@@ -51,14 +63,6 @@ html, body {
   overflow: hidden;
 }
 
-/* Common utility classes */
-.frame {
-  width: 450px;
-  height: 550px;
-  background: var(--background);
-  display: flex;
-  flex-direction: column;
-}
 
 .content {
   flex-grow: 1;

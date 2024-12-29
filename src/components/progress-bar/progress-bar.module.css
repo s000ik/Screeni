@@ -1,7 +1,7 @@
 .progressBarContainer {
   width: 400px;
   height: 4px;
-  background-color: #eeeeee;
+  background-color: var(--progress-bar-colour); /* Changed from #eeeeee to use theme variable */
   border-radius: 2px;
   overflow: hidden;
   margin: 0 auto;

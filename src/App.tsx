@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { ThisSession } from '@/pages/this_session/this_session';
-import { ThisDay } from '@/pages/this_day/this_day';
-import { ThisWeek } from '@/pages/this_week/this_week';
-import { Settings } from '@/pages/settings/settings';
-import Navbar from '@/components/navbar/navbar';
-import './index.css';
+import { useState, useEffect } from "react";
+import { ThisSession } from "@/pages/this_session/this_session";
+import { ThisDay } from "@/pages/this_day/this_day";
+import { ThisWeek } from "@/pages/this_week/this_week";
+import { Settings } from "@/pages/settings/settings";
+import Navbar from "@/components/navbar/navbar";
+import "./index.css";
 
 interface Timing {
   hostname: string;
@@ -20,22 +20,18 @@ interface WeeklyTiming {
 const isValidHostname = (hostname: string): boolean => {
   if (!hostname) return false;
   const invalidPrefixes = [
-    'chrome://',
-    'chrome-extension://',
-    'edge://',
-    'about:',
-    'chrome-search://'
+    "chrome://",
+    "chrome-extension://",
+    "edge://",
+    "about:",
+    "chrome-search://",
   ];
-  const invalidExactMatches = [
-    '',
-    'newtab',
-    'extensions'
-  ];
+  const invalidExactMatches = ["", "newtab", "extensions"];
 
-  if (invalidPrefixes.some(prefix => hostname.startsWith(prefix))) return false;
+  if (invalidPrefixes.some((prefix) => hostname.startsWith(prefix)))
+    return false;
   if (invalidExactMatches.includes(hostname)) return false;
   return true;
-  
 };
 
 function App() {
@@ -44,41 +40,92 @@ function App() {
   const [dailyTimings, setDailyTimings] = useState<Record<string, number>>({});
   const [weeklyData, setWeeklyData] = useState<any[]>([]);
   const [weeklySites, setWeeklySites] = useState<Record<string, number>>({});
-  const [liveWeeklyTime, setLiveWeeklyTime] = useState(0);  
+  const [liveWeeklyTime, setLiveWeeklyTime] = useState(0);
   const [currentSite, setCurrentSite] = useState<string | null>(null);
-  const [theme, setTheme] = useState<'system' | 'light' | 'dark'>('system');
+  const [theme, setTheme] = useState<"system" | "light" | "dark">(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return (savedTheme as "system" | "light" | "dark") || "system";
+  });
+
+  // Handle theme changes
+  const handleThemeChange = (newTheme: "system" | "light" | "dark") => {
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    
+    if (newTheme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      document.documentElement.setAttribute("data-theme", systemTheme);
+    } else {
+      document.documentElement.setAttribute("data-theme", newTheme);
+    }
+  };
+
+  // Listen for system theme changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
+      if (theme === "system") {
+        document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
+      }
+    };
+
+    // Initial theme setup
+    if (theme === "system") {
+      document.documentElement.setAttribute("data-theme", mediaQuery.matches ? "dark" : "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+  }, [theme]);
 
   useEffect(() => {
     const fetchTimingsOnce = async () => {
-      await new Promise(resolve => {
-        chrome.runtime.sendMessage({ type: 'GET_CURRENT_TIME' }, resolve);
+      await new Promise((resolve) => {
+        chrome.runtime.sendMessage({ type: "GET_CURRENT_TIME" }, resolve);
       });
-      
-      const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
-        'sessionTimings',
-        'dailyTimings',
-        'weeklyTimings'
+
+      const {
+        sessionTimings = [],
+        dailyTimings = [],
+        weeklyTimings = [],
+      } = await chrome.storage.local.get([
+        "sessionTimings",
+        "dailyTimings",
+        "weeklyTimings",
       ]);
 
       // Process session timings
-      const processedSessionTimings = sessionTimings.reduce((acc: Record<string, number>, site: Timing) => {
-        if (isValidHostname(site.hostname)) {
-          acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
-        }
-        return acc;
-      }, {}); 
+      const processedSessionTimings = sessionTimings.reduce(
+        (acc: Record<string, number>, site: Timing) => {
+          if (isValidHostname(site.hostname)) {
+            acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+          }
+          return acc;
+        },
+        {}
+      );
       setSessionTimings(processedSessionTimings);
 
       // Process daily timings
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const todayTimings = dailyTimings.filter((timing: any) => timing.dayStart === today.getTime());
-      const processedDailyTimings = todayTimings.reduce((acc: Record<string, number>, site: Timing) => {
-        if (isValidHostname(site.hostname)) {
-          acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
-        }
-        return acc;
-      }, {}); 
+      const todayTimings = dailyTimings.filter(
+        (timing: any) => timing.dayStart === today.getTime()
+      );
+      const processedDailyTimings = todayTimings.reduce(
+        (acc: Record<string, number>, site: Timing) => {
+          if (isValidHostname(site.hostname)) {
+            acc[site.hostname] = (acc[site.hostname] || 0) + site.timeSpent;
+          }
+          return acc;
+        },
+        {}
+      );
       setDailyTimings(processedDailyTimings);
 
       // Process weekly timings
@@ -89,14 +136,15 @@ function App() {
         if (isValidHostname(timing.hostname)) {
           weeklyStats[timing.dayOfWeek] += timing.timeSpent;
           totalTime += timing.timeSpent;
-          siteStats[timing.hostname] = (siteStats[timing.hostname] || 0) + timing.timeSpent;
+          siteStats[timing.hostname] =
+            (siteStats[timing.hostname] || 0) + timing.timeSpent;
         }
       });
 
-      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       const weeklyChartData = weeklyStats.map((time, index) => ({
         day: daysOfWeek[index],
-        time: time
+        time: time,
       }));
 
       setWeeklyData(weeklyChartData);
@@ -141,7 +189,7 @@ function App() {
               setCurrentSite(null);
             }
           } catch (err) {
-            console.error('Invalid URL:', tabs[0].url);
+            console.error("Invalid URL:", tabs[0].url);
             setCurrentSite(null);
           }
         }
@@ -149,10 +197,10 @@ function App() {
     };
 
     handleLocationChange();
-    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener("popstate", handleLocationChange);
 
     return () => {
-      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener("popstate", handleLocationChange);
     };
   }, []);
 
@@ -165,10 +213,6 @@ function App() {
     setLiveWeeklyTime(0);
   };
 
-  const handleThemeChange = (newTheme: 'system' | 'light' | 'dark') => {
-    setTheme(newTheme);
-  };
-
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
@@ -179,25 +223,20 @@ function App() {
     if (mins > 0 || hours > 0) timeParts.push(`${mins}m`);
     timeParts.push(`${secs}s`);
 
-    return timeParts.join(' ');
+    return timeParts.join(" ");
   };
 
   const renderContent = () => {
     switch (currentPage) {
       case 0:
         return (
-          <ThisSession 
+          <ThisSession
             sessionTimings={sessionTimings}
             formatTime={formatTime}
           />
         );
       case 1:
-        return (
-          <ThisDay
-            dailyTimings={dailyTimings}
-            formatTime={formatTime} 
-          />
-        );
+        return <ThisDay dailyTimings={dailyTimings} formatTime={formatTime} />;
       case 2:
         return (
           <ThisWeek
@@ -224,7 +263,11 @@ function App() {
 
   return (
     <div className="frame">
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navbar
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        theme={theme}
+      />
       {renderContent()}
     </div>
   );

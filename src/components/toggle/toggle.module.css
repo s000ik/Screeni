@@ -2,7 +2,7 @@
   width: 25px;
   height: 15px;
   border-radius: 8px;
-  background-color: #e9e9ea;
+  background-color: var(--toggle-bg);
   display: flex;
   align-items: center;
   padding: 2px;
@@ -15,7 +15,7 @@
 }
 
 .toggleOff {
-  background-color: #e9e9ea;
+  background-color: var(--toggle-bg);
 }
 
 .toggleCircle {

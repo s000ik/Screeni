@@ -79,3 +79,19 @@
     opacity: 0.3;
   }
 }
+
+.icon {
+  opacity: 0.5;
+}
+
+[data-theme='dark'] .icon {
+  opacity: 0.7;
+}
+
+.icon.active {
+  opacity: 1;
+}
+
+[data-theme='dark'] .icon.active::before {
+  background: rgba(123, 102, 255, 0.3); /* Use accent color with opacity */
+}

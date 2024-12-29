@@ -6,6 +6,7 @@
 }
 
 .container {
+  padding-top: 25px;
   margin: 0 auto;
   height: 460px; /* 550px - 90px navbar */
   /*width: 400px;*/
@@ -14,8 +15,8 @@
   flex-direction: column;
 }
 
+
 .fixedContent {
-  padding-top: 25px;
   flex-shrink: 0;
 }
 
@@ -60,7 +61,7 @@
   width: 400px;
   border: none;
   border-top: 1.15px solid var(--border-color);
-  margin: 20px auto 15px auto;
+  margin: 0 auto 15px auto;
 }
 
 .scrollableContainer {
@@ -91,8 +92,8 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: calc(400px - 6px); /* Compensate for the scrollbar width */
-  margin: 0 auto 20px auto;
+  width: 400px;  /* Compensate for the scrollbar width */
+  margin: 0 auto 15px auto;
 }
 
 .siteItem {
@@ -113,7 +114,7 @@
 .siteCardContainer {
   display: flex;
   align-items: center;
-  padding: 2px 0;
+  padding: 0;
   height: 19px;
 }
 
@@ -127,7 +128,9 @@
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 16;
-  margin: 0 20px;
+    margin: 0; /* Remove all margins */
+    margin-left: auto; /* Push to the right */
+    padding-right: 0; /* Remove any right padding */
 }
 
 .purpleLargeRoboto {
