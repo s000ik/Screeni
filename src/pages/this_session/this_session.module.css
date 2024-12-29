@@ -24,7 +24,7 @@
   justify-content: space-between;
   align-items: center;
   width: 400px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 15px auto;
 }
 
 .sectionText {
@@ -46,7 +46,7 @@
   font-weight: 400;
   font-size: 12px;
   color: var(--text-secondary);
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .sectionValue {
@@ -85,7 +85,7 @@
 .siteList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   width: calc(400px - 6px); /* Compensate for the scrollbar width */
   margin: 0 auto 20px auto;
 }

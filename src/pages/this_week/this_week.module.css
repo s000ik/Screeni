@@ -100,7 +100,7 @@
   margin: 0 auto 20px auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   width: calc(400px - 6px); /* Compensate for the scrollbar width */
 }
 
