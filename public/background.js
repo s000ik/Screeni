@@ -123,14 +123,18 @@ async function updateTimeSpent(hostname, timeSpent) {
   const startOfWeek = getStartOfWeek();
   const startOfDay = getStartOfDay();
 
+  // Check if we need to reset weekly data
   const lastWeekReset = await chrome.storage.local.get('lastWeekReset');
   if (!lastWeekReset.lastWeekReset || lastWeekReset.lastWeekReset < startOfWeek) {
+    // Clear weekly data when transitioning to a new week
     await chrome.storage.local.set({
-      weeklyTimings: [],
-      lastWeekReset: startOfWeek
+      weeklyTimings: [], // Reset weekly timings
+      lastWeekReset: startOfWeek // Update last reset timestamp
     });
+    weeklyTimings.length = 0; // Clear the local array as well - this is changed
   }
 
+  // Continue with normal timing updates
   const newSessionTiming = {
     hostname,
     timeSpent,
