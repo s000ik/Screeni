@@ -99,7 +99,7 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
                   marginBottom: "4px",
                 }}
                 contentStyle={{
-                  background: "#FFFFFF",
+                  background: "var(--background-primary)",
                   border: "1px solid var(--border-color)",
                   borderRadius: "8px",
                   padding: "8px 12px",
@@ -112,7 +112,7 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
                   padding: 0,
                 }}
                 separator=""
-                cursor={{ fill: "#F2F0FF" }}
+                cursor={{ fill: "var(--tooltip-hover)" }}
               />
               <Bar
                 dataKey="time"
