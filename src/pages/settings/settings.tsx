@@ -52,7 +52,7 @@ export const Settings: React.FC<SettingsProps> = ({
       <div className={setting_style.screeniSection}>
         <div className={setting_style.screeniInfo}>
           <span className={setting_style.sectionHead}>Screeni</span>
-          <span className={setting_style.sectionSubhead}>Version 5.0.0</span>
+          <span className={setting_style.sectionSubhead}>Version 5.0.4</span>
         </div>
         <img
           src={
@@ -161,7 +161,7 @@ export const Settings: React.FC<SettingsProps> = ({
         </div>
 
         <p className={setting_style.thankYou}>
-          Thank you for using this extension!
+          Thank you for choosing Screeni to support your digital wellbeing
         </p>
       </div>
     </main>
