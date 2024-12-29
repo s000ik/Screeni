@@ -9,17 +9,17 @@
 .container {
   margin: 0 auto;
   height: 460px; /* 550px - 90px navbar */
+  /*width: 400px;*/
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-top: 25px;
 }
 
 .scrollableContainer {
   scroll-behavior: smooth;
   overflow-y: auto;
-  margin-left: 25px;
-  width: 400px; /* This ensures the total width including margin is correct */
+  margin-right: 2px;
+  width: calc(100% - 2px); /* This ensures the total width including margin is correct */
 }
 .scrollableContainer::-webkit-scrollbar {
   width: 4px;
@@ -54,13 +54,16 @@
   margin: 0 auto 10px auto;
 }
 
+.contentSectionWrapper {
+  padding-top: 25px;
+}
 
 .contentSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 400px; /* Compensate for the scrollbar width */
-  margin: 0 auto 15px auto;
+  width: 400px;
+  margin: 0 19px 15px auto;
 }
 
 .sectionText {
@@ -96,16 +99,17 @@
   width: 400px; /* Compensate for the scrollbar width */
   border: none;
   border-top: 1.15px solid var(--border-color);
-  margin: 0 auto 15px auto;
+  margin: 0 19px 15px auto; /* Auto margin on the left forces alignment to the right */
 }
+
 
 .chartContainer {
   width: 400px; /* Compensate for the scrollbar width */
-  margin: 0 auto 10px auto;
+  margin: 0 19px 10px auto; /* Auto margin on the left forces alignment to the right */
 }
 
 .siteList {
-  margin: 0 auto 20px auto;
+  margin: 0 19px 20px auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
