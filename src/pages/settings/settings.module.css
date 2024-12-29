@@ -8,7 +8,7 @@
 .container {
   width: 400px;
   margin: 0 auto;
-  padding-top: 25px;
+  padding-top: 25px; /* Exactly 25px below navbar */
 }
 
 .contentSection {
@@ -16,7 +16,7 @@
   justify-content: space-between;
   align-items: center;
   width: 400px;
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* Changed from 20px to 15px */
 }
 
 .sectionText {
@@ -38,31 +38,32 @@
   font-weight: 400;
   font-size: 12px;
   color: var(--text-secondary);
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .themeSelect {
-  font-family: 'Roboto Flex', sans-serif;
-  font-style: italic;
-  font-weight: 775;
+  font-family: "Roboto Flex";
   font-size: 32.2424px;
   line-height: 38px;
+  text-align: right;
   color: var(--text-accent);
-  font-stretch: 25;
-  font-variation-settings: 'GRAD' -112, 'XOPQ' 85, 'XTRA' 433, 'YOPQ' 92, 'YTAS' 787, 'YTDE' -203, 'YTFI' 788, 'YTLC' 570, 'YTUC' 712, 'slnt' -10, 'opsz' 28;
+  font-weight: 780;
+  font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
+    "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
+    "YTFI" 788, "opsz" 28;
 }
 
 .deleteText {
-  font-family: 'Roboto Flex', sans-serif;
-  font-style: italic;
-  font-weight: 775;
+  font-family: "Roboto Flex";
   font-size: 32.2424px;
   line-height: 38px;
-  text-align: center;
+  text-align: right;
   color: #F54128;
   cursor: pointer;
-  font-stretch: 25;
-  font-variation-settings: 'GRAD' -112, 'XOPQ' 85, 'XTRA' 433, 'YOPQ' 92, 'YTAS' 787, 'YTDE' -203, 'YTFI' 788, 'YTLC' 570, 'YTUC' 712, 'slnt' -10, 'opsz' 28;
+  font-weight: 780;
+  font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
+    "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
+    "YTFI" 788, "opsz" 28;
 }
 
 .divider {
@@ -72,68 +73,100 @@
   margin: 0 auto 15px auto;
 }
 
-.specialSection {
+.screeniSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 15px 0;
+  margin-top: 10px; /* 10px above Screeni heading */
+  margin-bottom: 10px;
+}
+
+.screeniInfo {
+  display: flex;
+  flex-direction: column;
 }
 
 .screeniLogo {
-  width: 110px;
-  height: 44px;
+  width: 110px; /* Exactly 110px wide */
+  height: auto;
 }
 
-.aboutSection, .contributorsSection {
-  margin-top: 15px;
+.aboutSection {
+  margin-top: 0;
+}
+
+.aboutText {
+  margin-top: 2px; /* 4px below About Screeni heading */
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.contributorsSection {
+  margin-top: 10px; /* 10px above Contributors heading */
 }
 
 .contributorsContainer {
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   gap: 40px;
-  margin-top: 15px;
+  margin-bottom: 25px; /* Space before thank you note */
 }
+
 
 .contributor {
   display: flex;
-  gap: 10px;
-  flex-direction: row;
-  align-items: center;
+  gap: 16px;
+  align-items: flex-start;
+  height: 42px; /* Fixed height for contributor div */
 }
 
 .contributorAvatar {
-  width: 50px;
-  height: 50px;
+  width: 42px; /* Exactly 42x42px */
+  height: 42px;
   border-radius: 50%;
-  margin-bottom: 8px;
+}
+
+.contributorInfo {
+  display: flex;
+  flex-direction: column;
+  height: 37px; /* Fixed height for info div */
 }
 
 .contributorName {
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 12px;
+  line-height: 15px; /* Fixed height for name */
   color: var(--text-primary);
-  margin-top: 5px;
 }
 
 .socialLinks {
   display: flex;
   gap: 10px;
-  align-items: center;
-  margin-top: 5px;
+  margin-top: 4px;
+  height: 14px;
 }
 
 .socialLinks img {
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
+  filter: invert(46%) sepia(9%) saturate(369%) hue-rotate(182deg) brightness(94%) contrast(89%); /* Makes icons secondary color */
+  transition: filter 0.2s ease;
 }
+
+.socialLinks a:hover img {
+  filter: invert(47%) sepia(99%) saturate(1613%) hue-rotate(223deg) brightness(99%) contrast(96%); /* Changes to accent color on hover */
+}
+
 
 .versionText {
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   color: var(--text-secondary);
-  margin-top: 2px;
 }
 
 .thankYou {
@@ -141,5 +174,5 @@
   font-weight: 400;
   font-size: 12px;
   color: var(--text-secondary);
-  margin-top: 20px;
+  margin-top: 25px; /* Space after contributors */
 }
