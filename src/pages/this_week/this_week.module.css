@@ -5,6 +5,38 @@
   font-style: italic;
 }
 
+.scrollable {
+  box-sizing: content-box;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+.scrollable:hover::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: var(--background-navbar); 
+}
+
+
 .container {
   width: 400px;
   margin: 0 auto;
