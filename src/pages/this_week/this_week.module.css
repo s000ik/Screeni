@@ -14,7 +14,7 @@
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 .scrollable::-webkit-scrollbar-track {
@@ -22,18 +22,18 @@
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background: transparent; /* Initially invisible */
-  border-radius: 8px;
+  background: transparent;
+  border-radius: 4px;
   background-clip: padding-box;
   transition: background-color 0.2s ease;
 }
 
 .scrollable:hover::-webkit-scrollbar-thumb {
-  background: transparent; /* Prevents visibility when hovering over content */
+  background: transparent;
 }
 
 .scrollable::-webkit-scrollbar-thumb:hover {
-  background: var(--background-navbar); /* Visible only when hovering over scrollbar */
+  background: var(--background-navbar); 
 }
 
 
