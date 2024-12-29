@@ -155,8 +155,6 @@ function App() {
     fetchTimingsOnce();
 
     const interval = setInterval(() => {
-      setLiveWeeklyTime((prevTime) => prevTime + 1);
-
       if (currentSite && isValidHostname(currentSite)) {
         setSessionTimings((prevTimings) => {
           const updatedTimings = { ...prevTimings };
@@ -169,6 +167,8 @@ function App() {
           updatedTimings[currentSite] = (updatedTimings[currentSite] || 0) + 1;
           return updatedTimings;
         });
+
+        setLiveWeeklyTime((prevTime) => prevTime + 1);
       }
     }, 1000);
 
