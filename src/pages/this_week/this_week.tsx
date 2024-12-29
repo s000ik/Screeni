@@ -38,7 +38,7 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
           <div className={styles.contentSection}>
             <div className={styles.sectionText}>
               <span className={styles.sectionHead}>
-                Total Browsing Time This Week
+                Week's Browsing Time 
               </span>
               <span className={styles.sectionSubhead}>
                 Total screen-time over the week
@@ -56,7 +56,7 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
           <div className={styles.contentSection}>
             <div className={styles.sectionText}>
               <span className={styles.sectionHead}>
-                Average Browsing Time This Week
+                Week's Average Browsing Time
               </span>
               <span className={styles.sectionSubhead}>
                 Average screen-time per day over the week

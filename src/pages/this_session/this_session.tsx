@@ -25,7 +25,7 @@ export const ThisSession: React.FC<ThisSessionProps> = ({
 
         <div className={session_style.contentSection}>
           <div className={session_style.sectionText}>
-            <span className={session_style.sectionHead}>Total Browsing Time</span>
+            <span className={session_style.sectionHead}>Session's Browsing Time</span>
             <span className={session_style.sectionSubhead}>
               Total screen-time this session
             </span>

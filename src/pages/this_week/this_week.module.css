@@ -96,7 +96,7 @@
 }
 
 .divider {
-  width: 400px;
+  width: calc(400px - 6px); /* Compensate for the scrollbar width */
   border: none;
   border-top: 1.15px solid var(--border-color);
   margin: 0 auto 15px auto;
