@@ -21,25 +21,27 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
     .sort(([, timeA], [, timeB]) => timeB - timeA);
 
   return (
-    <main className={styles.scrollable}>
-      <div className={styles.container}>
-        <div className={styles.contentSection}>
-          <div className={styles.sectionText}>
-            <span className={styles.sectionHead}>Weekly Browsing Time</span>
-            <span className={styles.sectionSubhead}>Total screen-time this week</span>
+    <main className={styles.container}>
+      <div className={styles.scrollableContainer}>
+        <div className={styles.contentSectionWrapper}>
+          <div className={styles.contentSection}>
+            <div className={styles.sectionText}>
+              <span className={styles.sectionHead}>Weekly Browsing Time</span>
+              <span className={styles.sectionSubhead}>Total screen-time this week</span>
+            </div>
+            <div className={styles.sectionValue}>
+              <span className={styles.purpleLargeRoboto}>{formatTime(liveWeeklyTime)}</span>
+            </div>
           </div>
-          <div className={styles.sectionValue}>
-            <span className={styles.purpleLargeRoboto}>{formatTime(liveWeeklyTime)}</span>
-          </div>
-        </div>
 
-        <div className={styles.contentSection}>
-          <div className={styles.sectionText}>
-            <span className={styles.sectionHead}>Daily Average</span>
-            <span className={styles.sectionSubhead}>Average screen-time per day</span>
-          </div>
-          <div className={styles.sectionValue}>
-            <span className={styles.purpleLargeRoboto}>{formatTime(liveWeeklyTime / 7)}</span>
+          <div className={styles.contentSection}>
+            <div className={styles.sectionText}>
+              <span className={styles.sectionHead}>Daily Average</span>
+              <span className={styles.sectionSubhead}>Average screen-time per day</span>
+            </div>
+            <div className={styles.sectionValue}>
+              <span className={styles.purpleLargeRoboto}>{formatTime(liveWeeklyTime / 7)}</span>
+            </div>
           </div>
         </div>
 

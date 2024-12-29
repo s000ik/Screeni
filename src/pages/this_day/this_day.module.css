@@ -6,9 +6,13 @@
 }
 
 .container {
-  width: 400px;
-  margin: 0 auto;
   padding-top: 25px;
+  margin: 0 auto;
+  height: 460px; /* 550px - 90px navbar */
+  /*width: 400px;*/
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .contentSection {
@@ -16,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   width: 400px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 }
 
 .sectionText {
@@ -55,15 +59,33 @@
   margin: 0 auto 15px auto;
 }
 
-/* Fix the vertical spacing between site items */
+
+.scrollableContainer {
+  overflow-y: auto;
+  margin-right: 2px;
+  width: calc(100% - 2px); /* This ensures the total width including margin is correct */
+}
+
+.scrollableContainer::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollableContainer::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.scrollableContainer:hover::-webkit-scrollbar-thumb {
+  background-color: var(--background-navbar);
+}
+
 .siteList {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Reduce from 20px to 10px */
-  width: 400px;
+  gap: 10px; 
+  width: calc(400px - 6px); /* Compensate for the scrollbar width */
+  margin: 0 auto 20px auto;
 }
 
-/* Ensure consistent site item spacing */
 .siteItem {
   display: flex;
   flex-direction: column;
@@ -76,7 +98,7 @@
   align-items: center;
   width: 400px;
   height: 19px;
-  margin-bottom: 0; /* Remove extra bottom margin */
+  margin-bottom: 0; 
 }
 
 .siteCardContainer {
@@ -119,6 +141,7 @@
   width: 400px;
   margin-bottom: 15px;
   padding-top: 5px;
+  margin: 0 auto 20px auto;
 }
 
 .rightColumns {

@@ -79,6 +79,8 @@ export const ThisDay: React.FC<ThisDayProps> = ({
           </div>
         </div>
 
+      {/* Scrollable content */}
+      <div className={daily_style.scrollableContainer}>
         <div className={daily_style.siteList}>
           {Object.entries(dailyTimings)
             .sort(([, timeA], [, timeB]) => timeB - timeA)
@@ -99,6 +101,7 @@ export const ThisDay: React.FC<ThisDayProps> = ({
               </div>
             ))}
         </div>
+      </div>
     </main>
   );
 };
