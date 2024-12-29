@@ -45,7 +45,7 @@
   font-family: "Roboto Flex";
   font-size: 32.2424px;
   line-height: 38px;
-  text-align: right;
+  text-align: center;
   color: var(--text-accent);
   font-weight: 780;
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
@@ -75,21 +75,23 @@
 }
 
 .themeSelect option {
-  background-color: var(--background-color, white);
-  color: var(--text-accent);
+  border: var(--border-colour);
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
   padding: 10px;
-  font-size: 16px; 
-  border: none; 
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .themeSelect option:hover {
-  background-color: var(--hover-background-color, #f0f0f0);
-  color: var(--hover-text-color, var(--text-accent));
+  background-color: var(--hover-background-color, #ffffff);
+  color: var(--hover-text-color, var(--text-primary));
 }
 
 .themeSelect:focus option {
-  background-color: var(--focus-background-color, #e0e0e0); 
-  color: var(--focus-text-color, var(--text-accent));
+  background-color: var(--focus-background-color, #ffffff); 
+  color: var(--focus-text-color, var(--text-primary));
 }
 
 
