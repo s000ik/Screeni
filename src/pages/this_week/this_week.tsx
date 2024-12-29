@@ -26,18 +26,20 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
         <div className={styles.contentSectionWrapper}>
           <div className={styles.contentSection}>
             <div className={styles.sectionText}>
-              <span className={styles.sectionHead}>Weekly Browsing Time</span>
-              <span className={styles.sectionSubhead}>Total screen-time this week</span>
+              <span className={styles.sectionHead}>Total Browsing Time This Week</span>
+              <span className={styles.sectionSubhead}>Total screen-time over the week</span>
             </div>
             <div className={styles.sectionValue}>
               <span className={styles.purpleLargeRoboto}>{formatTime(liveWeeklyTime)}</span>
             </div>
           </div>
 
+          <hr className={styles.divider} />
+
           <div className={styles.contentSection}>
             <div className={styles.sectionText}>
-              <span className={styles.sectionHead}>Daily Average</span>
-              <span className={styles.sectionSubhead}>Average screen-time per day</span>
+              <span className={styles.sectionHead}>Average Browsing Time This Week</span>
+              <span className={styles.sectionSubhead}>Average screen-time per day over the week</span>
             </div>
             <div className={styles.sectionValue}>
               <span className={styles.purpleLargeRoboto}>{formatTime(liveWeeklyTime / 7)}</span>
@@ -84,8 +86,8 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
 
         <div className={styles.contentSection}>
           <div className={styles.sectionText}>
-            <span className={styles.sectionHead}>Top Viewed Sites</span>
-            <span className={styles.sectionSubhead}>Most visited sites this week</span>
+            <span className={styles.sectionHead}>Top Viewed Sites This Week</span>
+            <span className={styles.sectionSubhead}>Most viewed sites of the week</span>
           </div>
         </div>
 
