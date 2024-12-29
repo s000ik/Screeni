@@ -70,6 +70,11 @@
   width: calc(100% - 2px); /* This ensures the total width including margin is correct */
 }
 
+.scrollableContainer::-webkit-scrollbar-track {
+  margin-bottom: 4px;
+  background-color: transparent;
+}
+
 .scrollableContainer::-webkit-scrollbar {
   width: 4px;
 }
