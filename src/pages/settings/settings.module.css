@@ -45,13 +45,17 @@
   font-family: "Roboto Flex";
   font-size: 32.2424px;
   line-height: 38px;
-  text-align: center;
+  text-align: right;
   color: var(--text-accent);
   font-weight: 780;
   font-variation-settings: "wdth" 25, "GRAD" -113, "slnt" -10, "XOPQ" 86,
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 28;
   position: relative;
+  background-color: var(--background-primary);
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  user-select: none;
 
   appearance: none;
   -webkit-appearance: none;
@@ -65,6 +69,15 @@
   background-size: 12px;
 }
 
+
+.themeSelect:hover {
+  opacity: 0.8;
+}
+/* Only apply scale transform when clicking the select element itself */
+.themeSelect:active:not([size]) {
+  transform: scale(0.98);
+}
+
 .themeSelect::-ms-expand {
   display: none;
 }
@@ -75,14 +88,15 @@
 }
 
 .themeSelect option {
-  border: var(--border-colour);
-  font-family: 'Inter', sans-serif;
-  background-color: var(--background-color);
+  background-color: var(--background-primary);
   color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
   padding: 10px;
   font-size: 16px;
   font-weight: 400;
+  text-align: center; /* Center align the dropdown options */
 }
+
 
 .themeSelect option:hover {
   background-color: var(--hover-background-color, #ffffff);

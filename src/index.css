@@ -21,6 +21,10 @@
   --text-accent: #7b66ff;
   --toggle-bg: #e9e9ea;
   --tooltip-hover: #F6F4FF;
+  --hover-background-color: #f2f2f2;
+  --hover-text-color: #333333;
+  --focus-background-color: #f2f2f2;
+  --focus-text-color: #333333;
 }
 
 [data-theme='dark'] {
@@ -34,6 +38,10 @@
   --text-accent: #7b66ff;
   --toggle-bg: #454547;
   --tooltip-hover: #2D2D2D;
+  --hover-background-color: #333333;
+  --hover-text-color: #DDDDDD;
+  --focus-background-color: #333333;
+  --focus-text-color: #DDDDDD;
 }
 
 /* Base HTML element styles */

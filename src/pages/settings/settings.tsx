@@ -70,7 +70,7 @@ export const Settings: React.FC<SettingsProps> = ({
             fontWeight: 700,
             fontSize: "12px",
             letterSpacing: "-0.02em",
-            color: "#333333",
+            color: "var(--text-primary)",
           }}
         >
           About Screeni
@@ -91,7 +91,7 @@ export const Settings: React.FC<SettingsProps> = ({
             fontWeight: 700,
             fontSize: "12px",
             letterSpacing: "-0.02em",
-            color: "#333333",
+            color: "var(--text-primary)",
           }}
         >
           Contributors
