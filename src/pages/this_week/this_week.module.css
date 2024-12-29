@@ -18,8 +18,17 @@
 .scrollableContainer {
   scroll-behavior: smooth;
   overflow-y: auto;
+  padding-top : 2px;
+  padding-top: 2px;
   margin-right: 2px;
   width: calc(100% - 2px); /* This ensures the total width including margin is correct */
+}
+
+.chartsdivider {
+  width: 400px;
+  border: none;
+  border-top: 1.15px solid var(--border-color);
+  margin: 0 auto 10px auto;
 }
 
 .scrollableContainer::-webkit-scrollbar {
@@ -43,7 +52,7 @@
   justify-content: space-between;
   align-items: center;
   width: calc(400px - 6px); /* Compensate for the scrollbar width */
-  margin: 0 auto 20px auto;
+  margin: 0 auto 15px auto;
 }
 
 .sectionText {
@@ -65,7 +74,7 @@
   font-weight: 400;
   font-size: 12px;
   color: var(--text-secondary);
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .sectionValue {
@@ -84,7 +93,7 @@
 
 .chartContainer {
   width: calc(400px - 6px); /* Compensate for the scrollbar width */
-  margin: 0 auto 20px auto;
+  margin: 0 auto 10px auto;
 }
 
 .siteList {
