@@ -47,7 +47,7 @@ export const ThisDay: React.FC<ThisDayProps> = ({
       <div className={daily_style.contentSection}>
         <div className={daily_style.sectionText}>
           <span className={daily_style.sectionHead}>
-            Total Browsing Time Today
+            Today's Browsing Time
           </span>
           <span className={daily_style.sectionSubhead}>
             Total screen-time today
