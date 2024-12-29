@@ -13,13 +13,14 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 25px;
 }
 
 .scrollableContainer {
   scroll-behavior: smooth;
   overflow-y: auto;
-  margin-right: 2px;
-  width: calc(100% - 2px); /* This ensures the total width including margin is correct */
+  margin-left: 25px;
+  width: 400px; /* This ensures the total width including margin is correct */
 }
 .scrollableContainer::-webkit-scrollbar {
   width: 4px;
@@ -54,15 +55,12 @@
   margin: 0 auto 10px auto;
 }
 
-.contentSectionWrapper {
-  padding-top: 25px;
-}
 
 .contentSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(400px - 6px); /* Compensate for the scrollbar width */
+  width: 400px; /* Compensate for the scrollbar width */
   margin: 0 auto 15px auto;
 }
 
@@ -96,14 +94,14 @@
 }
 
 .divider {
-  width: calc(400px - 6px); /* Compensate for the scrollbar width */
+  width: 400px; /* Compensate for the scrollbar width */
   border: none;
   border-top: 1.15px solid var(--border-color);
   margin: 0 auto 15px auto;
 }
 
 .chartContainer {
-  width: calc(400px - 6px); /* Compensate for the scrollbar width */
+  width: 400px; /* Compensate for the scrollbar width */
   margin: 0 auto 10px auto;
 }
 
