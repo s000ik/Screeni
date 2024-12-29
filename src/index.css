@@ -65,6 +65,24 @@ html, body {
   overflow-y: auto;
 }
 
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b9b7c3;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
 /* Common text styles */
 .label {
   font-weight: 500;
