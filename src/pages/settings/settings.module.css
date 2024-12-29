@@ -244,5 +244,5 @@
   font-weight: 400;
   font-size: 12px;
   color: var(--text-secondary);
-  margin-top: 25px; /* Space after contributors */
+  margin-top: 20px; /* Space after contributors */
 }
