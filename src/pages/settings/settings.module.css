@@ -52,31 +52,44 @@
     "YOPQ" 92, "XTRA" 440, "YTUC" 712, "YTLC" 570, "YTAS" 786, "YTDE" -203,
     "YTFI" 788, "opsz" 28;
   position: relative;
-  
-  /* Remove default arrow */
+
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  
-  /* Add padding for custom arrow */
+
   padding-right: 30px;
-  
-  /* Add custom arrow using background image */
+
   background-image: url("/dropdown.png");
   background-repeat: no-repeat;
   background-position: right 8px center;
   background-size: 12px;
 }
 
-/* Hide arrow in IE */
 .themeSelect::-ms-expand {
   display: none;
 }
 
-/* Optional: Style focus state */
 .themeSelect:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(var(--text-accent), 0.2);
+}
+
+.themeSelect option {
+  background-color: var(--background-color, white);
+  color: var(--text-accent);
+  padding: 10px;
+  font-size: 16px; 
+  border: none; 
+}
+
+.themeSelect option:hover {
+  background-color: var(--hover-background-color, #f0f0f0);
+  color: var(--hover-text-color, var(--text-accent));
+}
+
+.themeSelect:focus option {
+  background-color: var(--focus-background-color, #e0e0e0); 
+  color: var(--focus-text-color, var(--text-accent));
 }
 
 
