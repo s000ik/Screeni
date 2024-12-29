@@ -56,7 +56,9 @@ export const Settings: React.FC<SettingsProps> = ({
         </div>
         <img
           src={
-            theme === "dark"
+            theme === "dark" ||
+            (theme === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches)
               ? "/Screeni-logotype.png"
               : "/Screeni-logotype-purple.png"
           }

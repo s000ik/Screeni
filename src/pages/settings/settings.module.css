@@ -61,11 +61,12 @@
   -webkit-appearance: none;
   -moz-appearance: none;
 
-  padding-right: 30px;
+  padding-right: 20px; /* Reduced from 30px */
+  width: auto; /* Allow content to determine width */
 
   background-image: url("/dropdown.png");
   background-repeat: no-repeat;
-  background-position: right 8px center;
+  background-position: right 0 center; /* Changed from right 8px center */
   background-size: 12px;
 }
 
