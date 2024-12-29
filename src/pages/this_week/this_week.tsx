@@ -64,7 +64,7 @@ export const ThisWeek: React.FC<ThisWeekProps> = ({
             </div>
             <div className={styles.sectionValue}>
               <span className={styles.purpleLargeRoboto}>
-                {formatTime(liveWeeklyTime / 7)}
+                {formatTime(liveWeeklyTime / (new Date().getDay() || 7))}
               </span>
             </div>
           </div>

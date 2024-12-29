@@ -134,14 +134,17 @@ function App() {
       const siteStats: Record<string, number> = {};
       weeklyTimings.forEach((timing: WeeklyTiming) => {
         if (isValidHostname(timing.hostname)) {
-          weeklyStats[timing.dayOfWeek] += timing.timeSpent;
+          // Convert Sunday (0) to 6, and other days subtract 1
+          const adjustedDay = timing.dayOfWeek === 0 ? 6 : timing.dayOfWeek - 1;
+          weeklyStats[adjustedDay] += timing.timeSpent;
           totalTime += timing.timeSpent;
           siteStats[timing.hostname] =
             (siteStats[timing.hostname] || 0) + timing.timeSpent;
         }
       });
-
-      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      
+      // Change days array to start with Monday
+      const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
       const weeklyChartData = weeklyStats.map((time, index) => ({
         day: daysOfWeek[index],
         time: time,
