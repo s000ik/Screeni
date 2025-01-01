@@ -15,11 +15,7 @@
       "storage",
       "notifications"
     ],
-      
-    "host_permissions": [
-      "<all_urls>"
-    ],
-    
+
     "background": {
       "service_worker": "background.js"      
     },

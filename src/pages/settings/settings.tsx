@@ -161,7 +161,7 @@ export const Settings: React.FC<SettingsProps> = ({
         </div>
 
         <p className={setting_style.thankYou}>
-          Thank you for choosing Screeni to support your digital wellbeing
+          Thank you for choosing Screeni to support your digital wellbeing!
         </p>
       </div>
     </main>
