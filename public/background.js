@@ -111,7 +111,7 @@ async function showBlockedNotification(hostname, tabId) {
 }
 
 // Time Tracking Functions
-async function updateTimeSpent(hostname, timeSpent) {
+async function updateTimeSpent(hostname, timeSpent, timestamp) {
   const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
     'sessionTimings',
     'dailyTimings',
@@ -119,43 +119,35 @@ async function updateTimeSpent(hostname, timeSpent) {
     'lastWeekReset'
   ]);
 
-  const now = Date.now();
   const startOfWeek = getStartOfWeek();
   const startOfDay = getStartOfDay();
 
-  // Check if we need to reset weekly data
-  const lastWeekReset = await chrome.storage.local.get('lastWeekReset');
-  if (!lastWeekReset.lastWeekReset || lastWeekReset.lastWeekReset < startOfWeek) {
-    // Clear weekly data when transitioning to a new week
-    await chrome.storage.local.set({
-      weeklyTimings: [], // Reset weekly timings
-      lastWeekReset: startOfWeek // Update last reset timestamp
-    });
-    weeklyTimings.length = 0; // Clear the local array as well - this is changed
-  }
-
-  // Continue with normal timing updates
+  // Session timings
   const newSessionTiming = {
     hostname,
     timeSpent,
-    startTime: now
+    startTime: timestamp
   };
   sessionTimings.push(newSessionTiming);
 
+  // Daily timings
+  const dayStart = new Date(timestamp);
+  dayStart.setHours(0, 0, 0, 0);
   const newDailyTiming = {
     hostname,
     timeSpent,
-    timestamp: now,
-    dayStart: startOfDay
+    timestamp,
+    dayStart: dayStart.getTime()
   };
   dailyTimings.push(newDailyTiming);
 
+  // Weekly timings
   const newWeeklyTiming = {
     hostname,
     timeSpent,
-    timestamp: now,
+    timestamp,
     weekStart: startOfWeek,
-    dayOfWeek: new Date(now).getDay()
+    dayOfWeek: new Date(timestamp).getDay()
   };
   weeklyTimings.push(newWeeklyTiming);
 
@@ -171,18 +163,36 @@ async function handleTabChange(tabId, url) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://')) {
     return;
   }
-  
-  const now = Date.now();
+
+  const now = new Date();
   const hostname = getHostname(url);
-  
+
   if (await isHostnameBlocked(hostname)) {
     await showBlockedNotification(hostname, tabId);
     return;
   }
 
   if (currentTab.id && currentTab.startTime && currentTab.hostname) {
-    const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
-    await updateTimeSpent(currentTab.hostname, timeSpent);
+    const previousTabTime = new Date(currentTab.startTime);
+    const elapsedTime = Math.floor((now - previousTabTime) / 1000);
+
+    if (previousTabTime.getDate() !== now.getDate()) {
+      // Split time between the previous day and the new day
+      const midnight = new Date(now);
+      midnight.setHours(0, 0, 0, 0);
+
+      const timeBeforeMidnight = Math.floor((midnight - previousTabTime) / 1000);
+      const timeAfterMidnight = elapsedTime - timeBeforeMidnight;
+
+      // Update time for the previous day
+      await updateTimeSpent(currentTab.hostname, timeBeforeMidnight, previousTabTime);
+
+      // Update time for the new day
+      await updateTimeSpent(currentTab.hostname, timeAfterMidnight, midnight);
+    } else {
+      // Same day, record time normally
+      await updateTimeSpent(currentTab.hostname, elapsedTime, previousTabTime);
+    }
   }
 
   currentTab = {
