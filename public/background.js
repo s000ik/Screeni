@@ -119,6 +119,7 @@ async function showBlockedNotification(hostname, tabId) {
   });
 }
 
+
 // Time Tracking Functions
 async function updateTimeSpent(hostname, timeSpent, timestamp) {
   const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
