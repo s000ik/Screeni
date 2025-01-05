@@ -63,28 +63,33 @@ async function showBlockedNotification(hostname, tabId) {
   if (notifiedTabs.has(tabId)) {
     return;
   }
-  
+
   const cleanHostname = hostname.replace(/^www\./, '').replace(/\.com$/, '');
   const notificationId = `block-notification-${tabId}`;
-  
-  chrome.notifications.create(notificationId, {
-    type: 'basic',
-    iconUrl: 'icon48.png',
-    title: 'Site Blocked',
-    message: `${cleanHostname} is blocked. It will close in 10 seconds.\nGreat job maintaining your screentime habits!`,
-    buttons: [
-      {
-        title: 'Snooze (5 minutes)'
-      },
-      {
-        title: 'Unblock'
-      }
-    ],
-    requireInteraction: true
-  });
 
-  // Start the initial 10-second timer
-  closeTabWithDelay(tabId);
+  const createNotificationAndStartTimer = async () => {
+    await chrome.notifications.create(notificationId, {
+      type: 'basic',
+      iconUrl: 'icon48.png',
+      title: 'Site Blocked',
+      message: `${cleanHostname} is blocked. It will close in 10 seconds.\nGreat job maintaining your screentime habits!`,
+      buttons: [
+        {
+          title: 'Snooze (5 minutes)'
+        },
+        {
+          title: 'Unblock'
+        }
+      ],
+      requireInteraction: true
+    });
+
+    // Start the 10-second timer for auto-closing
+    closeTabWithDelay(tabId);
+  };
+
+  // Initial notification and timer
+  await createNotificationAndStartTimer();
 
   // Add notification click listener
   chrome.notifications.onButtonClicked.addListener(async (clickedId, buttonIndex) => {
@@ -95,20 +100,25 @@ async function showBlockedNotification(hostname, tabId) {
         clearTimeout(timeoutId);
       }
 
-      if (buttonIndex === 0) {  // Snooze button
-        // Close in 5 minutes instead
-        closeTabWithDelay(tabId, 300000); // 5 minutes in milliseconds
-      } else if (buttonIndex === 1) {  // Unblock button
+      if (buttonIndex === 0) { // Snooze button
+        // Clear current notification
+        await chrome.notifications.clear(notificationId);
+        
+        // Show new notification after delay (15 seconds for testing)
+        setTimeout(async () => {
+          // Create new notification and start new timer
+          await createNotificationAndStartTimer();
+        }, 300000); 
+      } else if (buttonIndex === 1) { // Unblock button
         // Remove from blocked sites
         handleSiteBlock(hostname, false);
         notifiedTabs.delete(tabId);
+        await chrome.notifications.clear(notificationId);
       }
-
-      // Clear the notification
-      chrome.notifications.clear(notificationId);
     }
   });
 }
+
 
 // Time Tracking Functions
 async function updateTimeSpent(hostname, timeSpent) {
