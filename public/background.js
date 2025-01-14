@@ -40,7 +40,7 @@ async function isHostnameBlocked(hostname) {
 async function closeTabWithDelay(tabId, delayMs = 10000) {
   notifiedTabs.add(tabId);
   const notificationId = `block-notification-${tabId}`;
-
+  
   const timeoutId = setTimeout(async () => {
     chrome.notifications.clear(notificationId);
     try {
@@ -54,7 +54,7 @@ async function closeTabWithDelay(tabId, delayMs = 10000) {
       notifiedTabs.delete(tabId);
     }
   }, delayMs);
-
+  
   // Store the timeout ID so we can clear it if needed
   chrome.storage.local.set({ [`timeout_${tabId}`]: timeoutId });
 }
@@ -63,10 +63,10 @@ async function showBlockedNotification(hostname, tabId) {
   if (notifiedTabs.has(tabId)) {
     return;
   }
-
+  
   const cleanHostname = hostname.replace(/^www\./, '').replace(/\.com$/, '');
   const notificationId = `block-notification-${tabId}`;
-
+  
   const createNotificationAndStartTimer = async () => {
     await chrome.notifications.create(notificationId, {
       type: 'basic',
@@ -83,14 +83,14 @@ async function showBlockedNotification(hostname, tabId) {
       ],
       requireInteraction: true
     });
-
+    
     // Start the 10-second timer for auto-closing
     closeTabWithDelay(tabId);
   };
-
+  
   // Initial notification and timer
   await createNotificationAndStartTimer();
-
+  
   // Add notification click listener
   chrome.notifications.onButtonClicked.addListener(async (clickedId, buttonIndex) => {
     if (clickedId === notificationId) {
@@ -99,16 +99,16 @@ async function showBlockedNotification(hostname, tabId) {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
-
+      
       if (buttonIndex === 0) { // Snooze button
         // Clear current notification
         await chrome.notifications.clear(notificationId);
         
-        // Show new notification after delay (15 seconds for testing)
+        // Show new notification after delay (5 minutes)
         setTimeout(async () => {
           // Create new notification and start new timer
           await createNotificationAndStartTimer();
-        }, 300000); 
+        }, 300000);
       } else if (buttonIndex === 1) { // Unblock button
         // Remove from blocked sites
         handleSiteBlock(hostname, false);
@@ -118,10 +118,10 @@ async function showBlockedNotification(hostname, tabId) {
     }
   });
 }
-
+  
 
 // Time Tracking Functions
-async function updateTimeSpent(hostname, timeSpent, timestamp) {
+async function updateTimeSpent(hostname, timeSpent) {
   const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
     'sessionTimings',
     'dailyTimings',
@@ -129,35 +129,43 @@ async function updateTimeSpent(hostname, timeSpent, timestamp) {
     'lastWeekReset'
   ]);
 
+  const now = Date.now();
   const startOfWeek = getStartOfWeek();
   const startOfDay = getStartOfDay();
 
-  // Session timings
+  // Check if we need to reset weekly data
+  const lastWeekReset = await chrome.storage.local.get('lastWeekReset');
+  if (!lastWeekReset.lastWeekReset || lastWeekReset.lastWeekReset < startOfWeek) {
+    // Clear weekly data when transitioning to a new week
+    await chrome.storage.local.set({
+      weeklyTimings: [], // Reset weekly timings
+      lastWeekReset: startOfWeek // Update last reset timestamp
+    });
+    weeklyTimings.length = 0; // Clear the local array as well - this is changed
+  }
+
+  // Continue with normal timing updates
   const newSessionTiming = {
     hostname,
     timeSpent,
-    startTime: timestamp
+    startTime: now
   };
   sessionTimings.push(newSessionTiming);
 
-  // Daily timings
-  const dayStart = new Date(timestamp);
-  dayStart.setHours(0, 0, 0, 0);
   const newDailyTiming = {
     hostname,
     timeSpent,
-    timestamp,
-    dayStart: dayStart.getTime()
+    timestamp: now,
+    dayStart: startOfDay
   };
   dailyTimings.push(newDailyTiming);
 
-  // Weekly timings
   const newWeeklyTiming = {
     hostname,
     timeSpent,
-    timestamp,
+    timestamp: now,
     weekStart: startOfWeek,
-    dayOfWeek: new Date(timestamp).getDay()
+    dayOfWeek: new Date(now).getDay()
   };
   weeklyTimings.push(newWeeklyTiming);
 
@@ -173,36 +181,18 @@ async function handleTabChange(tabId, url) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://')) {
     return;
   }
-
-  const now = new Date();
+  
+  const now = Date.now();
   const hostname = getHostname(url);
-
+  
   if (await isHostnameBlocked(hostname)) {
     await showBlockedNotification(hostname, tabId);
     return;
   }
 
   if (currentTab.id && currentTab.startTime && currentTab.hostname) {
-    const previousTabTime = new Date(currentTab.startTime);
-    const elapsedTime = Math.floor((now - previousTabTime) / 1000);
-
-    if (previousTabTime.getDate() !== now.getDate()) {
-      // Split time between the previous day and the new day
-      const midnight = new Date(now);
-      midnight.setHours(0, 0, 0, 0);
-
-      const timeBeforeMidnight = Math.floor((midnight - previousTabTime) / 1000);
-      const timeAfterMidnight = elapsedTime - timeBeforeMidnight;
-
-      // Update time for the previous day
-      await updateTimeSpent(currentTab.hostname, timeBeforeMidnight, previousTabTime);
-
-      // Update time for the new day
-      await updateTimeSpent(currentTab.hostname, timeAfterMidnight, midnight);
-    } else {
-      // Same day, record time normally
-      await updateTimeSpent(currentTab.hostname, elapsedTime, previousTabTime);
-    }
+    const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
+    await updateTimeSpent(currentTab.hostname, timeSpent);
   }
 
   currentTab = {
