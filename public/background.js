@@ -2,7 +2,8 @@
 let currentTab = {
   id: null,
   hostname: null,
-  startTime: null
+  startTime: null,
+  lastMidnightCheck: null
 };
 
 let notifiedTabs = new Set();
@@ -23,11 +24,61 @@ function getStartOfDay() {
   return startOfDay.getTime();
 }
 
+function getMondayMidnight() {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - now.getDay() + 1); // Get next Monday
+  monday.setHours(0, 0, 0, 0); // Set to midnight instead of noon
+  return monday.getTime();
+}
+
 function getHostname(url) {
   try {
     return new URL(url).hostname;
   } catch {
     return '';
+  }
+}
+
+// Update the weekly reset check function
+async function checkWeeklyReset() {
+  const now = Date.now();
+  const mondayMidnight = getMondayMidnight();
+  const { lastWeekReset = 0 } = await chrome.storage.local.get('lastWeekReset');
+  
+  // If we've passed Monday midnight and haven't reset yet this week
+  if (now >= mondayMidnight && lastWeekReset < mondayMidnight) {
+    await chrome.storage.local.set({
+      weeklyTimings: [],
+      sessionTimings: [],
+      dailyTimings: [],
+      lastWeekReset: now
+    });
+    console.log('Weekly data cleared at Monday midnight');
+  }
+}
+
+// Split time across days if midnight was crossed
+async function handleDayTransition(hostname, startTime, endTime) {
+  const startDate = new Date(startTime);
+  const endDate = new Date(endTime);
+  
+  // If we crossed midnight
+  if (startDate.getDate() !== endDate.getDate()) {
+    const midnight = new Date(endDate);
+    midnight.setHours(0, 0, 0, 0);
+    
+    // Calculate split times
+    const timeBeforeMidnight = Math.floor((midnight.getTime() - startTime) / 1000);
+    const timeAfterMidnight = Math.floor((endTime - midnight.getTime()) / 1000);
+    
+    // Update times for both days
+    await updateTimeSpent(hostname, timeBeforeMidnight, startTime);
+    await updateTimeSpent(hostname, timeAfterMidnight, midnight.getTime());
+  } else {
+    // Normal update within same day
+    const timeSpent = Math.floor((endTime - startTime) / 1000);
+    await updateTimeSpent(hostname, timeSpent, startTime);
   }
 }
 
@@ -118,57 +169,44 @@ async function showBlockedNotification(hostname, tabId) {
     }
   });
 }
-  
 
 // Time Tracking Functions
-async function updateTimeSpent(hostname, timeSpent) {
+async function updateTimeSpent(hostname, timeSpent, timestamp) {
   const { sessionTimings = [], dailyTimings = [], weeklyTimings = [] } = await chrome.storage.local.get([
     'sessionTimings',
     'dailyTimings',
-    'weeklyTimings',
-    'lastWeekReset'
+    'weeklyTimings'
   ]);
 
-  const now = Date.now();
   const startOfWeek = getStartOfWeek();
-  const startOfDay = getStartOfDay();
-
-  // Check if we need to reset weekly data
-  const lastWeekReset = await chrome.storage.local.get('lastWeekReset');
-  if (!lastWeekReset.lastWeekReset || lastWeekReset.lastWeekReset < startOfWeek) {
-    // Clear weekly data when transitioning to a new week
-    await chrome.storage.local.set({
-      weeklyTimings: [], // Reset weekly timings
-      lastWeekReset: startOfWeek // Update last reset timestamp
-    });
-    weeklyTimings.length = 0; // Clear the local array as well - this is changed
-  }
-
-  // Continue with normal timing updates
+  const startOfDay = new Date(timestamp);
+  startOfDay.setHours(0, 0, 0, 0);
+  
   const newSessionTiming = {
     hostname,
     timeSpent,
-    startTime: now
+    startTime: timestamp
   };
-  sessionTimings.push(newSessionTiming);
-
+  
   const newDailyTiming = {
     hostname,
     timeSpent,
-    timestamp: now,
-    dayStart: startOfDay
+    timestamp,
+    dayStart: startOfDay.getTime()
   };
-  dailyTimings.push(newDailyTiming);
-
+  
   const newWeeklyTiming = {
     hostname,
     timeSpent,
-    timestamp: now,
+    timestamp,
     weekStart: startOfWeek,
-    dayOfWeek: new Date(now).getDay()
+    dayOfWeek: new Date(timestamp).getDay()
   };
+  
+  sessionTimings.push(newSessionTiming);
+  dailyTimings.push(newDailyTiming);
   weeklyTimings.push(newWeeklyTiming);
-
+  
   await chrome.storage.local.set({
     sessionTimings,
     dailyTimings,
@@ -185,20 +223,23 @@ async function handleTabChange(tabId, url) {
   const now = Date.now();
   const hostname = getHostname(url);
   
+  // Check for weekly reset
+  await checkWeeklyReset();
+  
   if (await isHostnameBlocked(hostname)) {
     await showBlockedNotification(hostname, tabId);
     return;
   }
 
   if (currentTab.id && currentTab.startTime && currentTab.hostname) {
-    const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
-    await updateTimeSpent(currentTab.hostname, timeSpent);
+    await handleDayTransition(currentTab.hostname, currentTab.startTime, now);
   }
 
   currentTab = {
     id: tabId,
     hostname: hostname,
-    startTime: now
+    startTime: now,
+    lastMidnightCheck: now
   };
 }
 
@@ -278,8 +319,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_CURRENT_TIME') {
     if (currentTab.id && currentTab.startTime && currentTab.hostname) {
       const now = Date.now();
-      const timeSpent = Math.floor((now - currentTab.startTime) / 1000);
-      updateTimeSpent(currentTab.hostname, timeSpent).then(() => {
+      handleDayTransition(currentTab.hostname, currentTab.startTime, now).then(() => {
         sendResponse({ success: true });
       });
       return true;
