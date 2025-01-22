@@ -1,8 +1,24 @@
 # Screeni - Digital Wellbeing Chrome Extension
 
-![Banner](public/Banner.png)
-
 **Screeni** is an open-source Chrome extension designed to help you track your browsing habits, boost productivity, and build healthier digital routines—all through an elegant and intuitive interface.
+<br>
+<br>
+<div style="display: flex; flex-direction: column; gap: 20px;">
+
+  <!-- Row 1 -->
+  <div style="display: flex; justify-content: space-between;">
+    <img src="https://lh3.googleusercontent.com/jhBSAw-YOVxyLhv0_zAsFAI-f1790vkmzHVp-Utt6yhJ9jb1tf_vBHHfeCdrdmtDQskJcd2OVFBGaFIGDRa6K6zj6Q=s1280-w1280-h800" style="border-radius: 15px; width: 48%; height: auto;" />
+    <img src="https://lh3.googleusercontent.com/eMJGF41yiPahSO992YC2YvBPlo6D-V3fClrCVOMITvlC2SFekkdn1LU1MOCMKj9wEBsj62DXJ1mEzX9mq_SPYoe-=s1280-w1280-h800" style="border-radius: 15px; width: 48%; height: auto;" />
+  </div>
+
+  <!-- Row 2 -->
+  <div style="display: flex; justify-content: space-between;">
+    <img src="https://lh3.googleusercontent.com/cRyA8fCRToZ6M6dhfsUGvM68tnKxEvES17smqVF3yYzC7phCYWaqgOnNudKrvfJk8H8IvvOZQ70taIRz7T0sKV9NK2w=s1280-w1280-h800" style="border-radius: 15px; width: 48%; height: auto;" />
+    <img src="https://lh3.googleusercontent.com/6YiikfFT8rm8xcLt4R5VgjlZGEftE77SKRkjWUdmrq9lAdXKCw3OmVKmISLgy-RHWpBC1J7RqY8lcLe7bzauyWRBmQ=s1280-w1280-h800" style="border-radius: 15px; width: 48%; height: auto;" />
+  </div>
+
+</div>
+<br>
 
 ---
 
@@ -129,3 +145,7 @@ If you encounter any issues or have feature requests, please open an issue in th
 
 **Take control of your digital wellbeing with Screeni.**  
 [Get started today!](https://chromewebstore.google.com/detail/screeni/kgikmpnigjdiaoijbofcbahpjblcgeeh)
+
+<br>
+
+![Banner](public/Banner.png)
