@@ -52,7 +52,7 @@ export const Settings: React.FC<SettingsProps> = ({
       <div className={setting_style.screeniSection}>
         <div className={setting_style.screeniInfo}>
           <span className={setting_style.sectionHead}>Screeni</span>
-          <span className={setting_style.sectionSubhead}>Version 5.0.4</span>
+          <span className={setting_style.sectionSubhead}>Version 5.1.4</span>
         </div>
         <img
           src={

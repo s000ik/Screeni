@@ -17,6 +17,18 @@ interface WeeklyTiming {
   hostname: string;
 }
 
+interface WeeklyChartData {
+  day: string;
+  time: number;
+}
+
+interface TimingData {
+  dayStart: number;
+  hostname: string;
+  timeSpent: number;
+}
+
+
 const isValidHostname = (hostname: string): boolean => {
   if (!hostname) return false;
   const invalidPrefixes = [
@@ -38,7 +50,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [sessionTimings, setSessionTimings] = useState<Record<string, number>>({});
   const [dailyTimings, setDailyTimings] = useState<Record<string, number>>({});
-  const [weeklyData, setWeeklyData] = useState<any[]>([]);
+  const [weeklyData, setWeeklyData] = useState<WeeklyChartData[]>([]);
   const [weeklySites, setWeeklySites] = useState<Record<string, number>>({});
   const [liveWeeklyTime, setLiveWeeklyTime] = useState(0);
   const [currentSite, setCurrentSite] = useState<string | null>(null);
@@ -115,7 +127,7 @@ function App() {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const todayTimings = dailyTimings.filter(
-        (timing: any) => timing.dayStart === today.getTime()
+        (timing: TimingData) => timing.dayStart === today.getTime()
       );
       const processedDailyTimings = todayTimings.reduce(
         (acc: Record<string, number>, site: Timing) => {
@@ -191,8 +203,8 @@ function App() {
             } else {
               setCurrentSite(null);
             }
-          } catch (err) {
-            console.error("Invalid URL:", tabs[0].url);
+          } catch (error) {
+            console.error("Invalid URL:", tabs[0].url, error);
             setCurrentSite(null);
           }
         }
