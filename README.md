@@ -133,7 +133,7 @@ This project is licensed under the [GNU General Public License v3.0](LICENSE).
 
 ## Made by
 
-[Satwik Singh](https://github.com/s000ik) and [Parth Gupta](https://github.com/p4r1h)
+[Satwik Singh](https://github.com/s000ik) and [Parth Gupta](https://github.com/p4r1h) - Team Bloomware
 
 ---
 
